@@ -1,0 +1,65 @@
+generated: '2026-07-18'
+method: searched
+source: openapi/*.yml securitySchemes + https://developers.contaazul.com/auth
+docs: https://developers.contaazul.com/auth
+summary:
+  types:
+  - oauth2
+  - http
+  oauth2_flows:
+  - authorizationCode
+  api_key_in: []
+  token_format: JWT
+  token_type: Bearer
+notes: >-
+  The Conta Azul "Nova API" (v2, api-v2.contaazul.com) is protected by OAuth 2.0
+  Authorization Code flow on AWS Cognito (auth.contaazul.com). The OpenAPI specs
+  only declare the resulting bearer scheme (HTTP bearer, JWT), but the access
+  token is obtained through the documented OAuth2 flow. The legacy API
+  (devdocs.contaazul.com) used incompatible credentials and was sunset
+  2025-11-05.
+schemes:
+- name: OAuth2
+  type: oauth2
+  source: docs (https://developers.contaazul.com/auth)
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://auth.contaazul.com/login
+    tokenUrl: https://auth.contaazul.com/oauth2/token
+    scopes:
+      openid: OpenID Connect authentication
+      profile: Access to the connected user profile
+      aws.cognito.signin.user.admin: Full administrative access to all API contexts
+  client_auth: Basic (base64 client_id:client_secret) at the token endpoint
+  access_token_ttl_seconds: 3600
+  refresh_token_ttl: up to 5 years / rotated on each refresh
+  discovery:
+    source: well-known/conta-azul-openid-configuration.json + well-known/conta-azul-oauth-authorization-server.json
+    issuer: https://api-v2.contaazul.com
+    authorization_endpoint: https://api-v2.contaazul.com/oauth/authorize
+    token_endpoint: https://api-v2.contaazul.com/oauth/token
+    jwks_uri: https://api-v2.contaazul.com/.well-known/jwks.json
+    userinfo_endpoint: https://api-v2.contaazul.com/v1/pessoas/conta-conectada
+    registration_endpoint: https://api-v2.contaazul.com/oauth2/register
+    pkce: S256
+    id_token_signing_alg: RS256
+    grant_types_supported: [authorization_code, refresh_token]
+    note: >-
+      RFC 8414 / OIDC discovery documents are live and advertise the endpoints on
+      api-v2.contaazul.com; the human docs walk the same flow via
+      auth.contaazul.com (the Cognito-fronted login/token host).
+- name: BearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  description: Bearer JWT access token sent in the Authorization header on every API call.
+  sources:
+  - openapi/conta-azul-acquittance-openapi.yml
+  - openapi/conta-azul-charge-openapi.yml
+  - openapi/conta-azul-contracts-openapi.yml
+  - openapi/conta-azul-financial-openapi.yml
+  - openapi/conta-azul-inventory-openapi.yml
+  - openapi/conta-azul-protocol-openapi.yml
+  - openapi/conta-azul-sales-openapi.yml
+  - openapi/conta-azul-proposal-openapi.yml
+  - openapi/conta-azul-scheduled-sales-openapi.yml
