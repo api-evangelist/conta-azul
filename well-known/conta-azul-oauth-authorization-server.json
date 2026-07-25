@@ -1,0 +1,11 @@
+{
+  "issuer": "https://api-v2.contaazul.com",
+  "authorization_endpoint": "https://api-v2.contaazul.com/oauth/authorize",
+  "token_endpoint": "https://api-v2.contaazul.com/oauth/token",
+  "registration_endpoint": "https://api-v2.contaazul.com/oauth2/register",
+  "scopes_supported": ["openid", "profile", "aws.cognito.signin.user.admin"],
+  "response_types_supported": ["code"],
+  "grant_types_supported": ["authorization_code", "refresh_token"],
+  "token_endpoint_auth_methods_supported": ["none"],
+  "code_challenge_methods_supported": ["S256"]
+}

@@ -1,0 +1,31 @@
+generated: '2026-07-18'
+method: searched
+source: https://developers.contaazul.com/requestingcode + https://developers.contaazul.com/migration
+docs: https://developers.contaazul.com/auth
+note: >-
+  Conta Azul's Nova API uses a single FIXED scope string on the OAuth2
+  authorization request. Per the migration guide, requesting this scope grants
+  the developer access to ALL API contexts, so there is no per-resource scope
+  surface to enumerate. The OpenAPI specs do not declare oauth2 scopes (they
+  declare only the resulting bearer scheme); these scopes are captured from the
+  documented authorization flow.
+schemes:
+- name: OAuth2
+  source: docs (https://developers.contaazul.com/auth)
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://auth.contaazul.com/login
+    tokenUrl: https://auth.contaazul.com/oauth2/token
+fixed_scope_string: openid profile aws.cognito.signin.user.admin
+scopes:
+- scope: openid
+  description: OpenID Connect authentication (identity).
+  flows: [authorizationCode]
+- scope: profile
+  description: Access to the connected user's profile.
+  flows: [authorizationCode]
+- scope: aws.cognito.signin.user.admin
+  description: >-
+    AWS Cognito admin scope — grants full administrative access to all Conta
+    Azul API contexts for the authorizing tenant.
+  flows: [authorizationCode]

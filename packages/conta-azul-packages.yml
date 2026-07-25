@@ -1,0 +1,30 @@
+generated: '2026-07-18'
+method: searched
+source: >-
+  npm, PyPI, Packagist, RubyGems, pkg.go.dev searches +
+  https://developers.contaazul.com (FAQ) + github.com/ContaAzul
+note: >-
+  Conta Azul publishes NO official/first-party client SDKs — the developer docs
+  state integrations are built directly with HTTP + JSON, and the Nova API ships
+  no official libraries. Only community/third-party libraries exist (for the
+  legacy API), listed below as official:false. No official SDK pointer is emitted.
+packages: []
+community_packages:
+- language: php
+  registry: github
+  name: eudovic/Conta-Azul-Api
+  url: https://github.com/eudovic/Conta-Azul-Api
+  official: false
+  note: Community library for auth + requests against the Conta Azul API.
+- language: docs
+  registry: github
+  name: jnettome/contaazul_docs
+  url: https://github.com/jnettome/contaazul_docs
+  official: false
+  note: Unofficial (community) API documentation for the legacy API.
+- language: examples
+  registry: github
+  name: Ailtontuk/api-examples
+  url: https://github.com/Ailtontuk/api-examples
+  official: false
+  note: Code examples for consuming the Conta Azul APIs (referenced from the docs).

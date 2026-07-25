@@ -1,0 +1,1054 @@
+openapi: 3.0.0
+info:
+  description: Operações relacionadas a contratos
+  title: Contratos
+  contact: {}
+  version: v1
+paths:
+  /v1/contratos:
+    get:
+      security:
+        - BearerAuth: []
+      description: >-
+        Permite consultar contratos existentes, com suporte a filtros que
+        facilitam a busca e a gestão dos contratos criados (ex. por cliente,
+        data, status, entre outros).
+
+        Os parâmetros de múltiplos valores (ex.: cliente_id, tipo_pagamento)
+        aceitam dois formatos equivalentes: chaves repetidas
+        (`?cliente_id=<uuid1>&cliente_id=<uuid2>`) ou valores separados por
+        vírgula (`?cliente_id=<uuid1>,<uuid2>`).
+      tags:
+        - v1
+      summary: Retornar os contratos por filtro
+      operationId: listarContratos
+      parameters:
+        - description: Página
+          name: pagina
+          in: query
+          example: 1
+          schema:
+            type: integer
+            default: 1
+        - description: Tamanho da página (máximo 50)
+          name: tamanho_pagina
+          in: query
+          example: 10
+          schema:
+            type: integer
+            default: 10
+        - description: >-
+            Campo para ordenação ascendente. Se informado ele desconsidera o
+            valor do campo_ordenado_descendente.
+          name: campo_ordenado_ascendente
+          in: query
+          example: DATA_INICIO
+          schema:
+            type: string
+            enum:
+              - DATA_INICIO
+              - DATA_FIM
+        - description: >-
+            Campo para ordenação descendente. Se este campo for utilizado, o
+            campo campo_ordenado_ascendente não deverá ser informado.
+          name: campo_ordenado_descendente
+          in: query
+          example: DATA_INICIO
+          schema:
+            type: string
+            enum:
+              - DATA_INICIO
+              - DATA_FIM
+        - description: Busca textual por nome
+          name: busca_textual
+          in: query
+          example: Contrato 1
+          schema:
+            type: string
+        - description: id do cliente
+          name: cliente_id
+          in: query
+          example: 123e4567-e89b-12d3-a456-426614174000
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+        - description: Data inicio do intervalo de busca
+          name: data_inicio
+          in: query
+          required: true
+          example: '2026-08-15'
+          schema:
+            type: string
+        - description: Data fim do intervalo de busca
+          name: data_fim
+          in: query
+          required: true
+          example: '2027-08-15'
+          schema:
+            type: string
+        - description: Tipos de pagamento
+          name: tipo_pagamento
+          in: query
+          example: BOLETO_BANCARIO
+          explode: true
+          schema:
+            type: array
+            items:
+              enum:
+                - BOLETO_BANCARIO
+                - CARTAO_CREDITO
+                - CARTAO_DEBITO
+                - CARTEIRA_DIGITAL
+                - CASHBACK
+                - CHEQUE
+                - CREDITO_LOJA
+                - CREDITO_VIRTUAL
+                - DEPOSITO_BANCARIO
+                - DINHEIRO
+                - OUTRO
+                - DEBITO_AUTOMATICO
+                - LINK_PAGAMENTO
+                - PIX_PAGAMENTO_INSTANTANEO
+                - COBRANCA_PIX
+                - PROGRAMA_FIDELIDADE
+                - SEM_PAGAMENTO
+                - TRANSFERENCIA_BANCARIA
+                - VALE_ALIMENTACAO
+                - VALE_COMBUSTIVEL
+                - VALE_REFEICAO
+              type: string
+        - description: Status dos contratos
+          name: status
+          in: query
+          example: ATIVO
+          schema:
+            type: string
+            enum:
+              - TODOS
+              - ATIVO
+              - INATIVO
+              - PROXIMO_AO_VENCIMENTO
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContratosFiltroResposta'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+    post:
+      security:
+        - BearerAuth: []
+      description: >-
+        Permite criar um novo contrato, definindo as informações necessárias
+        para configuração da recorrência, como período, produtos/serviços
+        vinculados e demais parâmetros do contrato.
+      tags:
+        - v1
+      summary: Criar um novo contrato
+      operationId: criarContrato
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CriarContrato'
+        description: Dados para criar o contrato
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResumoCriacaoContrato'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+  /v1/contratos/proximo-numero:
+    get:
+      security:
+        - BearerAuth: []
+      description: >-
+        Permite consultar o próximo número de contrato a ser utilizado no
+        momento da criação.
+      tags:
+        - v1
+      summary: Retornar o próximo número do contrato disponível
+      operationId: obterProximoNumeroContrato
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: integer
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+  /v1/contratos/{id}:
+    get:
+      security:
+        - BearerAuth: []
+      description: >-
+        Recupera os detalhes de um contrato específico por ID. Útil quando
+        quiser exibir ou sincronizar todos os dados de um contrato específico.
+      tags:
+        - v1
+      summary: Retornar o contrato por id
+      operationId: obterContratoPorID
+      parameters:
+        - description: ID do contrato (UUID)
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContratoResumo'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+    delete:
+      security:
+        - BearerAuth: []
+      description: >-
+        Remove um contrato existente. O contrato será excluído permanentemente,
+        cancelando todas as vendas associadas (agendadas e efetivadas).
+        Contratos em reajuste de valor não podem ser removidos.
+      tags:
+        - v1
+      summary: Remover um contrato
+      operationId: removerContrato
+      parameters:
+        - description: ID do contrato (UUID)
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+  /v1/contratos/{id}/encerrar:
+    post:
+      security:
+        - BearerAuth: []
+      description: >-
+        Encerra um contrato ativo. O contrato será desativado e não poderá mais
+        gerar novas cobranças. Contratos que estão passando por reajuste de
+        valor não podem ser encerrados.
+      tags:
+        - v1
+      summary: Encerrar um contrato
+      operationId: encerrarContrato
+      parameters:
+        - description: ID do contrato (UUID)
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+tags:
+  - description: Operações relacionadas a orçamentos
+    name: v1
+servers:
+  - url: https://api-v2.contaazul.com
+components:
+  securitySchemes:
+    BearerAuth:
+      description: >-
+        Digite **'Bearer &lt;JWT&gt;'**, onde JWT é o access_token recebido no
+        login (passo 2 do fluxo de autenticação).
+      type: apiKey
+      name: Authorization
+      in: header
+  schemas:
+    ClienteContrato:
+      description: Dados do cliente vinculado ao contrato
+      type: object
+      properties:
+        id:
+          description: ID do cliente
+          type: string
+          example: 123e4567-e89b-12d3-a456-426614174000
+        nome:
+          description: Nome do cliente
+          type: string
+          example: João da Silva
+    ClienteResumo:
+      description: Resumo dos dados do cliente vinculado ao contrato
+      type: object
+      properties:
+        id:
+          description: ID do cliente
+          type: string
+          example: 123e4567-e89b-12d3-a456-426614174000
+        nome:
+          description: Nome do cliente
+          type: string
+          example: João da Silva
+    ComposicaoValorResumo:
+      description: Resumo da composição de valores do contrato
+      type: object
+      properties:
+        desconto:
+          description: Valor do desconto aplicado
+          type: number
+          example: 200
+        frete:
+          description: Valor do frete
+          type: number
+          example: 50
+        valor_bruto:
+          description: Valor bruto do contrato
+          type: number
+          example: 1200
+        valor_impostos_servico:
+          description: Valor total dos impostos sobre o serviço
+          type: number
+          example: 100
+        valor_liquido:
+          description: Valor líquido do contrato
+          type: number
+          example: 1050
+    CondicaoPagamentoResumo:
+      description: Resumo das condições de pagamento do contrato
+      type: object
+      properties:
+        dia_vencimento:
+          description: Dia do mês para vencimento do pagamento
+          type: integer
+          example: 15
+        nome_conta_financeira:
+          description: Nome da conta financeira vinculada ao pagamento
+          type: string
+          example: Conta Corrente
+        observacoes_pagamento:
+          description: Observações sobre o pagamento
+          type: string
+          example: Pagamento mensal
+        tipo_pagamento:
+          description: Tipo de pagamento do contrato
+          allOf:
+            - $ref: '#/components/schemas/TipoDePagamento'
+          example: CARTAO_CREDITO
+    ConfiguracaoRecorrenciaResumo:
+      description: Resumo da configuração de recorrência do contrato
+      type: object
+      properties:
+        vigencia_restante:
+          description: Vigência restante do contrato
+          type: integer
+          example: 12
+        vigencia_total:
+          description: Vigência total do contrato
+          type: integer
+          example: 24
+    ContaFinanceiraContrato:
+      description: Conta financeira vinculada ao contrato
+      type: object
+      properties:
+        id:
+          description: ID da conta
+          type: string
+          example: b0ff3efe-a7fe-4432-81ac-62ca1085529b
+        tipo:
+          description: Tipo de conta
+          allOf:
+            - $ref: '#/components/schemas/TipoContaFinanceira'
+          example: CONTA_CORRENTE
+    ContratoResumo:
+      description: Resumo do modelo que representa um contrato de venda recorrente
+      type: object
+      properties:
+        cliente:
+          $ref: '#/components/schemas/ClienteResumo'
+        composicao_valor:
+          $ref: '#/components/schemas/ComposicaoValorResumo'
+        condicao_pagamento:
+          $ref: '#/components/schemas/CondicaoPagamentoResumo'
+        configuracao_recorrencia:
+          $ref: '#/components/schemas/ConfiguracaoRecorrenciaResumo'
+        data_proxima_emissao:
+          description: Data da próxima emissão
+          type: string
+          example: '2026-09-15'
+        data_proximo_vencimento:
+          description: Data do próximo vencimento
+          type: string
+          example: '2026-09-15'
+        data_ultima_emissao:
+          description: Data da última emissão
+          type: string
+          example: '2026-08-15'
+        id:
+          description: ID do contrato
+          type: string
+          example: 123e4567-e89b-12d3-a456-426614174000
+        id_proxima_venda_agendada:
+          description: ID da próxima venda agendada
+          type: string
+          example: 123e4567-e89b-12d3-a456-426614174002
+        id_ultima_venda_confirmada:
+          description: ID da última venda confirmada
+          type: string
+          example: 123e4567-e89b-12d3-a456-426614174001
+        local_prestacao_servico:
+          $ref: '#/components/schemas/LocalPrestacaoServicoResumo'
+        observacoes:
+          description: Observações adicionais sobre o contrato
+          type: string
+          example: Contrato de venda recorrente para serviços de consultoria.
+        status:
+          description: Status do contrato
+          allOf:
+            - $ref: '#/components/schemas/Status'
+          example: ATIVO
+        termos:
+          $ref: '#/components/schemas/TermosResumo'
+        vendedor:
+          $ref: '#/components/schemas/VendedorResumo'
+    ContratosFiltroResposta:
+      description: Resposta paginada da listagem de contratos
+      type: object
+      properties:
+        itens:
+          description: Lista de contratos
+          type: array
+          items:
+            $ref: '#/components/schemas/ItemContrato'
+        itens_totais:
+          description: Total de contratos encontrados
+          type: integer
+          example: 1
+    CriarComposicaoValorContrato:
+      description: >-
+        Modelo de criação da composição de valor do contrato, incluindo frete e
+        desconto
+      type: object
+      properties:
+        desconto:
+          description: Detalhes do desconto aplicado à venda
+          allOf:
+            - $ref: '#/components/schemas/CriarDescontoContrato'
+        frete:
+          description: Valor de frete
+          type: number
+          minimum: 0
+          example: 15
+    CriarCondicaoPagamentoContrato:
+      description: Modelo de condição de pagamento para criação de contrato
+      type: object
+      required:
+        - dia_vencimento
+        - primeira_data_vencimento
+        - tipo_pagamento
+      properties:
+        dia_vencimento:
+          description: Dia do mês para vencimento do pagamento (1-31)
+          type: integer
+          maximum: 31
+          minimum: 1
+          example: 10
+        id_conta_financeira:
+          description: ID da conta financeira associada ao pagamento
+          type: string
+          example: 123e4567-e89b-12d3-a456-426614174000
+        primeira_data_vencimento:
+          description: Data do primeiro vencimento no formato YYYY-MM-DD
+          type: string
+          example: '2025-01-10'
+        tipo_pagamento:
+          description: Forma de pagamento
+          allOf:
+            - $ref: '#/components/schemas/TipoDePagamento'
+          example: BOLETO_BANCARIO
+    CriarContrato:
+      description: Modelo de criação de contrato
+      type: object
+      required:
+        - condicao_pagamento
+        - id_cliente
+        - itens
+        - termos
+      properties:
+        composicao_de_valor:
+          description: Composição dos valores da venda, incluindo frete e desconto
+          allOf:
+            - $ref: '#/components/schemas/CriarComposicaoValorContrato'
+        condicao_pagamento:
+          description: Condição de pagamento do contrato
+          allOf:
+            - $ref: '#/components/schemas/CriarCondicaoPagamentoContrato'
+        id_categoria:
+          description: ID da categoria
+          type: string
+          example: 123e4567-e89b-12d3-a456-426614174000
+        id_centro_custo:
+          description: ID do centro de custo
+          type: string
+          example: 123e4567-e89b-12d3-a456-426614174000
+        id_cliente:
+          description: ID do cliente associado ao contrato
+          type: string
+          example: 123e4567-e89b-12d3-a456-426614174000
+        id_vendedor:
+          description: ID do vendedor responsável pelo contrato
+          type: string
+          example: 123e4567-e89b-12d3-a456-426614174000
+        itens:
+          description: Lista de itens do contrato
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/CriarItemVendaContrato'
+        observacoes:
+          description: Observações gerais sobre o contrato
+          type: string
+          example: Cliente solicitou entrega rápida
+        observacoes_pagamento:
+          description: Observações específicas para a emissão da nota fiscal
+          type: string
+          example: Pagamento realizado em 3 parcelas
+        termos:
+          description: Termos de recorrência da venda agendada
+          allOf:
+            - $ref: '#/components/schemas/CriarTermosContrato'
+    CriarDescontoContrato:
+      description: Modelo de criação de desconto aplicado ao contrato
+      type: object
+      required:
+        - tipo
+        - valor
+      properties:
+        tipo:
+          description: Tipo de desconto (VALOR ou PORCENTAGEM)
+          allOf:
+            - $ref: '#/components/schemas/TipoDeDesconto'
+          example: VALOR
+        valor:
+          description: Valor do desconto
+          type: number
+          minimum: 0
+          example: 5
+    CriarItemVendaContrato:
+      description: Modelo de criação de item de venda para contrato
+      type: object
+      required:
+        - id
+        - quantidade
+        - valor
+      properties:
+        descricao:
+          description: Descrição do item da venda
+          type: string
+          maxLength: 500
+          example: Produto A
+        id:
+          description: ID do item da venda
+          type: string
+          example: 123e4567-e89b-12d3-a456-426614174000
+        quantidade:
+          description: Quantidade do item da venda
+          type: number
+          minimum: 0
+          example: 2
+        valor:
+          description: Valor do item da venda
+          type: number
+          minimum: 0
+          example: 100.5
+        valor_custo:
+          description: >-
+            Valor de custo do item da venda                        // Itens do
+            kit, caso o item seja um kit
+          type: number
+          example: 80
+    CriarTermosContrato:
+      description: Modelo de termos para criação de contrato
+      type: object
+      required:
+        - data_fim
+        - data_inicio
+        - dia_emissao_venda
+        - intervalo_frequencia
+        - numero
+        - tipo_expiracao
+        - tipo_frequencia
+      properties:
+        data_fim:
+          description: >-
+            Data de fim da recorrência no formato YYYY-MM-DD; não pode ser
+            anterior à data de início
+          type: string
+          example: '2025-12-31'
+        data_inicio:
+          description: Data de início da recorrência no formato YYYY-MM-DD
+          type: string
+          example: '2025-01-01'
+        dia_emissao_venda:
+          description: Dia do mês em que a venda será emitida
+          type: integer
+          maximum: 31
+          minimum: 1
+          example: 5
+        intervalo_frequencia:
+          description: Intervalo de frequência entre as recorrências (1-60)
+          type: integer
+          maximum: 60
+          minimum: 1
+          example: 1
+        numero:
+          description: Número do contrato
+          type: integer
+          minimum: 1
+          example: 12
+        tipo_expiracao:
+          description: Tipo de expiração da recorrência. Aceita DATA ou NUNCA
+          allOf:
+            - $ref: '#/components/schemas/TipoExpiracaoRecorrencia'
+          example: DATA
+        tipo_frequencia:
+          description: Tipo de frequência da recorrência. Aceita MENSAL ou ANUAL
+          allOf:
+            - $ref: '#/components/schemas/TipoFrequenciaRecorrencia'
+          example: MENSAL
+    ErroAPI:
+      description: Modelo de resposta para erros da API
+      type: object
+      properties:
+        error:
+          description: Mensagem de erro
+          type: string
+          example: Mensagem de erro detalhada
+    ItemContrato:
+      description: Dados resumidos de um contrato recorrente
+      type: object
+      properties:
+        cliente:
+          description: Dados do cliente
+          allOf:
+            - $ref: '#/components/schemas/ClienteContrato'
+        conta_financeira:
+          description: Conta financeira vinculada
+          allOf:
+            - $ref: '#/components/schemas/ContaFinanceiraContrato'
+        data_inicio:
+          description: Data de início do contrato
+          type: string
+          example: '2026-08-15'
+        id:
+          description: ID do contrato
+          type: string
+          example: 123e4567-e89b-12d3-a456-426614174000
+        numero:
+          description: Número do contrato
+          type: integer
+          example: 1014
+        proximo_vencimento:
+          description: Data do próximo vencimento
+          type: string
+          example: '2026-08-15'
+        status:
+          description: Status do contrato
+          allOf:
+            - $ref: '#/components/schemas/Status'
+          example: ATIVO
+        termos:
+          description: Termos de vigência
+          allOf:
+            - $ref: '#/components/schemas/TermosContrato'
+        tipo_pagamento:
+          description: Tipo de pagamento
+          allOf:
+            - $ref: '#/components/schemas/TipoDePagamento'
+          example: BOLETO_BANCARIO
+        total:
+          description: Valor total do contrato
+          type: number
+          example: 1000
+        total_proximo_vencimento:
+          description: Valor da próxima cobrança
+          type: number
+          example: 1000
+    LocalPrestacaoServicoResumo:
+      description: Resumo do local de prestação de serviço do contrato
+      type: object
+      properties:
+        nome:
+          description: Nome do local de prestação de serviço
+          type: string
+          example: Escritório Central
+    PeriodoDeAgendamento:
+      description: Enum de período de agendamento
+      type: string
+      enum:
+        - MENSAL
+        - SEMANAL
+        - ANUAL
+      x-enum-varnames:
+        - SCHEDULED_PERIOD_MONTH
+        - SCHEDULED_PERIOD_WEEK
+        - SCHEDULED_PERIOD_YEAR
+    ResumoCriacaoContrato:
+      description: Resumo de criação de contrato
+      type: object
+      properties:
+        id:
+          description: ID do contrato
+          type: string
+          example: 550e8400-e29b-41d4-a716-446655440000
+        id_legado:
+          description: ID legado do contrato
+          type: integer
+          example: 12345
+        id_venda:
+          description: ID da venda gerada pelo contrato
+          type: string
+          example: 123e4567-e89b-12d3-a456-426614174000
+    Status:
+      description: Enum de status do contrato
+      type: string
+      enum:
+        - ATIVO
+        - INATIVO
+        - DELETADO
+      x-enum-varnames:
+        - STATUS_ENABLED
+        - STATUS_DISABLED
+        - STATUS_DELETED
+    TermosContrato:
+      description: Termos de vigência do contrato
+      type: object
+      properties:
+        data_fim:
+          description: Data de término do contrato
+          type: string
+          example: '2026-10-21'
+        tipo_expiracao:
+          description: Tipo de expiração
+          allOf:
+            - $ref: '#/components/schemas/TipoDeExpiracao'
+          example: DATA
+        vigencia_atual:
+          description: Número de cobranças realizadas
+          type: integer
+          example: 6
+        vigencia_total:
+          description: Total de cobranças previstas
+          type: integer
+          example: 12
+    TermosResumo:
+      description: Resumo dos termos do contrato
+      type: object
+      properties:
+        data_fim:
+          description: Data de término do contrato
+          type: string
+          example: '2026-10-21'
+        data_inicio:
+          description: Data de início do contrato
+          type: string
+          example: '2026-08-15'
+        dia_emissao_venda:
+          description: Dia do mês para emissão da venda
+          type: integer
+          example: 15
+        intervalo_frequencia:
+          description: 'Intervalo entre as cobranças (ex: a cada 1 mês)'
+          type: integer
+          example: 1
+        numero:
+          description: Número do contrato
+          type: integer
+          example: 1
+        tipo_expiracao:
+          description: Tipo de expiração do contrato
+          allOf:
+            - $ref: '#/components/schemas/TipoDeExpiracao'
+          example: DATA
+        tipo_frequencia:
+          description: Tipo de frequência de cobrança
+          allOf:
+            - $ref: '#/components/schemas/PeriodoDeAgendamento'
+          example: MENSAL
+    TipoContaFinanceira:
+      description: Enum de tipo de conta financeira
+      type: string
+      enum:
+        - APLICACAO
+        - CAIXINHA
+        - CONTA_CORRENTE
+        - CARTAO_CREDITO
+        - INVESTIMENTO
+        - OUTROS
+        - MEIOS_RECEBIMENTO
+        - POUPANCA
+        - COBRANCAS_CONTA_AZUL
+        - RECEBA_FACIL_CARTAO
+      x-enum-varnames:
+        - ACCOUNT_TYPE_APPLICATION
+        - ACCOUNT_TYPE_CASH
+        - ACCOUNT_TYPE_CHECKING
+        - ACCOUNT_TYPE_CREDIT_CARD
+        - ACCOUNT_TYPE_INVESTMENT
+        - ACCOUNT_TYPE_OTHERS
+        - ACCOUNT_TYPE_PAYMENTS_SYSTEM
+        - ACCOUNT_TYPE_SAVINGS
+        - ACCOUNT_TYPE_CA_PAYMENTS
+        - ACCOUNT_TYPE_CA_PAYMENTS_CREDIT
+    TipoDeDesconto:
+      description: Enum de tipo de desconto
+      type: string
+      enum:
+        - PORCENTAGEM
+        - VALOR
+      x-enum-varnames:
+        - DISCOUNT_TYPE_PERCENT
+        - DISCOUNT_TYPE_VALUE
+    TipoDeExpiracao:
+      description: Enum de tipo de expiração
+      type: string
+      enum:
+        - DATA
+        - VEZES
+        - NUNCA
+      x-enum-varnames:
+        - EXPIRATION_TYPE_DATE
+        - EXPIRATION_TYPE_TIMES
+        - EXPIRATION_TYPE_FOREVER
+    TipoDePagamento:
+      description: Enum de tipo de pagamento
+      type: string
+      enum:
+        - BOLETO_BANCARIO
+        - CARTAO_CREDITO
+        - CARTAO_DEBITO
+        - CARTEIRA_DIGITAL
+        - CASHBACK
+        - CHEQUE
+        - CREDITO_LOJA
+        - CREDITO_VIRTUAL
+        - DEPOSITO_BANCARIO
+        - DINHEIRO
+        - OUTRO
+        - DEBITO_AUTOMATICO
+        - LINK_PAGAMENTO
+        - PIX_PAGAMENTO_INSTANTANEO
+        - COBRANCA_PIX
+        - PROGRAMA_FIDELIDADE
+        - SEM_PAGAMENTO
+        - TRANSFERENCIA_BANCARIA
+        - VALE_ALIMENTACAO
+        - VALE_COMBUSTIVEL
+        - VALE_PRESENTE
+        - VALE_REFEICAO
+      x-enum-varnames:
+        - PAYMENT_TYPE_BANKING_BILLET
+        - PAYMENT_TYPE_CREDIT_CARD
+        - PAYMENT_TYPE_DEBIT_CARD
+        - PAYMENT_TYPE_DIGITAL_WALLET
+        - PAYMENT_TYPE_CASHBACK
+        - PAYMENT_TYPE_CHECK
+        - PAYMENT_TYPE_STORE_CREDIT
+        - PAYMENT_TYPE_VIRTUAL_CREDIT
+        - PAYMENT_TYPE_BANKING_DEPOSIT
+        - PAYMENT_TYPE_CASH
+        - PAYMENT_TYPE_OTHER
+        - PAYMENT_TYPE_AUTOMATIC_DEBIT
+        - PAYMENT_TYPE_PAYMENT_LINK
+        - PAYMENT_TYPE_INSTANT_PAYMENT
+        - PAYMENT_TYPE_PIX_CHARGE
+        - PAYMENT_TYPE_FIDELITY_PROGRAM
+        - PAYMENT_TYPE_WITHOUT_PAYMENT
+        - PAYMENT_TYPE_BANKING_TRANSFER
+        - PAYMENT_TYPE_FOOD_VOUCHER
+        - PAYMENT_TYPE_FUEL_VOUCHER
+        - PAYMENT_TYPE_GIFT_VOUCHER
+        - PAYMENT_TYPE_MEAL_VOUCHER
+    TipoExpiracaoRecorrencia:
+      description: Enum de tipo de expiração de recorrência
+      type: string
+      enum:
+        - DATA
+        - NUNCA
+      x-enum-varnames:
+        - RECURRENCE_EXPIRATION_TYPE_DATE
+        - RECURRENCE_EXPIRATION_TYPE_FOREVER
+    TipoFrequenciaRecorrencia:
+      description: Enum de tipo de frequência de recorrência
+      type: string
+      enum:
+        - MENSAL
+        - ANUAL
+      x-enum-varnames:
+        - RECURRENCE_FREQUENCY_TYPE_MONTH
+        - RECURRENCE_FREQUENCY_TYPE_YEAR
+    VendedorResumo:
+      description: Resumo dos dados do vendedor responsável pelo contrato
+      type: object
+      properties:
+        id:
+          description: ID do vendedor
+          type: string
+          example: 123e4567-e89b-12d3-a456-426614174000
+        nome:
+          description: Nome do vendedor
+          type: string
+          example: Maria Oliveira

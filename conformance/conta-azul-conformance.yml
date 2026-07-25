@@ -1,0 +1,32 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/*.yml + https://developers.contaazul.com/auth
+note: >-
+  Cross-cutting standards conformance derived from the OpenAPI specs and the
+  documented OAuth2/OIDC authorization flow. Conta Azul is a Brazilian
+  accounting/ERP SaaS; no card-acquiring or open-banking (PSD2) surface is
+  present in the published APIs.
+standards:
+- id: oauth2
+  conforms: true
+  evidence: Authorization Code flow documented on auth.contaazul.com (AWS Cognito).
+- id: oidc
+  conforms: true
+  evidence: openid + profile scopes on the authorization request.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: Errors are plain application/json bodies, not application/problem+json.
+- id: pagination
+  conforms: true
+  evidence: List endpoints use offset/page params (pagina, tamanho_pagina).
+- id: idempotency
+  conforms: false
+  evidence: No idempotency-key header/parameter documented or in the OpenAPI.
+- id: json-api
+  conforms: false
+- id: fhir
+  conforms: false
+- id: fapi
+  conforms: false
+- id: psd2
+  conforms: false

@@ -1,0 +1,14 @@
+{
+  "provider": "conta-azul",
+  "sources": [
+    "conta-azul-v1-api-openapi.yml"
+  ],
+  "outputs": [
+    "conta-azul-v1-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

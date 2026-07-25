@@ -1,0 +1,13 @@
+{
+  "issuer": "https://api-v2.contaazul.com",
+  "authorization_endpoint": "https://api-v2.contaazul.com/oauth/authorize",
+  "token_endpoint": "https://api-v2.contaazul.com/oauth/token",
+  "jwks_uri": "https://api-v2.contaazul.com/.well-known/jwks.json",
+  "userinfo_endpoint": "https://api-v2.contaazul.com/v1/pessoas/conta-conectada",
+  "response_types_supported": ["code"],
+  "grant_types_supported": ["authorization_code", "refresh_token"],
+  "subject_types_supported": ["public"],
+  "id_token_signing_alg_values_supported": ["RS256"],
+  "scopes_supported": ["openid", "profile", "email"],
+  "token_endpoint_auth_methods_supported": ["client_secret_basic"]
+}

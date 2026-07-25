@@ -1,0 +1,166 @@
+generated: '2026-07-18'
+method: derived
+status: candidate
+source: openapi/*.yml operations
+note: No official Conta Azul MCP server was found (Dec 2025 search). Candidate tool
+  list derived one-per-operation from the published OpenAPI; not an official server.
+server:
+  name: conta-azul
+  transport: http
+tools:
+- name: criarBaixa
+  description: Criar uma nova baixa
+  source_operation: openapi/conta-azul-acquittance-openapi.yml#criarBaixa
+- name: listarBaixas
+  description: Retornar as baixas pelo id da parcela
+  source_operation: openapi/conta-azul-acquittance-openapi.yml#listarBaixas
+- name: atualizarBaixa
+  description: Atualizar parcialmente uma baixa por id
+  source_operation: openapi/conta-azul-acquittance-openapi.yml#atualizarBaixa
+- name: deletarBaixa
+  description: Deletar baixa por id
+  source_operation: openapi/conta-azul-acquittance-openapi.yml#deletarBaixa
+- name: buscarBaixa
+  description: Retornar a baixa por id
+  source_operation: openapi/conta-azul-acquittance-openapi.yml#buscarBaixa
+- name: buscarCobrancaPorId
+  description: Retornar a cobrança por id
+  source_operation: openapi/conta-azul-charge-openapi.yml#buscarCobrancaPorId
+- name: deletarCobrancaPorId
+  description: Deletar cobrança por id
+  source_operation: openapi/conta-azul-charge-openapi.yml#deletarCobrancaPorId
+- name: criarCobranca
+  description: Criar uma nova cobrança
+  source_operation: openapi/conta-azul-charge-openapi.yml#criarCobranca
+- name: criarContrato
+  description: Criar um novo contrato
+  source_operation: openapi/conta-azul-contracts-openapi.yml#criarContrato
+- name: listarContratos
+  description: Retornar os contratos por filtro
+  source_operation: openapi/conta-azul-contracts-openapi.yml#listarContratos
+- name: getNextContractNumber
+  description: Retornar o próximo número do contrato disponível
+  source_operation: openapi/conta-azul-contracts-openapi.yml#getNextContractNumber
+- name: searchCostCenters
+  description: Retornar os centros de custo por filtro
+  source_operation: openapi/conta-azul-financial-openapi.yml#searchCostCenters
+- name: createCostCenter
+  description: Criar um novo centro de custo
+  source_operation: openapi/conta-azul-financial-openapi.yml#createCostCenter
+- name: getInstallmentsByEventId
+  description: Retornar as parcelas pelo id do evento financeiro
+  source_operation: openapi/conta-azul-financial-openapi.yml#getInstallmentsByEventId
+- name: searchCategories
+  description: Retornar as categorias por filtro
+  source_operation: openapi/conta-azul-financial-openapi.yml#searchCategories
+- name: getDefaultCategoryConfig
+  description: Retornar a configuração de de-para de categorias
+  source_operation: openapi/conta-azul-financial-openapi.yml#getDefaultCategoryConfig
+- name: searchDreCategories
+  description: Retornar as categorias DRE
+  source_operation: openapi/conta-azul-financial-openapi.yml#searchDreCategories
+- name: searchFinancialAccounts
+  description: Retornar as contas financeiras por filtro
+  source_operation: openapi/conta-azul-financial-openapi.yml#searchFinancialAccounts
+- name: searchBalanceByFinancialAccountId
+  description: Retornar o saldo atual pelo id da conta financeira
+  source_operation: openapi/conta-azul-financial-openapi.yml#searchBalanceByFinancialAccountId
+- name: searchAccountingExportTransfers
+  description: Retornar as transferências entre contas financeiras por filtro
+  source_operation: openapi/conta-azul-financial-openapi.yml#searchAccountingExportTransfers
+- name: createReceivableFinancialEvent
+  description: Criar um novo evento financeiro de contas a receber
+  source_operation: openapi/conta-azul-financial-openapi.yml#createReceivableFinancialEvent
+- name: searchInstallmentsToReceiveByFilter
+  description: Retornar as receitas por filtro
+  source_operation: openapi/conta-azul-financial-openapi.yml#searchInstallmentsToReceiveByFilter
+- name: createPayableFinancialEvent
+  description: Criar um novo evento financeiro de contas a pagar
+  source_operation: openapi/conta-azul-financial-openapi.yml#createPayableFinancialEvent
+- name: searchInstallmentsToPayByFilter
+  description: Retornar as despesas por filtro
+  source_operation: openapi/conta-azul-financial-openapi.yml#searchInstallmentsToPayByFilter
+- name: getInstallmentById
+  description: Retornar a parcela por id
+  source_operation: openapi/conta-azul-financial-openapi.yml#getInstallmentById
+- name: updateInstallment
+  description: Atualizar parcialmente uma parcela por id
+  source_operation: openapi/conta-azul-financial-openapi.yml#updateInstallment
+- name: getAlteredFinancialEvents
+  description: Retornar os IDs dos eventos financeiros alterados em um período
+  source_operation: openapi/conta-azul-financial-openapi.yml#getAlteredFinancialEvents
+- name: getInitialBalancesOfFinancialAccounts
+  description: Retornar os saldos iniciais das contas financeiras
+  source_operation: openapi/conta-azul-financial-openapi.yml#getInitialBalancesOfFinancialAccounts
+- name: getProductsByFilter
+  description: Obter produtos por filtro
+  source_operation: openapi/conta-azul-inventory-openapi.yml#getProductsByFilter
+- name: createProduct
+  description: Criar um novo produto
+  source_operation: openapi/conta-azul-inventory-openapi.yml#createProduct
+- name: deleteProduct
+  description: Excluir um produto existente
+  source_operation: openapi/conta-azul-inventory-openapi.yml#deleteProduct
+- name: deactivateProducts
+  description: Desativar produtos
+  source_operation: openapi/conta-azul-inventory-openapi.yml#deactivateProducts
+- name: listarOrcamentosPorFiltros
+  description: Retornar orçamentos por filtros
+  source_operation: openapi/conta-azul-proposal-openapi.yml#listarOrcamentosPorFiltros
+- name: criarOrcamento
+  description: Criar um orçamento
+  source_operation: openapi/conta-azul-proposal-openapi.yml#criarOrcamento
+- name: excluirOrcamentosEmLote
+  description: Excluir orçamentos em lote
+  source_operation: openapi/conta-azul-proposal-openapi.yml#excluirOrcamentosEmLote
+- name: obterOrcamentoPorID
+  description: Retornar o orçamento por ID
+  source_operation: openapi/conta-azul-proposal-openapi.yml#obterOrcamentoPorID
+- name: buscarProtocoloPorId
+  description: Retornar o protocolo por id
+  source_operation: openapi/conta-azul-protocol-openapi.yml#buscarProtocoloPorId
+- name: listVendedores
+  description: Retornar os vendedores
+  source_operation: openapi/conta-azul-sales-openapi.yml#listVendedores
+- name: getVendaById
+  description: Retornar a venda por id
+  source_operation: openapi/conta-azul-sales-openapi.yml#getVendaById
+- name: editSale
+  description: Atualizar uma venda por id
+  source_operation: openapi/conta-azul-sales-openapi.yml#editSale
+- name: searchVendas
+  description: Retornar as vendas por filtro
+  source_operation: openapi/conta-azul-sales-openapi.yml#searchVendas
+- name: createVenda
+  description: Criar uma nova venda
+  source_operation: openapi/conta-azul-sales-openapi.yml#createVenda
+- name: printVendaPdf
+  description: Retornar o PDF de uma venda
+  source_operation: openapi/conta-azul-sales-openapi.yml#printVendaPdf
+- name: deleteVendasBatch
+  description: Excluir vendas em lote
+  source_operation: openapi/conta-azul-sales-openapi.yml#deleteVendasBatch
+- name: getVendaItens
+  description: Retornar os itens de uma venda pelo id da venda
+  source_operation: openapi/conta-azul-sales-openapi.yml#getVendaItens
+- name: getNextVendaNumber
+  description: Retornar o próximo número de venda disponível
+  source_operation: openapi/conta-azul-sales-openapi.yml#getNextVendaNumber
+- name: listarContratos
+  description: Retornar os contratos por filtro
+  source_operation: openapi/conta-azul-scheduled-sales-openapi.yml#listarContratos
+- name: criarContrato
+  description: Criar um novo contrato
+  source_operation: openapi/conta-azul-scheduled-sales-openapi.yml#criarContrato
+- name: obterProximoNumeroContrato
+  description: Retornar o próximo número do contrato disponível
+  source_operation: openapi/conta-azul-scheduled-sales-openapi.yml#obterProximoNumeroContrato
+- name: obterContratoPorID
+  description: Retornar o contrato por id
+  source_operation: openapi/conta-azul-scheduled-sales-openapi.yml#obterContratoPorID
+- name: removerContrato
+  description: Remover um contrato
+  source_operation: openapi/conta-azul-scheduled-sales-openapi.yml#removerContrato
+- name: encerrarContrato
+  description: Encerrar um contrato
+  source_operation: openapi/conta-azul-scheduled-sales-openapi.yml#encerrarContrato

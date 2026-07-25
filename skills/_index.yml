@@ -1,0 +1,21 @@
+generated: '2026-07-18'
+method: generated
+note: >-
+  Packaged Agent Skills for Conta Azul's Nova API (api-v2.contaazul.com). Each
+  step is grounded in a real operationId verified against the published OpenAPI.
+  Auth for every skill is OAuth 2.0 Authorization Code -> Bearer JWT
+  (authentication/conta-azul-authentication.yml). No official provider-published
+  skills/AGENTS.md were found.
+skills:
+- file: conta-azul-record-and-settle-receivable.md
+  name: Record a receivable and settle it
+  api: openapi/conta-azul-financial-openapi.yml
+  operations: [createReceivableFinancialEvent, searchInstallmentsToReceiveByFilter, criarBaixa]
+- file: conta-azul-create-sale.md
+  name: Look up a product and create a sale
+  api: openapi/conta-azul-sales-openapi.yml
+  operations: [getProductsByFilter, createVenda, getVendaById, printVendaPdf]
+- file: conta-azul-issue-charge.md
+  name: Issue a charge and check its status
+  api: openapi/conta-azul-charge-openapi.yml
+  operations: [criarCobranca, buscarCobrancaPorId]

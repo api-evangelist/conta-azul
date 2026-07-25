@@ -1,0 +1,756 @@
+openapi: 3.0.0
+info:
+  description: Operações relacionadas a orçamentos
+  title: Orçamentos
+  contact: {}
+  version: v1
+paths:
+  /v1/orcamentos:
+    get:
+      security:
+        - BearerAuth: []
+      description: Recupera a lista de orçamentos com base nos filtros informados.
+      tags:
+        - v1
+      summary: Retornar orçamentos por filtros
+      operationId: listarOrcamentosPorFiltros
+      parameters:
+        - description: Número da página
+          name: pagina
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - description: Tamanho da página
+          name: tamanho_pagina
+          in: query
+          schema:
+            type: integer
+            default: 10
+        - description: >-
+            Campo para ordenação ascendente. Se informado ele desconsidera o
+            valor do campo_ordenado_descendente. É possível ordenar pela data da
+            venda (DATA), pelo número da venda (NUMERO) ou pelo nome do cliente
+            (CLIENTE)
+          name: campo_ordenado_ascendente
+          in: query
+          example: DATA
+          schema:
+            type: string
+            enum:
+              - DATA
+              - NUMERO
+              - CLIENTE
+        - description: >-
+            Campo para ordenação descendente. Se este campo for utilizado, o
+            campo campo_ordenado_ascendente não deverá ser informado. É possível
+            ordenar pela data da venda (DATA), pelo número da venda (NUMERO) ou
+            pelo nome do cliente (CLIENTE)
+          name: campo_ordenado_descendente
+          in: query
+          example: DATA
+          schema:
+            type: string
+            enum:
+              - DATA
+              - NUMERO
+              - CLIENTE
+        - description: Termo de busca
+          name: termo_busca
+          in: query
+          schema:
+            type: string
+        - description: 'Data inicial (formato: YYYY-MM-DD)'
+          name: data_inicio
+          in: query
+          schema:
+            type: string
+        - description: 'Data final (formato: YYYY-MM-DD)'
+          name: data_fim
+          in: query
+          schema:
+            type: string
+        - description: 'Data de criação inicial (formato: YYYY-MM-DD)'
+          name: data_criacao_de
+          in: query
+          schema:
+            type: string
+        - description: 'Data de criação final (formato: YYYY-MM-DD)'
+          name: data_criacao_ate
+          in: query
+          schema:
+            type: string
+        - description: 'Data de alteração inicial (formato: YYYY-MM-DDThh:mm:ss)'
+          name: data_alteracao_de
+          in: query
+          schema:
+            type: string
+        - description: 'Data de alteração final (formato: YYYY-MM-DDThh:mm:ss)'
+          name: data_alteracao_ate
+          in: query
+          schema:
+            type: string
+        - description: IDs dos vendedores (UUID)
+          name: ids_vendedores
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+        - description: IDs dos clientes (UUID)
+          name: ids_clientes
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+        - description: IDs das naturezas de operação (UUID)
+          name: ids_natureza_operacao
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+        - description: IDs das categorias (UUID)
+          name: ids_categorias
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+        - description: IDs dos produtos (UUID)
+          name: ids_produtos
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+        - description: Situações dos orçamentos
+          name: situacoes
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              enum:
+                - ORCAMENTO
+                - ORCAMENTO_ACEITO
+                - ORCAMENTO_RECUSADO
+              type: string
+        - description: Origens dos orçamentos
+          name: origens
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+        - description: Números dos orçamentos
+          name: numeros
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: integer
+        - description: IDs legados dos donos
+          name: ids_legado_donos
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: integer
+        - description: IDs legados dos clientes
+          name: ids_legado_clientes
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: integer
+        - description: IDs legados dos produtos
+          name: ids_legado_produtos
+          in: query
+          explode: true
+          schema:
+            type: array
+            items:
+              type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListagemOrcamentosPorFiltro'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+    post:
+      security:
+        - BearerAuth: []
+      description: Cria um novo orçamento no sistema da Conta Azul.
+      tags:
+        - v1
+      summary: Criar um orçamento
+      operationId: criarOrcamento
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CriarOrcamento'
+        description: Dados do orçamento a ser criado
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResumoCriacaoOrcamento'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+    delete:
+      security:
+        - BearerAuth: []
+      description: >-
+        Permite excluir vários orçamentos de uma vez. Útil durante
+        sincronizações ou processos de limpeza de dados.
+      tags:
+        - v1
+      summary: Excluir orçamentos em lote
+      operationId: excluirOrcamentosEmLote
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExclusaoLoteOrcamento'
+        description: IDs dos orçamentos a serem excluídos
+        required: true
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+  /v1/orcamentos/{id}:
+    get:
+      security:
+        - BearerAuth: []
+      description: >-
+        Recupera os detalhes de um orçamento específico por ID. Útil quando
+        quiser exibir ou sincronizar todos os dados de um orçamento específico.
+      tags:
+        - v1
+      summary: Retornar o orçamento por ID
+      operationId: obterOrcamentoPorID
+      parameters:
+        - description: ID do orçamento (UUID)
+          name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Orcamento'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErroAPI'
+tags:
+  - description: Operações relacionadas a contratos
+    name: v1
+servers:
+  - url: https://api-v2.contaazul.com
+components:
+  securitySchemes:
+    BearerAuth:
+      description: >-
+        Digite **'Bearer &lt;JWT&gt;'**, onde JWT é o access_token recebido no
+        login (passo 2 do fluxo de autenticação).
+      type: apiKey
+      name: Authorization
+      in: header
+  schemas:
+    ClienteOrcamento:
+      type: object
+      properties:
+        email:
+          description: Email do cliente
+          type: string
+          example: exemplo@email.com
+        id:
+          description: id do cliente
+          type: string
+          example: 123e4567-e89b-12d3-a456-426614174000
+        nome:
+          description: Nome do cliente
+          type: string
+          example: João da Silva
+    ComposicaoValorOrcamento:
+      description: Modelo que representa a composição de valor de um orçamento
+      type: object
+      properties:
+        desconto:
+          description: Desconto aplicado ao orçamento
+          allOf:
+            - $ref: '#/components/schemas/DescontoOrcamento'
+        frete:
+          description: Valor do frete do orçamento
+          type: number
+          example: 5
+    CriarComposicaoValorOrcamento:
+      description: >-
+        Modelo de criação da composição de valor do orçamento, incluindo frete e
+        desconto
+      type: object
+      properties:
+        desconto:
+          description: Detalhes do desconto aplicado ao orçamento
+          allOf:
+            - $ref: '#/components/schemas/CriarDescontoOrcamento'
+        frete:
+          description: Valor do frete; deve ser maior ou igual a 0
+          type: number
+          minimum: 0
+          example: 5
+    CriarDescontoOrcamento:
+      description: Modelo de criação de desconto aplicado ao orçamento
+      type: object
+      properties:
+        tipo:
+          description: 'Tipo de desconto: VALOR ou PORCENTAGEM'
+          allOf:
+            - $ref: '#/components/schemas/TipoDeDesconto'
+          example: VALOR
+        valor:
+          description: Valor do desconto; se o tipo for PORCENTAGEM, deve ser entre 0 e 100
+          type: number
+          minimum: 0
+          example: 10
+    CriarItemOrcamento:
+      description: Modelo de criação de item do orçamento
+      type: object
+      required:
+        - id
+      properties:
+        id:
+          description: ID do item (produto ou serviço)
+          type: string
+          example: 623ef303-54df-4df6-b816-69416f29e093
+        quantidade:
+          description: Quantidade do item; deve ser maior que zero
+          type: number
+          example: 1
+        valor:
+          description: Valor unitário do item; deve ser maior que zero
+          type: number
+          example: 10
+        valor_custo:
+          description: Valor de custo do item
+          type: number
+          example: 8
+    CriarOrcamento:
+      description: Modelo de criação de orçamento
+      type: object
+      required:
+        - data_orcamento
+        - data_validade
+        - id_cliente
+        - itens
+      properties:
+        composicao_de_valor:
+          description: Composição dos valores do orçamento (frete e desconto)
+          allOf:
+            - $ref: '#/components/schemas/CriarComposicaoValorOrcamento'
+        data_orcamento:
+          description: Data do orçamento no formato YYYY-MM-DD
+          type: string
+          example: '2026-05-01'
+        data_validade:
+          description: >-
+            Data de validade no formato YYYY-MM-DD; não pode ser anterior à data
+            do orçamento
+          type: string
+          example: '2026-05-15'
+        descricao:
+          description: Descrição do orçamento
+          type: string
+          example: Proposta comercial referente ao mês de maio
+        id_cliente:
+          description: ID do cliente
+          type: string
+          example: 72f07482-bfda-44b0-a2e7-d8817bf950fa
+        id_vendedor:
+          description: >-
+            ID do vendedor; se não informado ou inexistente, será utilizado o
+            vendedor default
+          type: string
+          example: 8cc4ff03-e8c6-4d7e-8c41-4245f55f8612
+        itens:
+          description: Lista de itens do orçamento; deve conter ao menos um item
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/CriarItemOrcamento'
+        observacoes:
+          description: Observações gerais
+          type: string
+          example: Cliente solicitou entrega rápida
+        observacoes_pagamento:
+          description: Observações sobre o pagamento
+          type: string
+          example: Pagamento em até 30 dias após aprovação
+        previsao_entrega:
+          description: Previsão de entrega
+          type: string
+          example: Entrega em até 10 dias úteis
+    DescontoOrcamento:
+      description: Modelo que representa o desconto de um orçamento
+      type: object
+      properties:
+        tipo:
+          description: Tipo do desconto (VALOR ou PORCENTAGEM)
+          allOf:
+            - $ref: '#/components/schemas/TipoDeDesconto'
+          example: VALOR
+        valor:
+          description: Valor do desconto
+          type: number
+          example: 10
+    ErroAPI:
+      description: Modelo de resposta para erros da API
+      type: object
+      properties:
+        error:
+          description: Mensagem de erro
+          type: string
+          example: Mensagem de erro detalhada
+    ExclusaoLoteOrcamento:
+      description: Modelo de lista de ids para exclusão de orçamentos em lote
+      type: object
+      required:
+        - ids
+      properties:
+        ids:
+          description: Lista de ids dos orçamentos a serem excluídos
+          type: array
+          maxItems: 10
+          minItems: 1
+          items:
+            type: string
+          example:
+            - 7d7c9d4a-27aa-457e-b981-2df4c81970f7
+            - c44e254d-0040-46e2-bccf-6898d0981201
+    ItemOrcamento:
+      description: Modelo que representa um item de um orçamento
+      type: object
+      properties:
+        custo:
+          description: Custo do item do orçamento
+          type: number
+          example: 10
+        descricao:
+          description: Descrição do item do orçamento
+          type: string
+          example: 'Tipo de serviço: Manutenção Preventiva'
+        id:
+          description: ID do item do orçamento
+          type: string
+          example: 9a1960f7-87e6-48c7-b30d-0ae0f8d6292e
+        nome:
+          description: Nome do item do orçamento
+          type: string
+          example: Produto 01
+        quantidade:
+          description: Quantidade do item do orçamento
+          type: number
+          example: 1
+        tipo:
+          description: Tipo do item do orçamento (PRODUTO ou SERVICO)
+          allOf:
+            - $ref: '#/components/schemas/TipoItemOrcamento'
+          example: PRODUTO
+        valor:
+          description: Valor do item do orçamento
+          type: number
+          example: 10
+    ItemOrcamentoPorFiltro:
+      type: object
+      properties:
+        cliente:
+          description: Cliente
+          allOf:
+            - $ref: '#/components/schemas/ClienteOrcamento'
+        data_alteracao:
+          description: Data de alteração do orçamento (ISO 8601, São Paulo/GMT-3)
+          type: string
+          example: '2025-10-17T02:00:08.841'
+        data_criacao:
+          description: Data de criação do orçamento
+          type: string
+          example: '2025-05-16T17:51:04.63'
+        data_orcamento:
+          description: Data do orçamento
+          type: string
+          example: '2023-12-31'
+        id:
+          description: id do orçamento
+          type: string
+          example: 123e4567-e89b-12d3-a456-426614174000
+        id_contrato:
+          description: id do contrato
+          type: string
+          example: 123e4567-e89b-12d3-a456-426614174000
+        itens:
+          description: >-
+            Categoria dos itens incluídos no orçamento (PRODUTO, SERVICO, ou
+            PRODUTO_E_SERVICO)
+          allOf:
+            - $ref: '#/components/schemas/TipoDeItens'
+          example: PRODUTO
+        numero:
+          description: Número do orçamento
+          type: integer
+          example: 1001
+        origem:
+          description: Origem do orçamento
+          type: string
+          example: NFE
+        situacao:
+          description: Situação do orçamento
+          allOf:
+            - $ref: '#/components/schemas/TipoDeSituacaoOrcamento'
+          example: ORCAMENTO
+        total:
+          description: Total do orçamento
+          type: number
+          example: 1000
+        versao:
+          description: Versão do orçamento
+          type: integer
+          example: 1
+    ListagemOrcamentosPorFiltro:
+      description: Listagem de orçamentos com filtros
+      type: object
+      properties:
+        itens:
+          description: Lista de orçamentos
+          type: array
+          items:
+            $ref: '#/components/schemas/ItemOrcamentoPorFiltro'
+        total_itens:
+          description: Total de itens
+          type: integer
+          example: 10
+    Orcamento:
+      description: Modelo que representa um orçamento
+      type: object
+      properties:
+        composicao_de_valor:
+          description: Composição de valor do orçamento (frete e desconto)
+          allOf:
+            - $ref: '#/components/schemas/ComposicaoValorOrcamento'
+        data_orcamento:
+          description: Data do orçamento (YYYY-MM-DD)
+          type: string
+          example: '2026-05-01'
+        data_validade:
+          description: Data de validade do orçamento (YYYY-MM-DD)
+          type: string
+          example: '2026-05-01'
+        descricao:
+          description: Descrição do orçamento
+          type: string
+          example: Este orçamento refere-se a manutenção de serviço
+        id:
+          description: ID do orçamento
+          type: string
+          example: aff32f2a-2904-4918-a18b-96fa39ac435c
+        id_cliente:
+          description: ID do cliente do orçamento
+          type: string
+          example: 72f07482-bfda-44b0-a2e7-d8817bf950fa
+        id_vendedor:
+          description: ID do vendedor responsável pelo orçamento
+          type: string
+          example: 8cc4ff03-e8c6-4d7e-8c41-4245f55f8612
+        itens:
+          description: Itens do orçamento
+          type: array
+          items:
+            $ref: '#/components/schemas/ItemOrcamento'
+        numero:
+          description: Número do orçamento
+          type: integer
+          example: 1
+        observacoes:
+          description: Observações gerais do orçamento
+          type: string
+          example: Entrega Grátis
+        observacoes_pagamento:
+          description: Observações de pagamento do orçamento
+          type: string
+          example: Pagamento à vista
+        previsao_entrega:
+          description: Previsão de entrega do orçamento
+          type: string
+          example: À combinar
+        situacao:
+          description: Situação atual do orçamento
+          allOf:
+            - $ref: '#/components/schemas/TipoDeSituacaoOrcamento'
+          example: ORCAMENTO
+        versao:
+          description: Versão do orçamento
+          type: integer
+          example: 1
+    ResumoCriacaoOrcamento:
+      description: Modelo de resposta da criação de orçamento
+      type: object
+      properties:
+        id:
+          description: ID do orçamento criado
+          type: string
+          example: cae40e8a-8330-4469-9bf7-51cbf3e8e2cd
+    TipoDeDesconto:
+      description: Enum de tipo de desconto
+      type: string
+      enum:
+        - PORCENTAGEM
+        - VALOR
+      x-enum-varnames:
+        - DISCOUNT_TYPE_PERCENT
+        - DISCOUNT_TYPE_VALUE
+    TipoDeItens:
+      description: Enum de tipo de itens
+      type: string
+      enum:
+        - PRODUTO
+        - SERVICO
+        - PRODUTO_E_SERVICO
+      x-enum-varnames:
+        - ItemsTypeProduto
+        - ItemsTypeServico
+        - ItemsTypeProdutoEServico
+    TipoDeSituacaoOrcamento:
+      description: Enum de tipo de situação de orçamento
+      type: string
+      enum:
+        - ORCAMENTO
+        - ORCAMENTO_ACEITO
+        - ORCAMENTO_RECUSADO
+      x-enum-varnames:
+        - SITUATION_TYPE_FOR_PROPOSAL
+        - SITUATION_TYPE_FOR_PROPOSAL_ACCEPTED
+        - SITUATION_TYPE_FOR_PROPOSAL_REFUSED
+    TipoItemOrcamento:
+      description: Enum de tipo de item de orçamento
+      type: string
+      enum:
+        - PRODUTO
+        - SERVICO
+      x-enum-varnames:
+        - PROPOSAL_PRODUCT
+        - PROPOSAL_SERVICE

@@ -1,0 +1,23 @@
+generated: '2026-07-18'
+method: searched
+source: >-
+  https://developers.contaazul.com/migration,
+  https://developers.contaazul.com/changelog, https://status.contaazul.com
+versioning:
+  scheme: uri-path + dated release train
+  current: v1
+  release_train: v2.1.YYYY.MM.DD
+  docs: https://developers.contaazul.com/aboutapis
+deprecation:
+  policy_url: https://developers.contaazul.com/migration
+  note: >-
+    The legacy API (devdocs.contaazul.com) was formally deprecated and sunset on
+    2025-11-05; its credentials are incompatible with the Nova API. Developers
+    were directed to migrate to the v2 API (api-v2.contaazul.com). Contract
+    changes and discontinuations are announced in the dated changelog.
+  legacy_api: https://devdocs.contaazul.com/
+  legacy_sunset_date: '2025-11-05'
+status_page: https://status.contaazul.com
+changelog: https://developers.contaazul.com/changelog
+changelog_artifact: changelog/conta-azul-changelog.yml
+deprecated_operations: []

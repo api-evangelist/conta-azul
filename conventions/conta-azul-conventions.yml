@@ -1,0 +1,44 @@
+generated: '2026-07-18'
+method: searched
+source: >-
+  https://developers.contaazul.com/makingcalls,
+  https://developers.contaazul.com/aboutapis, openapi/*.yml
+docs: https://developers.contaazul.com/aboutapis
+base_url: https://api-v2.contaazul.com
+authentication:
+  style: OAuth 2.0 Authorization Code (AWS Cognito) -> Bearer JWT
+  header: 'Authorization: Bearer <access_token>'
+  ref: authentication/conta-azul-authentication.yml
+versioning:
+  scheme: uri-path
+  current: v1
+  path_prefix: /v1
+  note: >-
+    Resources are served under /v1 on api-v2.contaazul.com. The changelog uses a
+    dated release train (v2.1.YYYY.MM.DD) for the platform, distinct from the /v1
+    resource path.
+  ref: lifecycle/conta-azul-lifecycle.yml
+pagination:
+  style: offset/page
+  request_params:
+    page: pagina
+    page_size: tamanho_pagina
+  sorting:
+    ascending: campo_ordenado_ascendente
+    descending: campo_ordenado_descendente
+  note: List endpoints accept pagina + tamanho_pagina plus per-endpoint text/status filters.
+idempotency:
+  supported: false
+  note: No idempotency-key header/parameter is documented or present in the OpenAPI.
+error_envelope:
+  media_type: application/json
+  format: json
+  note: Plain JSON error body (not RFC 9457 problem+json).
+  ref: errors/conta-azul-problem-types.yml
+rate_limiting:
+  signaled: true
+  mechanism: HTTP 429 (Too Many Requests) responses
+  headers_documented: false
+localization:
+  language: pt-BR
+  note: Resource names, fields, and documentation are in Brazilian Portuguese.

@@ -1,0 +1,61 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/*.yml (4xx/5xx responses)
+format: json
+note: Conta Azul returns a plain application/json error body (not RFC 9457 problem+json).
+  Catalog derived from documented status codes across all specs.
+envelope:
+  media_type: application/json
+problems:
+- status: 400
+  title: Bad Request
+  media_type: application/json
+  remediation: Validate the request payload/parameters against the operation schema.
+  operations_sample:
+  - conta-azul-acquittance-openapi.yml#atualizarBaixa
+  - conta-azul-acquittance-openapi.yml#buscarBaixa
+  - conta-azul-acquittance-openapi.yml#criarBaixa
+  - conta-azul-acquittance-openapi.yml#deletarBaixa
+  - conta-azul-acquittance-openapi.yml#listarBaixas
+- status: 401
+  title: Unauthorized
+  media_type: application/json
+  remediation: Provide a valid Bearer JWT access token; refresh it via the OAuth2
+    token endpoint if expired.
+  operations_sample:
+  - conta-azul-acquittance-openapi.yml#atualizarBaixa
+  - conta-azul-acquittance-openapi.yml#buscarBaixa
+  - conta-azul-acquittance-openapi.yml#criarBaixa
+  - conta-azul-acquittance-openapi.yml#deletarBaixa
+  - conta-azul-acquittance-openapi.yml#listarBaixas
+- status: 404
+  title: Not Found
+  media_type: application/json
+  remediation: Verify the resource id exists for the connected tenant.
+  operations_sample:
+  - conta-azul-acquittance-openapi.yml#buscarBaixa
+  - conta-azul-acquittance-openapi.yml#deletarBaixa
+  - conta-azul-charge-openapi.yml#buscarCobrancaPorId
+  - conta-azul-charge-openapi.yml#deletarCobrancaPorId
+  - conta-azul-inventory-openapi.yml#deleteProduct
+- status: 429
+  title: Too Many Requests
+  media_type: application/json
+  remediation: Rate limit exceeded — back off and retry with exponential delay.
+  operations_sample:
+  - conta-azul-acquittance-openapi.yml#atualizarBaixa
+  - conta-azul-acquittance-openapi.yml#buscarBaixa
+  - conta-azul-acquittance-openapi.yml#criarBaixa
+  - conta-azul-acquittance-openapi.yml#deletarBaixa
+  - conta-azul-acquittance-openapi.yml#listarBaixas
+- status: 500
+  title: Internal Server Error
+  media_type: application/json
+  remediation: Transient server error — retry; if it persists contact Conta Azul developer
+    support.
+  operations_sample:
+  - conta-azul-acquittance-openapi.yml#atualizarBaixa
+  - conta-azul-acquittance-openapi.yml#buscarBaixa
+  - conta-azul-acquittance-openapi.yml#criarBaixa
+  - conta-azul-acquittance-openapi.yml#deletarBaixa
+  - conta-azul-acquittance-openapi.yml#listarBaixas

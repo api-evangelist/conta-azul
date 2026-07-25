@@ -1,0 +1,24 @@
+# generated: '2026-07-18'
+# method: generated
+# source: openapi/conta-azul-sales-openapi.yml
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Conta Azul Vendas
+  version: 1.0.0
+extends: openapi/conta-azul-sales-openapi.yml
+actions:
+- target: $.info
+  update:
+    x-apievangelist-rating: 4
+    x-api-evangelist-provider: conta-azul
+    x-authentication: OAuth 2.0 Authorization Code (AWS Cognito) — bearer JWT access
+      token
+    x-base-url: https://api-v2.contaazul.com
+- target: $.info
+  update:
+    x-catalog:
+      auth: authentication/conta-azul-authentication.yml
+      scopes: scopes/conta-azul-scopes.yml
+      conventions: conventions/conta-azul-conventions.yml
+      errors: errors/conta-azul-problem-types.yml
+      lifecycle: lifecycle/conta-azul-lifecycle.yml

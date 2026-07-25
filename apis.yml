@@ -1,27 +1,121 @@
 aid: conta-azul
 name: Conta Azul
-description: 'Conta Azul is a company surfaced as a portfolio company of ribbit-capital and added to the
-  API Evangelist network as a stub for enrichment. Sector: fintech. This profile is a lead awaiting the
-  enrichment pipeline.'
+description: 'Conta Azul is a Brazilian cloud accounting, financial-management and ERP platform for small and medium businesses,
+  backed by Ribbit Capital. Its Nova API (v2, api-v2.contaazul.com) exposes the ERP over REST/JSON with OAuth 2.0 (AWS Cognito)
+  authorization: financial events (accounts payable and receivable), installments, cost centers, categories and DRE, financial
+  accounts and balances, sales, charges, products/inventory, proposals, contracts and settlements (baixas). The legacy API
+  was sunset in November 2025 in favor of this versioned, OpenAPI-documented platform.'
 url: https://raw.githubusercontent.com/api-evangelist/conta-azul/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - ribbit-capital
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: enriched
+x-tier-reason: spec-bearing-provider
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-18'
+image: https://contaazul.com/wp-content/themes/contaazul/assets/images/logo.svg
 tags:
 - Company
 - Fintech
-apis: []
+- Accounting
+- ERP
+- Brazil
+- Small Business
+- Financial Management
+- Invoicing
+- Payments
+apis:
+- aid: conta-azul:conta-azul-v1-api
+  name: Conta Azul v1 API
+  description: >-
+    Conjunto de recursos para acompanhar e administrar operações relacionadas ao gerenciamento de baixas
+    - esses recursos incluem criar uma nova baixa, retornar as baixas pelo id da parcela, atualizar parcialmente
+    uma baixa por id, deletar baixa por id e retornar a baixa por id
+  humanURL: https://developers.contaazul.com/docs/acquittance-apis-openapi
+  baseURL: https://api-v2.contaazul.com
+  tags:
+  - v1
+  properties:
+  - type: OpenAPI
+    url: openapi/conta-azul-v1-api-openapi.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/conta-azul-domain-security.yml
+- type: DeveloperPortal
+  url: https://developers.contaazul.com/
+- type: Documentation
+  url: https://developers.contaazul.com/introduction
+- type: APIReference
+  url: https://developers.contaazul.com/docs/financial-apis-openapi
+- type: GettingStarted
+  url: https://developers.contaazul.com/guide
+- type: Authentication
+  url: authentication/conta-azul-authentication.yml
+- type: OAuthScopes
+  url: scopes/conta-azul-scopes.yml
+- type: WellKnown
+  url: well-known/conta-azul-well-known.yml
+- type: Conventions
+  url: conventions/conta-azul-conventions.yml
+- type: ErrorCatalog
+  url: errors/conta-azul-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/conta-azul-lifecycle.yml
+- type: StatusPage
+  url: https://status.contaazul.com
+- type: Deprecation
+  url: https://developers.contaazul.com/migration
+- type: ChangeLog
+  url: changelog/conta-azul-changelog.yml
+- type: DataModel
+  url: data-model/conta-azul-data-model.yml
+- type: MCPServer
+  url: mcp/conta-azul-mcp.yml
+- type: LLMsTxt
+  url: llms/conta-azul-llms.txt
+- type: Conformance
+  url: conformance/conta-azul-conformance.yml
+- type: Packages
+  url: packages/conta-azul-packages.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Support
+  url: https://ajuda.contaazul.com/hc/pt-br
+- type: Blog
+  url: https://blog.contaazul.com
+- type: GitHubOrganization
+  url: https://github.com/ContaAzul
+- type: Pricing
+  url: https://contaazul.com/planos/
+- type: SignUp
+  url: https://developers-portal.contaazul.com/
+- type: TermsOfService
+  url: https://contaazul.com/termos/
+- type: PrivacyPolicy
+  url: https://contaazul.com/termos/privacidade/
 - type: Website
   url: https://contaazul.com
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence
