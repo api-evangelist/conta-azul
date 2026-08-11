@@ -58,6 +58,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Overlay
+  url: overlays/conta-azul-acquittance-overlay.yaml
 - type: DomainSecurity
   url: security/conta-azul-domain-security.yml
 - type: DeveloperPortal
