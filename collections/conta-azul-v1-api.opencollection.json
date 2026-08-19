@@ -1,0 +1,1677 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Baixas v1 API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "v1",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retornar as baixas pelo id da parcela",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.contaazul.com/v1/financeiro/eventos-financeiros/parcelas/:parcela_id/baixa",
+            "params": [
+              {
+                "name": "parcela_id",
+                "value": "35473eec-4e74-11ee-b500-9f61de8a8b8b",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Permite consultar todas as baixas associadas a uma determinada parcela. Essa funcionalidade possibilita o acompanhamento detalhado de pagamentos realizados, facilitando a auditoria e o controle financeiro."
+        },
+        {
+          "info": {
+            "name": "Criar uma nova baixa",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-v2.contaazul.com/v1/financeiro/eventos-financeiros/parcelas/:parcela_id/baixa",
+            "params": [
+              {
+                "name": "parcela_id",
+                "value": "35473eec-4e74-11ee-b500-9f61de8a8b8b",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Permite registrar uma nova baixa vinculada a uma parcela específica. Por meio desse endpoint, é possível informar os dados do pagamento, como data, valor, juros, multa, descontos e método de pagamento. Ao registrar a baixa, o sistema atualiza automaticamente o status da parcela refletindo a quitação realizada."
+        },
+        {
+          "info": {
+            "name": "Retornar a baixa por id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.contaazul.com/v1/financeiro/eventos-financeiros/parcelas/baixa/:baixa_id",
+            "params": [
+              {
+                "name": "baixa_id",
+                "value": "35473eec-4e74-11ee-b500-9f61de8a8b8b",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Permite consultar os detalhes de uma baixa específica a partir do seu identificador único (baixa_id). O retorno inclui informações completas sobre a baixa, como data de pagamento, valores envolvidos, conta financeira utilizada, método de pagamento e observações registradas."
+        },
+        {
+          "info": {
+            "name": "Atualizar parcialmente uma baixa por id",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api-v2.contaazul.com/v1/financeiro/eventos-financeiros/parcelas/baixa/:baixa_id",
+            "params": [
+              {
+                "name": "baixa_id",
+                "value": "35473eec-4e74-11ee-b500-9f61de8a8b8b",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Permite atualizar parcialmente as informações de uma baixa. Use a baixa parcial quando houver pagamento ou recebimento parcial de uma fatura, seja por negociação com cliente/fornecedor ou em situações de inadimplência parcial. Por meio desse endpoint, é possível corrigir dados como valor, conta financeira, data de pagamento ou observações, mantendo o controle de versão para evitar conflitos de atualização."
+        },
+        {
+          "info": {
+            "name": "Deletar baixa por id",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api-v2.contaazul.com/v1/financeiro/eventos-financeiros/parcelas/baixa/:baixa_id",
+            "params": [
+              {
+                "name": "baixa_id",
+                "value": "35473eec-4e74-11ee-b500-9f61de8a8b8b",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Permite excluir uma baixa existente do sistema. Esse endpoint deve ser utilizado com cautela, pois a exclusão impacta diretamente o saldo e o histórico financeiro da parcela associada."
+        },
+        {
+          "info": {
+            "name": "Retornar a cobrança por id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.contaazul.com/v1/financeiro/eventos-financeiros/contas-a-receber/cobranca/:id_cobranca",
+            "params": [
+              {
+                "name": "id_cobranca",
+                "value": "",
+                "type": "path",
+                "description": "Identificador único da cobrança"
+              }
+            ]
+          },
+          "docs": "Permite consultar os detalhes de uma cobrança específica utilizando seu identificador único (id_cobranca)."
+        },
+        {
+          "info": {
+            "name": "Deletar cobrança por id",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api-v2.contaazul.com/v1/financeiro/eventos-financeiros/contas-a-receber/cobranca/:id_cobranca",
+            "params": [
+              {
+                "name": "id_cobranca",
+                "value": "",
+                "type": "path",
+                "description": "Identificador único da cobrança"
+              }
+            ]
+          },
+          "docs": "Permite cancelar uma cobrança existente identificada por id_cobranca. É recomendada apenas quando a cobrança foi gerada incorretamente ou precisa ser invalidada antes de seu pagamento."
+        },
+        {
+          "info": {
+            "name": "Criar uma nova cobrança",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-v2.contaazul.com/v1/financeiro/eventos-financeiros/contas-a-receber/gerar-cobranca",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Permite criar uma nova cobrança, por meio desse endpoint, é possível informar o valor, data de vencimento, descrição da fatura e demais parâmetros que definem a cobrança. Essa funcionalidade facilita a geração automatizada de cobranças."
+        },
+        {
+          "info": {
+            "name": "Retornar os contratos por filtro",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.contaazul.com/v1/contratos",
+            "params": [
+              {
+                "name": "pagina",
+                "value": "1",
+                "type": "query",
+                "description": "Página"
+              },
+              {
+                "name": "tamanho_pagina",
+                "value": "10",
+                "type": "query",
+                "description": "Tamanho da página (máximo 50)"
+              },
+              {
+                "name": "campo_ordenado_ascendente",
+                "value": "",
+                "type": "query",
+                "description": "Campo para ordenação ascendente. Se informado ele desconsidera o valor do campo_ordenado_descendente."
+              },
+              {
+                "name": "campo_ordenado_descendente",
+                "value": "",
+                "type": "query",
+                "description": "Campo para ordenação descendente. Se este campo for utilizado, o campo campo_ordenado_ascendente  não deverá ser informado."
+              },
+              {
+                "name": "busca_textual",
+                "value": "Contrato 1",
+                "type": "query",
+                "description": "Busca textual por nome"
+              },
+              {
+                "name": "cliente_id",
+                "value": "",
+                "type": "query",
+                "description": "id do cliente"
+              },
+              {
+                "name": "data_inicio",
+                "value": "2026-08-15",
+                "type": "query",
+                "description": "Data inicio do intervalo de busca"
+              },
+              {
+                "name": "data_fim",
+                "value": "2027-08-15",
+                "type": "query",
+                "description": "Data fim do intervalo de busca"
+              }
+            ]
+          },
+          "docs": "Permite consultar contratos existentes, com suporte a filtros que facilitam a busca e a gestão dos contratos criados (ex. por cliente, data, status, entre outros)."
+        },
+        {
+          "info": {
+            "name": "Criar um novo contrato",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-v2.contaazul.com/v1/contratos",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Permite criar um novo contrato, definindo as informações necessárias para configuração da recorrência, como período, produtos/serviços vinculados e demais parâmetros do contrato."
+        },
+        {
+          "info": {
+            "name": "Retornar o próximo número do contrato disponível",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.contaazul.com/v1/contratos/proximo-numero"
+          },
+          "docs": "Permite consultar o próximo número de contrato a ser utilizado no momento da criação."
+        },
+        {
+          "info": {
+            "name": "Retornar os centros de custo por filtro",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.contaazul.com/v1/centro-de-custo",
+            "params": [
+              {
+                "name": "pagina",
+                "value": "1",
+                "type": "query",
+                "description": "Página"
+              },
+              {
+                "name": "tamanho_pagina",
+                "value": "10",
+                "type": "query",
+                "description": "Tamanho da página"
+              },
+              {
+                "name": "busca",
+                "value": "010",
+                "type": "query",
+                "description": "Busca textual por nome ou código"
+              },
+              {
+                "name": "filtro_rapido",
+                "value": "ATIVO",
+                "type": "query",
+                "description": "Filtro rápido para itens ativos, inativos ou todos"
+              },
+              {
+                "name": "campo_ordenado_ascendente",
+                "value": "nome",
+                "type": "query",
+                "description": "Campo para ordenação ascendente. Se informado ele desconsidera o valor do campo_ordenado_descendente. É possível ordenar por nome ou por código"
+              },
+              {
+                "name": "campo_ordenado_descendente",
+                "value": "nome",
+                "type": "query",
+                "description": "Campo para ordenação descendente. Se este campo for utilizado, o campo campo_ordenado_ascendente  não deverá ser informado. É possível ordenar por nome ou por código"
+              }
+            ]
+          },
+          "docs": "Permite consultar os centros de custo cadastrados. Suporta filtros como página, tamanho de página, busca por texto, status (ativo/inativo/todos) e ordenação. Utilizado para consultar lançamentos financeiros e facilitar análise orçamentária."
+        },
+        {
+          "info": {
+            "name": "Criar um novo centro de custo",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-v2.contaazul.com/v1/centro-de-custo",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Permite criar um novo centro de custo, definindo campos como código, nome, parâmetros que ajudam a organizar os custos da empresa de forma estruturada."
+        },
+        {
+          "info": {
+            "name": "Retornar as parcelas pelo id do evento financeiro",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.contaazul.com/v1/financeiro/eventos-financeiros/:id_evento/parcelas",
+            "params": [
+              {
+                "name": "id_evento",
+                "value": "35473eec-4e74-11ee-b500-9f61de8a8b8b",
+                "type": "path",
+                "description": "uuid ou id legado do evento"
+              }
+            ]
+          },
+          "docs": "Permite listar as parcelas vinculadas a um evento financeiro específico (id_evento). Útil para acompanhar cada parcela de um lançamento de contas a pagar ou receber, com seus valores, vencimentos e status e outras informações pertinentes."
+        },
+        {
+          "info": {
+            "name": "Retornar as categorias por filtro",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.contaazul.com/v1/categorias",
+            "params": [
+              {
+                "name": "pagina",
+                "value": "1",
+                "type": "query",
+                "description": "Página"
+              },
+              {
+                "name": "tamanho_pagina",
+                "value": "10",
+                "type": "query",
+                "description": "Tamanho da página"
+              },
+              {
+                "name": "campo_ordenado_ascendente",
+                "value": "NOME",
+                "type": "query",
+                "description": "Campo para ordenação ascendente. Se informado ele desconsidera o valor do  campo_ordenado_descendente. É possível ordenar por 'NOME' ou 'TIPO'"
+              },
+              {
+                "name": "campo_ordenado_descendente",
+                "value": "TIPO",
+                "type": "query",
+                "description": "Campo para ordenação descendente. Se este campo for utilizado, o campo campo_ordenado_ascendente não  deverá ser informado. É possível ordenar por 'NOME' ou 'TIPO'"
+              },
+              {
+                "name": "busca",
+                "value": "010",
+                "type": "query",
+                "description": "Busca textual por nome ou código"
+              },
+              {
+                "name": "tipo",
+                "value": "RECEITA",
+                "type": "query",
+                "description": "Tipo da categoria"
+              },
+              {
+                "name": "apenas_filhos",
+                "value": "true",
+                "type": "query",
+                "description": "Filtrar apenas categorias filhas"
+              },
+              {
+                "name": "nome",
+                "value": "Eletrônicos",
+                "type": "query",
+                "description": "Nome da categoria"
+              },
+              {
+                "name": "permite_apenas_filhos",
+                "value": "true",
+                "type": "query",
+                "description": "Permite apenas categorias filhas"
+              }
+            ]
+          },
+          "docs": "Permite listar as categorias utilizadas para classificação de receitas ou despesas. Auxilia no controle, agrupamento e geração de relatórios financeiros baseados em categorias."
+        },
+        {
+          "info": {
+            "name": "Retornar a configuração de de-para de categorias",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.contaazul.com/v1/categorias/configuracao-padrao",
+            "params": [
+              {
+                "name": "sugestao_padrao",
+                "value": "true",
+                "type": "query",
+                "description": "Quando verdadeiro (padrão), inclui o objeto `sugestao_padrao` em cada item. Quando falso, o campo `sugestao_padrao` é retornado como `null`."
+              }
+            ]
+          },
+          "docs": "Retorna o de-para entre as operações financeiras e as categorias configuradas para o tenant, incluindo opcionalmente a sugestão padrão de categoria para cada operação."
+        },
+        {
+          "info": {
+            "name": "Retornar as categorias DRE",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.contaazul.com/v1/financeiro/categorias-dre"
+          },
+          "docs": "Permite listar as categorias de DRE (Demonstração do Resultado do Exercício) usadas para a estrutura contábil-financeira da empresa, facilitando o fechamento financeiro e contábil."
+        },
+        {
+          "info": {
+            "name": "Retornar as contas financeiras por filtro",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.contaazul.com/v1/conta-financeira",
+            "params": [
+              {
+                "name": "pagina",
+                "value": "1",
+                "type": "query",
+                "description": "Página"
+              },
+              {
+                "name": "tamanho_pagina",
+                "value": "10",
+                "type": "query",
+                "description": "Tamanho da página"
+              },
+              {
+                "name": "tipos",
+                "value": "APLICACAO",
+                "type": "query",
+                "description": "Lista de tipos de conta"
+              },
+              {
+                "name": "nome",
+                "value": "Conta corrente",
+                "type": "query",
+                "description": "Nome da conta"
+              },
+              {
+                "name": "apenas_ativo",
+                "value": "true",
+                "type": "query",
+                "description": "Filtrar apenas contas ativas"
+              },
+              {
+                "name": "esconde_conta_digital",
+                "value": "true",
+                "type": "query",
+                "description": "Esconder contas digitais"
+              },
+              {
+                "name": "mostrar_caixinha",
+                "value": "true",
+                "type": "query",
+                "description": "Mostrar contas de caixinha"
+              }
+            ]
+          },
+          "docs": "Permite consultar as contas financeiras existentes no sistema (contas bancárias, cartões, poupança, etc.). Suporta filtros como tipo de conta, nome, se estão ativas, entre outros."
+        },
+        {
+          "info": {
+            "name": "Retornar o saldo atual pelo id da conta financeira",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.contaazul.com/v1/conta-financeira/:id_conta_financeira/saldo-atual",
+            "params": [
+              {
+                "name": "id_conta_financeira",
+                "value": "35473eec-4e74-11ee-b500-9f61de8a8b8b",
+                "type": "path",
+                "description": "uuid da conta financeira"
+              }
+            ]
+          },
+          "docs": "Permite obter o saldo atual de uma conta financeira específica identificada por id_conta_financeira. Útil para monitoramento em tempo real de saldos das contas da empresa."
+        },
+        {
+          "info": {
+            "name": "Retornar as transferências entre contas financeiras por filtro",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.contaazul.com/v1/financeiro/transferencias",
+            "params": [
+              {
+                "name": "pagina",
+                "value": "1",
+                "type": "query",
+                "description": "Número da página para paginação dos resultados"
+              },
+              {
+                "name": "tamanho_pagina",
+                "value": "10",
+                "type": "query",
+                "description": "Quantidade de itens por página"
+              },
+              {
+                "name": "ids_conta_financeira",
+                "value": "35473eec-4e74-11ee-b500-9f61de8a8b8b,8f2a3e45-1c9d-4b3a-a7f1-9e8d7c6b5a4f",
+                "type": "query",
+                "description": "Lista de identificadores (UUIDs) das contas financeiras para filtrar as transferências. Retorna transferências onde as contas especificadas sejam origem ou destino."
+              },
+              {
+                "name": "data_inicio",
+                "value": "2026-01-01",
+                "type": "query",
+                "description": "Data inicial do período para filtrar as transferências (formato ISO date)"
+              },
+              {
+                "name": "data_fim",
+                "value": "2026-12-31",
+                "type": "query",
+                "description": "Data final do período para filtrar as transferências (formato ISO date)"
+              }
+            ]
+          },
+          "docs": "Permite consultar as transferências realizadas entre contas financeiras mediante filtros como período de datas e contas financeiras específicas. Para viabilizar a conciliação financeira automática e sincronizar corretamente as movimentações no meu sistema."
+        },
+        {
+          "info": {
+            "name": "Criar um novo evento financeiro de contas a receber",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-v2.contaazul.com/v1/financeiro/eventos-financeiros/contas-a-receber",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Permite criar um novo evento financeiro de contas a receber, passando dados como data de competência, valor, descrição, conta financeira, condições de pagamento, entre outros. Facilita o registro de receitas previstas ou realizadas."
+        },
+        {
+          "info": {
+            "name": "Retornar as receitas por filtro",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.contaazul.com/v1/financeiro/eventos-financeiros/contas-a-receber/buscar",
+            "params": [
+              {
+                "name": "pagina",
+                "value": "1",
+                "type": "query",
+                "description": "Página"
+              },
+              {
+                "name": "tamanho_pagina",
+                "value": "10",
+                "type": "query",
+                "description": "Tamanho da página"
+              },
+              {
+                "name": "campo_ordenado_ascendente",
+                "value": "nome",
+                "type": "query",
+                "description": "Campo para ordenação ascendente. Se informado ele desconsidera o valor do campo_ordenado_descendente. É possível ordenar por nome"
+              },
+              {
+                "name": "campo_ordenado_descendente",
+                "value": "nome",
+                "type": "query",
+                "description": "Campo para ordenação descendente. Se este campo for utilizado, o campo campo_ordenado_ascendente não deverá ser informado. É possível ordenar por nome"
+              },
+              {
+                "name": "descricao",
+                "value": "Conta Corrente",
+                "type": "query",
+                "description": "Descrição da conta"
+              },
+              {
+                "name": "data_vencimento_de",
+                "value": "2027-08-15",
+                "type": "query",
+                "description": "Data de vencimento de (ISO date format)"
+              },
+              {
+                "name": "data_vencimento_ate",
+                "value": "2027-08-20",
+                "type": "query",
+                "description": "Data de vencimento até (ISO date format)"
+              },
+              {
+                "name": "data_competencia_de",
+                "value": "2025-08-15",
+                "type": "query",
+                "description": "Data de competência de (ISO date format)"
+              },
+              {
+                "name": "data_competencia_ate",
+                "value": "2025-08-20",
+                "type": "query",
+                "description": "Data de competência até (ISO date format)"
+              },
+              {
+                "name": "data_pagamento_de",
+                "value": "2025-08-15",
+                "type": "query",
+                "description": "Data de pagamento de (ISO date format)"
+              },
+              {
+                "name": "data_pagamento_ate",
+                "value": "2025-08-20",
+                "type": "query",
+                "description": "Data de pagamento até (ISO date format)"
+              },
+              {
+                "name": "data_alteracao_de",
+                "value": "2025-10-20T07:00:00",
+                "type": "query",
+                "description": "Data de alteração de (ISO 8601, São Paulo/GMT-3)"
+              },
+              {
+                "name": "data_alteracao_ate",
+                "value": "2025-10-20T07:59:59",
+                "type": "query",
+                "description": "Data de alteração até (ISO 8601, São Paulo/GMT-3)"
+              },
+              {
+                "name": "valor_de",
+                "value": "100",
+                "type": "query",
+                "description": "Valor de"
+              },
+              {
+                "name": "valor_ate",
+                "value": "500",
+                "type": "query",
+                "description": "Valor até"
+              },
+              {
+                "name": "status",
+                "value": "ATRASADO",
+                "type": "query",
+                "description": "Status da conta"
+              },
+              {
+                "name": "ids_contas_financeiras",
+                "value": "",
+                "type": "query",
+                "description": "Lista de IDs de contas financeiras"
+              },
+              {
+                "name": "ids_categorias",
+                "value": "",
+                "type": "query",
+                "description": "Lista de IDs de categorias"
+              },
+              {
+                "name": "ids_centros_de_custo",
+                "value": "",
+                "type": "query",
+                "description": "Lista de IDs de centros de custo"
+              },
+              {
+                "name": "ids_clientes",
+                "value": "",
+                "type": "query",
+                "description": "Lista de IDs de clientes"
+              }
+            ]
+          },
+          "docs": "Permite consultar as parcelas de receitas (contas a receber) mediante filtros como data de vencimento, data de competência, data de pagamento, data de alteração, valor, status, dentre outros. Essa funcionalidade ajuda no controle e análise de entradas financeiras com base nas condições definidas."
+        },
+        {
+          "info": {
+            "name": "Criar um novo evento financeiro de contas a pagar",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-v2.contaazul.com/v1/financeiro/eventos-financeiros/contas-a-pagar",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Permite criar um novo evento financeiro de contas a pagar, informando dados como valor, condições de pagamento, descrição, conta financeira, entre outros. Esse endpoint facilita o registro das obrigações financeiras da empresa."
+        },
+        {
+          "info": {
+            "name": "Retornar as despesas por filtro",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.contaazul.com/v1/financeiro/eventos-financeiros/contas-a-pagar/buscar",
+            "params": [
+              {
+                "name": "pagina",
+                "value": "1",
+                "type": "query",
+                "description": "Página"
+              },
+              {
+                "name": "tamanho_pagina",
+                "value": "10",
+                "type": "query",
+                "description": "Tamanho da página"
+              },
+              {
+                "name": "campo_ordenado_ascendente",
+                "value": "nome",
+                "type": "query",
+                "description": "Campo para ordenação ascendente. Se informado ele desconsidera o valor do campo_ordenado_descendente. É possível ordenar por id do centro de custo (id),  pelo código (CODIGO), pelo nome (NOME) e por ativo (ATIVO)"
+              },
+              {
+                "name": "campo_ordenado_descendente",
+                "value": "nome",
+                "type": "query",
+                "description": "Campo para ordenação descendente. Se este campo for utilizado, o campo campo_ordenado_ascendente não  deverá ser informado. É possível ordenar por id do centro de custo (id), pelo código (CODIGO), pelo  nome (NOME) ou por ativo (ATIVO)"
+              },
+              {
+                "name": "descricao",
+                "value": "Pagamento do salário",
+                "type": "query",
+                "description": "Descrição da conta"
+              },
+              {
+                "name": "data_vencimento_de",
+                "value": "2027-08-15",
+                "type": "query",
+                "description": "Date de vencimento de (ISO date format)"
+              },
+              {
+                "name": "data_vencimento_ate",
+                "value": "2027-08-20",
+                "type": "query",
+                "description": "Data de vencimento até (ISO date format)"
+              },
+              {
+                "name": "data_competencia_de",
+                "value": "2025-08-15",
+                "type": "query",
+                "description": "Data de competência de (ISO date format)"
+              },
+              {
+                "name": "data_competencia_ate",
+                "value": "2025-08-20",
+                "type": "query",
+                "description": "Data de competência até (ISO date format)"
+              },
+              {
+                "name": "data_pagamento_de",
+                "value": "2025-08-15",
+                "type": "query",
+                "description": "Data de pagamento de (ISO date format)"
+              },
+              {
+                "name": "data_pagamento_ate",
+                "value": "2025-08-20",
+                "type": "query",
+                "description": "Data de pagamento até (ISO date format)"
+              },
+              {
+                "name": "data_alteracao_de",
+                "value": "2025-10-20T07:00:00",
+                "type": "query",
+                "description": "Data de alteração de (ISO 8601, São Paulo/GMT-3)"
+              },
+              {
+                "name": "data_alteracao_ate",
+                "value": "2025-10-20T07:59:59",
+                "type": "query",
+                "description": "Data de alteração até (ISO 8601, São Paulo/GMT-3)"
+              },
+              {
+                "name": "valor_de",
+                "value": "100",
+                "type": "query",
+                "description": "Valor de"
+              },
+              {
+                "name": "valor_ate",
+                "value": "500",
+                "type": "query",
+                "description": "Valor até"
+              },
+              {
+                "name": "status",
+                "value": "ATRASADO",
+                "type": "query",
+                "description": "Lista de status da conta"
+              },
+              {
+                "name": "ids_contas_financeiras",
+                "value": "35473eec-4e74-11ee-b500-9f61de8a8b8b",
+                "type": "query",
+                "description": "Lista de IDs de contas financeiras"
+              },
+              {
+                "name": "ids_categorias",
+                "value": "35473eec-4e74-11ee-b500-9f61de8a8b8b",
+                "type": "query",
+                "description": "Lista de IDs de categorias"
+              },
+              {
+                "name": "ids_centros_de_custo",
+                "value": "35473eec-4e74-11ee-b500-9f61de8a8b8b",
+                "type": "query",
+                "description": "Lista de IDs de centros de custo"
+              }
+            ]
+          },
+          "docs": "Permite consultar as parcelas de despesas (contas a pagar) conforme filtros como data de vencimento, data competência, data de alteração, valor, status, conta financeira, etc. Essa consulta possibilita monitorar as obrigações financeiras pendentes ou pagas, favorecendo a gestão e o planejamento."
+        },
+        {
+          "info": {
+            "name": "Retornar a parcela por id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.contaazul.com/v1/financeiro/eventos-financeiros/parcelas/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identificador único da parcela"
+              }
+            ]
+          },
+          "docs": "Permite consultar os detalhes de uma parcela específica (de conta a receber ou a pagar) identificada pelo seu id. A resposta traz campos como data de vencimento, valor, status, conta financeira, entre outros."
+        },
+        {
+          "info": {
+            "name": "Atualizar parcialmente uma parcela por id",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api-v2.contaazul.com/v1/financeiro/eventos-financeiros/parcelas/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Permite atualizar parcialmente uma parcela existente identificada pelo id, alterando campos como data de vencimento, valor, observações, conta financeira e outros campos permitidos. Essa operação ajuda a ajustar lançamentos financeiros sem a necessidade de recriá-los."
+        },
+        {
+          "info": {
+            "name": "Retornar os IDs dos eventos financeiros alterados em um período",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.contaazul.com/v1/financeiro/eventos-financeiros/alteracoes",
+            "params": [
+              {
+                "name": "pagina",
+                "value": "1",
+                "type": "query",
+                "description": "Página"
+              },
+              {
+                "name": "tamanho_pagina",
+                "value": "10",
+                "type": "query",
+                "description": "Tamanho da página"
+              },
+              {
+                "name": "data_inicio",
+                "value": "2026-01-01T23:59:59",
+                "type": "query",
+                "description": "Data inicial do período para filtrar os eventos financeiros alterados (ISO 8601, São Paulo/GMT-3)"
+              },
+              {
+                "name": "data_fim",
+                "value": "2026-03-12T23:59:59",
+                "type": "query",
+                "description": "Data final do período para filtrar os eventos financeiros alterados (ISO 8601, São Paulo/GMT-3)"
+              }
+            ]
+          },
+          "docs": "Permite consultar os IDs dos eventos financeiros (contas a pagar e a receber) que foram alterados em um período  definido por data de ínico e fim. Essa funcionalidade é útil para identificar quais eventos sofreram modificações  recentes, facilitando a sincronização e o monitoramento de mudanças nos dados financeiros. Importante: As informações disponíveis indicam a data e hora em que o evento foi salvo, sem detalhar quais campos  foram modificados em cada operação. Salvar um recurso sem alteraçõ"
+        },
+        {
+          "info": {
+            "name": "Retornar os saldos iniciais das contas financeiras",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.contaazul.com/v1/financeiro/eventos-financeiros/saldo-inicial",
+            "params": [
+              {
+                "name": "pagina",
+                "value": "1",
+                "type": "query",
+                "description": "Página"
+              },
+              {
+                "name": "tamanho_pagina",
+                "value": "10",
+                "type": "query",
+                "description": "Tamanho da página"
+              },
+              {
+                "name": "data_inicio",
+                "value": "2026-01-01T23:59:59",
+                "type": "query",
+                "description": "Data inicial do período para filtrar os saldos iniciais (ISO 8601, São Paulo/GMT-3)"
+              },
+              {
+                "name": "data_fim",
+                "value": "2026-03-12T23:59:59",
+                "type": "query",
+                "description": "Data final do período para filtrar os saldos iniciais (ISO 8601, São Paulo/GMT-3)"
+              }
+            ]
+          },
+          "docs": "Permite consultar os saldos iniciais das contas financeiras em um período definido por data de início e fim."
+        },
+        {
+          "info": {
+            "name": "Obter produtos por filtro",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.contaazul.com/v1/produto/busca",
+            "params": [
+              {
+                "name": "pagina",
+                "value": "1",
+                "type": "query"
+              },
+              {
+                "name": "tamanho_pagina",
+                "value": "10",
+                "type": "query"
+              },
+              {
+                "name": "campo_ordenacao",
+                "value": "NOME",
+                "type": "query"
+              },
+              {
+                "name": "direcao_ordenacao",
+                "value": "",
+                "type": "query",
+                "description": "Direção da ordenação (ASC para ascendente, DESC para descendente)."
+              },
+              {
+                "name": "busca",
+                "value": "Produto",
+                "type": "query",
+                "description": "Buscar produtos por nome ou código."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Status do produto."
+              },
+              {
+                "name": "inicio",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "fim",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Obter produtos por filtro"
+        },
+        {
+          "info": {
+            "name": "Criar um novo produto",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-v2.contaazul.com/v1/produto",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Criar um novo produto"
+        },
+        {
+          "info": {
+            "name": "Excluir um produto existente",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api-v2.contaazul.com/v1/produto/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "123e4567-e89b-12d3-a456-426614174000",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Excluir um produto existente"
+        },
+        {
+          "info": {
+            "name": "Desativar produtos",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-v2.contaazul.com/v1/produto/desativar",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Desativa uma lista de produtos pelo ID."
+        },
+        {
+          "info": {
+            "name": "Retornar orçamentos por filtros",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.contaazul.com/v1/orcamentos",
+            "params": [
+              {
+                "name": "pagina",
+                "value": "",
+                "type": "query",
+                "description": "Número da página"
+              },
+              {
+                "name": "tamanho_pagina",
+                "value": "",
+                "type": "query",
+                "description": "Tamanho da página"
+              },
+              {
+                "name": "campo_ordenado_ascendente",
+                "value": "DATA",
+                "type": "query",
+                "description": "Campo para ordenação ascendente. Se informado ele desconsidera o valor do campo_ordenado_descendente. É possível ordenar pela data da venda (DATA), pelo número da venda (NUMERO) ou pelo nome do cliente (CLIENTE)"
+              },
+              {
+                "name": "campo_ordenado_descendente",
+                "value": "DATA",
+                "type": "query",
+                "description": "Campo para ordenação descendente. Se este campo for utilizado, o campo campo_ordenado_ascendente não deverá ser informado. É possível ordenar pela data da venda (DATA), pelo número da venda (NUMERO) ou pelo nome do cliente (CLIENTE)"
+              },
+              {
+                "name": "termo_busca",
+                "value": "",
+                "type": "query",
+                "description": "Termo de busca"
+              },
+              {
+                "name": "data_inicio",
+                "value": "",
+                "type": "query",
+                "description": "Data inicial (formato: YYYY-MM-DD)"
+              },
+              {
+                "name": "data_fim",
+                "value": "",
+                "type": "query",
+                "description": "Data final (formato: YYYY-MM-DD)"
+              },
+              {
+                "name": "data_criacao_de",
+                "value": "",
+                "type": "query",
+                "description": "Data de criação inicial (formato: YYYY-MM-DD)"
+              },
+              {
+                "name": "data_criacao_ate",
+                "value": "",
+                "type": "query",
+                "description": "Data de criação final (formato: YYYY-MM-DD)"
+              },
+              {
+                "name": "data_alteracao_de",
+                "value": "",
+                "type": "query",
+                "description": "Data de alteração inicial (formato: YYYY-MM-DDThh:mm:ss)"
+              },
+              {
+                "name": "data_alteracao_ate",
+                "value": "",
+                "type": "query",
+                "description": "Data de alteração final (formato: YYYY-MM-DDThh:mm:ss)"
+              },
+              {
+                "name": "ids_vendedores",
+                "value": "",
+                "type": "query",
+                "description": "IDs dos vendedores (UUID)"
+              },
+              {
+                "name": "ids_clientes",
+                "value": "",
+                "type": "query",
+                "description": "IDs dos clientes (UUID)"
+              },
+              {
+                "name": "ids_natureza_operacao",
+                "value": "",
+                "type": "query",
+                "description": "IDs das naturezas de operação (UUID)"
+              },
+              {
+                "name": "ids_categorias",
+                "value": "",
+                "type": "query",
+                "description": "IDs das categorias (UUID)"
+              },
+              {
+                "name": "ids_produtos",
+                "value": "",
+                "type": "query",
+                "description": "IDs dos produtos (UUID)"
+              },
+              {
+                "name": "situacoes",
+                "value": "",
+                "type": "query",
+                "description": "Situações dos orçamentos"
+              },
+              {
+                "name": "origens",
+                "value": "",
+                "type": "query",
+                "description": "Origens dos orçamentos"
+              },
+              {
+                "name": "numeros",
+                "value": "",
+                "type": "query",
+                "description": "Números dos orçamentos"
+              },
+              {
+                "name": "ids_legado_donos",
+                "value": "",
+                "type": "query",
+                "description": "IDs legados dos donos"
+              },
+              {
+                "name": "ids_legado_clientes",
+                "value": "",
+                "type": "query",
+                "description": "IDs legados dos clientes"
+              },
+              {
+                "name": "ids_legado_produtos",
+                "value": "",
+                "type": "query",
+                "description": "IDs legados dos produtos"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Recupera a lista de orçamentos com base nos filtros informados."
+        },
+        {
+          "info": {
+            "name": "Criar um orçamento",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-v2.contaazul.com/v1/orcamentos",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Cria um novo orçamento no sistema da Conta Azul."
+        },
+        {
+          "info": {
+            "name": "Excluir orçamentos em lote",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api-v2.contaazul.com/v1/orcamentos",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Permite excluir vários orçamentos de uma vez. Útil durante sincronizações ou processos de limpeza de dados."
+        },
+        {
+          "info": {
+            "name": "Retornar o orçamento por ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.contaazul.com/v1/orcamentos/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID do orçamento (UUID)"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Recupera os detalhes de um orçamento específico por ID. Útil quando quiser exibir ou sincronizar todos os dados de um orçamento específico."
+        },
+        {
+          "info": {
+            "name": "Retornar o protocolo por id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.contaazul.com/v1/protocolo/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "123e4567-e89b-12d3-a456-426614174000",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Permite consultar os detalhes de um protocolo específico identificado por id."
+        },
+        {
+          "info": {
+            "name": "Retornar os vendedores",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.contaazul.com/v1/venda/vendedores"
+          },
+          "docs": "Retorna a lista de vendedores cadastrados na Conta Azul. Útil quando você precisa atribuir um vendedor a uma venda ou exibir opções de vendedores em sua interface."
+        },
+        {
+          "info": {
+            "name": "Retornar a venda por id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.contaazul.com/v1/venda/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "123e4567-e89b-12d3-a456-426614174000",
+                "type": "path",
+                "description": "O legacy id ou uuid da venda a ser obtida"
+              }
+            ]
+          },
+          "docs": "Recupera os detalhes de uma venda específica por ID (pode ser UUID ou id legado). Útil quando quiser exibir ou sincronizar todos os dados de uma venda específica."
+        },
+        {
+          "info": {
+            "name": "Atualizar uma venda por id",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api-v2.contaazul.com/v1/venda/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "123e4567-e89b-12d3-a456-426614174000",
+                "type": "path",
+                "description": "O uuid da venda a ser editada"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Permite atualizar uma venda existente. Útil se sua aplicação permite editar vendas depois que foram criadas no ERP."
+        },
+        {
+          "info": {
+            "name": "Retornar as vendas por filtro",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.contaazul.com/v1/venda/busca",
+            "params": [
+              {
+                "name": "pagina",
+                "value": "1",
+                "type": "query",
+                "description": "Página"
+              },
+              {
+                "name": "tamanho_pagina",
+                "value": "10",
+                "type": "query",
+                "description": "Tamanho da página"
+              },
+              {
+                "name": "campo_ordenado_ascendente",
+                "value": "numero",
+                "type": "query",
+                "description": "Campo para ordenação ascendente. Se informado ele desconsidera o valor do  campo_ordenado_descendente. É possível ordenar por numero da venda (NUMERO),  pelo nome do cliente (CLIENTE) ou pela data da venda (DATA)"
+              },
+              {
+                "name": "campo_ordenado_descendente",
+                "value": "numero",
+                "type": "query",
+                "description": "Campo para ordenação descendente. Se este campo for utilizado, o campo campo_ordenado_ascendente  não deverá ser informado. É possível ordenar por numero da venda (NUMERO), pelo nome do  cliente (CLIENTE) ou pela data da venda (DATA)"
+              },
+              {
+                "name": "termo_busca",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "data_inicio",
+                "value": "",
+                "type": "query",
+                "description": "Data de início da emissão da venda"
+              },
+              {
+                "name": "data_fim",
+                "value": "",
+                "type": "query",
+                "description": "Data final da emissão da venda"
+              },
+              {
+                "name": "data_criacao_de",
+                "value": "",
+                "type": "query",
+                "description": "Data de início da criação da venda"
+              },
+              {
+                "name": "data_criacao_ate",
+                "value": "",
+                "type": "query",
+                "description": "Data final da criação da venda"
+              },
+              {
+                "name": "data_alteracao_de",
+                "value": "2025-10-20T07:59:59",
+                "type": "query",
+                "description": "Data de alteração de (ISO 8601, São Paulo/GMT-3)"
+              },
+              {
+                "name": "data_alteracao_ate",
+                "value": "2025-10-29T07:59:59",
+                "type": "query",
+                "description": "Data de alteração até (ISO 8601, São Paulo/GMT-3)"
+              },
+              {
+                "name": "ids_vendedores",
+                "value": "",
+                "type": "query",
+                "description": "ids dos vendedores"
+              },
+              {
+                "name": "ids_clientes",
+                "value": "",
+                "type": "query",
+                "description": "ids dos clientes"
+              },
+              {
+                "name": "ids_natureza_operacao",
+                "value": "",
+                "type": "query",
+                "description": "ids da natureza da operação"
+              },
+              {
+                "name": "situacoes",
+                "value": "",
+                "type": "query",
+                "description": "Situações das vendas"
+              },
+              {
+                "name": "tipos",
+                "value": "",
+                "type": "query",
+                "description": "Tipos de vendas"
+              },
+              {
+                "name": "origens",
+                "value": "",
+                "type": "query",
+                "description": "Origens das vendas"
+              },
+              {
+                "name": "numeros",
+                "value": "",
+                "type": "query",
+                "description": "Números das vendas"
+              },
+              {
+                "name": "ids_categorias",
+                "value": "",
+                "type": "query",
+                "description": "ids das categorias"
+              },
+              {
+                "name": "ids_produtos",
+                "value": "",
+                "type": "query",
+                "description": "ids dos produtos"
+              },
+              {
+                "name": "pendente",
+                "value": "",
+                "type": "query",
+                "description": "Indica se a venda está pendente"
+              },
+              {
+                "name": "totais",
+                "value": "",
+                "type": "query",
+                "description": "Tipo de total de venda. Possiveis valores `WAITING_APPROVED`, `APPROVED`, `CANCELED`, `ALL`"
+              },
+              {
+                "name": "ids_legado_donos",
+                "value": "",
+                "type": "query",
+                "description": "ids legados dos donos"
+              },
+              {
+                "name": "ids_legado_clientes",
+                "value": "",
+                "type": "query",
+                "description": "ids legados dos clientes"
+              },
+              {
+                "name": "ids_legado_produtos",
+                "value": "",
+                "type": "query",
+                "description": "ids legados dos produtos"
+              },
+              {
+                "name": "ids_legado_categorias",
+                "value": "",
+                "type": "query",
+                "description": "ids legados das categorias"
+              }
+            ]
+          },
+          "docs": "Retorna as vendas filtradas, podendo fazer uso de parâmetros de consulta como data inicial/final, cliente, situação, tipos de venda, IDs de produtos, IDs de categorias, paginação, entre outros. Use esse endpoint para construir telas de listagem, dashboards ou relatórios de vendas."
+        },
+        {
+          "info": {
+            "name": "Criar uma nova venda",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-v2.contaazul.com/v1/venda",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Cria uma nova venda no sistema da Conta Azul. Ideal para registrar vendas vindas de sistemas externos diretamente no ERP da Conta Azul."
+        },
+        {
+          "info": {
+            "name": "Retornar o PDF de uma venda",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.contaazul.com/v1/venda/:id/imprimir",
+            "params": [
+              {
+                "name": "id",
+                "value": "123e4567-e89b-12d3-a456-426614174000",
+                "type": "path",
+                "description": "id da venda a ser impressa, pode ser passado id ou uuid"
+              }
+            ]
+          },
+          "docs": "Gera e retorna um PDF da venda identificada pelo ID. Use quando precisar mostrar ao usuário ou armazenar uma versão impressa da venda."
+        },
+        {
+          "info": {
+            "name": "Excluir vendas em lote",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-v2.contaazul.com/v1/venda/exclusao-lote",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Permite excluir várias vendas de uma vez. Útil para excluir em lote vendas de forma automatizada. Útil durante sincronizações ou processos de limpeza de dados."
+        },
+        {
+          "info": {
+            "name": "Retornar os itens de uma venda pelo id da venda",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.contaazul.com/v1/venda/:id_venda/itens",
+            "params": [
+              {
+                "name": "id_venda",
+                "value": "123e4567-e89b-12d3-a456-426614174000",
+                "type": "path",
+                "description": "id da venda"
+              },
+              {
+                "name": "pagina",
+                "value": "1",
+                "type": "query",
+                "description": "Página"
+              },
+              {
+                "name": "tamanho_pagina",
+                "value": "10",
+                "type": "query",
+                "description": "Tamanho da página"
+              }
+            ]
+          },
+          "docs": "Retorna a lista de itens de uma venda, dado o ID da venda. Use para exibir um detalhe da venda (todos produtos/serviços) ou para sincronizar os itens da venda para outros sistemas."
+        },
+        {
+          "info": {
+            "name": "Retornar o próximo número de venda disponível",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.contaazul.com/v1/venda/proximo-numero"
+          },
+          "docs": "Retorna o próximo número de venda disponível, segundo a numeração usada no ERP da Conta Azul. Pode ser usado antes de criar uma venda para garantir que você está usando uma sequência de número válida/nova."
+        },
+        {
+          "info": {
+            "name": "Retornar o contrato por id",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-v2.contaazul.com/v1/contratos/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID do contrato (UUID)"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Recupera os detalhes de um contrato específico por ID. Útil quando quiser exibir ou sincronizar todos os dados de um contrato específico."
+        },
+        {
+          "info": {
+            "name": "Remover um contrato",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api-v2.contaazul.com/v1/contratos/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID do contrato (UUID)"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Remove um contrato existente. O contrato será excluído permanentemente, cancelando todas as vendas associadas (agendadas e efetivadas). Contratos em reajuste de valor não podem ser removidos."
+        },
+        {
+          "info": {
+            "name": "Encerrar um contrato",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-v2.contaazul.com/v1/contratos/:id/encerrar",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID do contrato (UUID)"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Encerra um contrato ativo. O contrato será desativado e não poderá mais gerar novas cobranças. Contratos que estão passando por reajuste de valor não podem ser encerrados."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

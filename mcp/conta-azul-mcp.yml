@@ -2,8 +2,8 @@ generated: '2026-07-18'
 method: derived
 status: candidate
 source: openapi/*.yml operations
-note: No official Conta Azul MCP server was found (Dec 2025 search). Candidate tool
-  list derived one-per-operation from the published OpenAPI; not an official server.
+note: No official Conta Azul MCP server was found (Dec 2025 search). Candidate tool list derived one-per-operation
+  from the published OpenAPI; not an official server.
 server:
   name: conta-azul
   transport: http
@@ -164,3 +164,9 @@ tools:
 - name: encerrarContrato
   description: Encerrar um contrato
   source_operation: openapi/conta-azul-scheduled-sales-openapi.yml#encerrarContrato
+deployment:
+  mode: none
+  verified: derived
+  tools: 52
+  checked: '2026-08-12'
+  source: catalog MCP census
