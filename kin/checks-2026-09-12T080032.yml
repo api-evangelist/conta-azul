@@ -1,16 +1,16 @@
 ---
 kin_checks:
   slug: conta-azul
-  schema_version: 0.18.2
-  scored_at: '2026-09-04'
-  run_ts: 2026-09-04T062714
+  schema_version: 0.21.0
+  scored_at: '2026-09-12'
+  run_ts: 2026-09-12T080032
   note: Actionable checks only (missed + partial). earned/na are every other check
-    in rubric/scoring-0.18.2.yml; counts below let you verify that.
+    in rubric/scoring-0.21.0.yml; counts below let you verify that.
   counts:
-    total: 132
-    earned: 50
-    partial: 6
-    missed: 53
+    total: 136
+    earned: 51
+    partial: 7
+    missed: 55
     na: 23
   checks:
   - id: well_known_published
@@ -55,8 +55,6 @@ kin_checks:
     status: missed
   - id: overlay_published
     status: missed
-  - id: rate_limits_documented
-    status: missed
   - id: rate_limits_rich
     status: missed
   - id: security_disclosure
@@ -97,6 +95,14 @@ kin_checks:
     status: missed
   - id: reg_pci_sca
     status: missed
+  - id: upsert_outcome_discriminator
+    status: missed
+  - id: upsert_alternate_key
+    status: missed
+  - id: upsert_named
+    status: missed
+  - id: upsert_declared_conflict
+    status: missed
   - id: agentic_access
     status: missed
   - id: reversibility_documented
@@ -104,8 +110,6 @@ kin_checks:
   - id: mcp_server
     status: missed
   - id: idempotency
-    status: missed
-  - id: rate_limit_signal
     status: missed
   - id: event_surface_described
     status: missed
@@ -140,6 +144,10 @@ kin_checks:
     status: partial
     earned: 9.0
     detail: 'grade: served'
+  - id: rate_limit_signal
+    status: partial
+    earned: 3.5
+    detail: 'grade: documented'
   - id: agent_skills
     status: partial
     earned: 1.25

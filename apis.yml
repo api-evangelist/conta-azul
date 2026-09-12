@@ -1,10 +1,6 @@
 aid: conta-azul
 name: Conta Azul
-description: 'Conta Azul is a Brazilian cloud accounting, financial-management and ERP platform for small and medium businesses,
-  backed by Ribbit Capital. Its Nova API (v2, api-v2.contaazul.com) exposes the ERP over REST/JSON with OAuth 2.0 (AWS Cognito)
-  authorization: financial events (accounts payable and receivable), installments, cost centers, categories and DRE, financial
-  accounts and balances, sales, charges, products/inventory, proposals, contracts and settlements (baixas). The legacy API
-  was sunset in November 2025 in favor of this versioned, OpenAPI-documented platform.'
+description: 'Conta Azul is a Brazilian cloud accounting, financial-management and ERP platform for small and medium businesses, backed by Ribbit Capital. Its Nova API (v2, api-v2.contaazul.com) exposes the ERP over REST/JSON with OAuth 2.0 (AWS Cognito) authorization: financial events (accounts payable and receivable), installments, cost centers, categories and DRE, financial accounts and balances, sales, charges, products/inventory, proposals, contracts and settlements (baixas). The legacy API was sunset in November 2025 in favor of this versioned, OpenAPI-documented platform.'
 url: https://raw.githubusercontent.com/api-evangelist/conta-azul/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -53,10 +49,7 @@ tags:
 apis:
 - aid: conta-azul:conta-azul-v1-api
   name: Conta Azul v1 API
-  description: >-
-    Conjunto de recursos para acompanhar e administrar operações relacionadas ao gerenciamento de baixas
-    - esses recursos incluem criar uma nova baixa, retornar as baixas pelo id da parcela, atualizar parcialmente
-    uma baixa por id, deletar baixa por id e retornar a baixa por id
+  description: Conjunto de recursos para acompanhar e administrar operações relacionadas ao gerenciamento de baixas - esses recursos incluem criar uma nova baixa, retornar as baixas pelo id da parcela, atualizar parcialmente uma baixa por id, deletar baixa por id e retornar a baixa por id
   humanURL: https://developers.contaazul.com/docs/acquittance-apis-openapi
   baseURL: https://api-v2.contaazul.com
   tags:
@@ -64,6 +57,35 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/conta-azul-v1-api-openapi.yml
+- name: Conta Azul API
+  description: REST/JSON API for the Conta Azul ERP, organized by functional area (Financeiro, Cobranças, Baixas, Vendas, Pessoas, Produtos, Serviços, Notas Fiscais, Contratos), secured with OAuth 2.0 Authorization Code (AWS Cognito).
+  humanURL: https://developers.contaazul.com
+  baseURL: https://api-v2.contaazul.com/v1
+  tags:
+  - ERP
+  - Financial
+  - Accounting
+  properties:
+  - type: Authentication
+    url: authentication/dvpj-authentication.yml
+  - type: OAuthScopes
+    url: scopes/dvpj-scopes.yml
+  - type: Conventions
+    url: conventions/dvpj-conventions.yml
+  - type: RateLimits
+    url: rate-limits/dvpj-rate-limits.yml
+  - type: ErrorCatalog
+    url: errors/dvpj-error-codes.yml
+  - type: ChangeLog
+    url: changelog/dvpj-changelog.yml
+  - type: Lifecycle
+    url: lifecycle/dvpj-lifecycle.yml
+  - type: Conformance
+    url: conformance/dvpj-conformance.yml
+  - type: DataModel
+    url: data-model/dvpj-data-model.yml
+  - type: LLMsTxt
+    url: llms/dvpj-llms.txt
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
