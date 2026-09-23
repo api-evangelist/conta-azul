@@ -1,7 +1,14 @@
 {
   "provider": "conta-azul",
   "sources": [
-    "conta-azul-v1-api-openapi.yml"
+    "_original/conta-azul-acquittance-openapi.yml",
+    "_original/conta-azul-charge-openapi.yml",
+    "_original/conta-azul-financial-openapi.yml",
+    "_original/conta-azul-inventory-openapi.yml",
+    "_original/conta-azul-proposal-openapi.yml",
+    "_original/conta-azul-protocol-openapi.yml",
+    "_original/conta-azul-sales-openapi.yml",
+    "_original/conta-azul-scheduled-sales-openapi.yml"
   ],
   "outputs": [
     "conta-azul-v1-api-openapi.yml"
@@ -9,6 +16,22 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "1 archived document(s) dropped as subsets of other archived documents",
+    "sourced from openapi/_original/ (8 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "conta-azul-acquittance-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "conta-azul-charge-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "conta-azul-financial-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "conta-azul-inventory-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "conta-azul-proposal-openapi.yml: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "conta-azul-protocol-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "conta-azul-sales-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
+    "conta-azul-scheduled-sales-openapi.yml: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "tag 'v1' spans 8 source specs (conta-azul-acquittance-openapi.yml, conta-azul-charge-openapi.yml, conta-azul-financial-openapi.yml, conta-azul-inventory-openapi.yml, conta-azul-proposal-openapi.yml, conta-azul-protocol-openapi.yml, conta-azul-sales-openapi.yml, conta-azul-scheduled-sales-openapi.yml): per-path servers applied",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "_original/conta-azul-contracts-openapi.yml: archived document superseded by a larger archived document",
+    "conta-azul-v1-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

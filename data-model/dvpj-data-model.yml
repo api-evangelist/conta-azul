@@ -1,0 +1,83 @@
+generated: '2026-07-18'
+method: searched
+source:
+  - https://developers.contaazul.com/aboutapis
+  - https://developers.contaazul.com/changelog
+note: >-
+  Derived from Conta Azul's documented functional API areas and object references;
+  no machine-readable OpenAPI was reachable, so relationships reflect documented
+  fields (e.g. id_vendedor on sale, category mapping, installments) rather than a
+  parsed spec. Entities named per the docs.
+entities:
+  - name: person
+    domain: Pessoas / Fornecedores
+    description: Customers and suppliers registry.
+  - name: product
+    domain: Produtos
+    description: Product catalog with stock and pricing.
+  - name: service
+    domain: Serviços
+    description: Service catalog.
+  - name: sale
+    domain: Vendas
+    description: Sales records.
+  - name: financial_event
+    domain: Financeiro
+    description: Accounts receivable/payable entries (lançamentos) with installments (parcelas).
+  - name: charge
+    domain: Cobranças
+    description: Charges / collections.
+  - name: acquittance
+    domain: Baixas
+    description: Settlements / write-offs of financial titles.
+  - name: contract
+    domain: Contratos
+    description: Recurring contracts.
+  - name: invoice
+    domain: Notas Fiscais
+    description: Electronic invoices (NF-e; NFS-e planned).
+  - name: financial_account
+    domain: Financeiro
+    description: Bank/financial accounts.
+  - name: category
+    domain: Financeiro
+    description: Financial categories.
+  - name: cost_center
+    domain: Financeiro
+    description: Cost centers (centro de custo).
+  - name: company
+    domain: Pessoas
+    description: The connected ERP company (id_empresa) in a session.
+relationships:
+  - from: sale
+    to: person
+    type: belongs_to
+    via: customer
+  - from: sale
+    to: person
+    type: belongs_to
+    via: id_vendedor
+  - from: financial_event
+    to: category
+    type: belongs_to
+    via: category
+  - from: financial_event
+    to: cost_center
+    type: belongs_to
+    via: cost_center
+  - from: financial_event
+    to: financial_account
+    type: belongs_to
+    via: financial_account
+  - from: acquittance
+    to: financial_event
+    type: belongs_to
+    via: financial_event
+  - from: charge
+    to: financial_event
+    type: belongs_to
+    via: financial_event
+  - from: contract
+    to: person
+    type: belongs_to
+    via: customer

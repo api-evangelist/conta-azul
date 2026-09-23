@@ -1,0 +1,40 @@
+generated: '2026-07-18'
+method: searched
+source: https://developers.contaazul.com/commonmistakes
+docs: https://developers.contaazul.com/commonmistakes
+envelope: JSON error body; OAuth token errors follow RFC 6749 (error, error_description)
+http_status_codes: [200, 400, 401, 404, 429, 500]
+errors:
+  - code: invalid_grant
+    layer: oauth2
+    title: Invalid or expired grant
+    cause: >-
+      The authorization_code or refresh_token is invalid, already used, expired,
+      or does not match the redirect_uri / client_id provided.
+    remediation: >-
+      Request a fresh authorization code; ensure redirect_uri matches the one
+      registered in the Developer Portal exactly; store and rotate refresh_token
+      on every renewal.
+  - status: 401
+    code: unauthorized
+    title: Unauthorized
+    cause: Missing/invalid/expired access_token, or token lacks permission for the resource.
+    remediation: Send a valid Bearer access_token; renew via refresh_token when expired.
+  - status: 429
+    code: too_many_requests
+    title: Too Many Requests
+    cause: Exceeded rate limits (600/min, 10/sec per connected account).
+    remediation: Apply exponential backoff; monitor rate-limit response headers; cache where possible.
+  - status: 500
+    code: internal_server_error
+    title: Internal Server Error
+    cause: Unexpected server-side error, transient infrastructure issue, or malformed request body.
+    remediation: Verify request formatting/data; retry after a few seconds; contact support via Developer Portal chat if it persists.
+  - status: 400
+    code: bad_request
+    title: Bad Request
+    cause: Malformed request or invalid parameters.
+  - status: 404
+    code: not_found
+    title: Not Found
+    cause: Requested resource does not exist.

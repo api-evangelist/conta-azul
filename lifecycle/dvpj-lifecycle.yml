@@ -1,0 +1,26 @@
+generated: '2026-07-18'
+method: searched
+source: https://developers.contaazul.com/migration
+docs:
+  - https://developers.contaazul.com/migration
+  - https://developers.contaazul.com/changelog
+versioning:
+  scheme: uri-path
+  current: v1
+  release_stamp: 'v2.1.YYYY.MM.DD'
+  docs: https://developers.contaazul.com/changelog
+deprecation:
+  policy_url: https://developers.contaazul.com/migration
+  detail: >-
+    Conta Azul is migrating integrations from the Legacy API to the New API
+    (api-v2.contaazul.com). A published migration guide covers the transition;
+    the legacy API is being phased out in favor of the new v1 surface.
+  sunset_header: unknown
+tokens:
+  access_token_ttl_seconds: 3600
+  refresh_token_validity: up to 5 years or until next renewal
+status_page: https://status.contaazul.com
+sla:
+  url: null
+  uptime_target: null
+changelog: changelog/dvpj-changelog.yml

@@ -1,33 +1,31 @@
 generated: '2026-07-18'
 method: searched
 host: https://api-v2.contaazul.com
-note: >-
-  Probed /.well-known/ on api-v2.contaazul.com, auth.contaazul.com and
-  contaazul.com. The API host publishes live OIDC + OAuth 2.0 Authorization
-  Server Metadata (RFC 8414) discovery documents, confirming PKCE (S256),
-  refresh_token grant, dynamic client registration, and a JWKS endpoint. No
-  security.txt, api-catalog, or ai-plugin.json is published.
-documents:
-- path: /.well-known/openid-configuration
-  host: https://api-v2.contaazul.com
-  status: 200
-  file: conta-azul-openid-configuration.json
-- path: /.well-known/oauth-authorization-server
-  host: https://api-v2.contaazul.com
-  status: 200
-  file: conta-azul-oauth-authorization-server.json
-- path: /.well-known/security.txt
-  host: https://api-v2.contaazul.com
-  status: 500
-- path: /.well-known/api-catalog
-  host: https://api-v2.contaazul.com
-  status: 500
-- path: /.well-known/ai-plugin.json
-  host: https://api-v2.contaazul.com
-  status: 500
-- path: /.well-known/security.txt
-  host: https://contaazul.com
-  status: 403
-- path: /.well-known/openid-configuration
-  host: https://auth.contaazul.com
-  status: 404
+note: Probed /.well-known/ on api-v2.contaazul.com, auth.contaazul.com and contaazul.com. The API host
+  publishes live OIDC + OAuth 2.0 Authorization Server Metadata (RFC 8414) discovery documents, confirming
+  PKCE (S256), refresh_token grant, dynamic client registration, and a JWKS endpoint. No security.txt,
+  api-catalog, or ai-plugin.json is published.
+hosts:
+- host: https://api-v2.contaazul.com
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: conta-azul-openid-configuration.json
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: conta-azul-oauth-authorization-server.json
+  - path: /.well-known/security.txt
+    status: 500
+  - path: /.well-known/api-catalog
+    status: 500
+  - path: /.well-known/ai-plugin.json
+    status: 500
+  - path: /.well-known/security.txt
+    status: 403
+  - path: /.well-known/openid-configuration
+    status: 404
+x-shape-fix:
+  converted: '2026-08-20'
+  from: documents
+  note: Rewritten into hosts[] -> documents[], the only shape well_known_docs() in score.rb reads. A served
+    .well-known surface recorded in any other shape scores as absent.

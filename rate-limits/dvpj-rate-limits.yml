@@ -1,0 +1,16 @@
+generated: '2026-07-18'
+method: searched
+source: https://developers.contaazul.com/faq
+docs: https://developers.contaazul.com/faq
+scope: per connected ERP account
+signaling: HTTP response headers; HTTP 429 Too Many Requests on exceed
+guidance: Implement exponential backoff and cache where appropriate.
+rate_limits:
+  - name: per-minute
+    limit_count: 600
+    window: minute
+    scope: connected-account
+  - name: per-second
+    limit_count: 10
+    window: second
+    scope: connected-account

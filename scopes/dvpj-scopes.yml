@@ -1,0 +1,28 @@
+generated: '2026-07-18'
+method: searched
+source: https://developers.contaazul.com/requestingcode
+docs: https://developers.contaazul.com/requestingcode
+provider_oauth: AWS Cognito hosted UI
+schemes:
+  - name: OAuth2
+    flows:
+      - flow: authorizationCode
+        authorizationUrl: https://auth.contaazul.com/login
+        tokenUrl: https://auth.contaazul.com/oauth2/token
+scopes:
+  - scope: openid
+    description: OpenID Connect base scope; issues an ID token identifying the authenticated Conta Azul user.
+    flows: [authorizationCode]
+  - scope: profile
+    description: Access to the authenticated user's basic profile claims.
+    flows: [authorizationCode]
+  - scope: aws.cognito.signin.user.admin
+    description: >-
+      AWS Cognito user-admin scope. In Conta Azul this grants the application
+      administrator-level access to the connected ERP account's resources
+      (per the docs, "seu aplicativo terá a permissão de administrador").
+    flows: [authorizationCode]
+notes: >-
+  Conta Azul does not publish a granular per-resource scope catalog; the single
+  requested scope string is `openid profile aws.cognito.signin.user.admin`,
+  which grants the integration admin access to the connected account.

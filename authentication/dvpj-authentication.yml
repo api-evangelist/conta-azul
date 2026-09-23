@@ -1,0 +1,34 @@
+generated: '2026-07-18'
+method: searched
+source: https://developers.contaazul.com/auth
+docs: https://developers.contaazul.com/auth
+summary:
+  types: [oauth2]
+  oauth2_flows: [authorizationCode]
+  client_authentication: basic
+  bearer_format: JWT
+notes: >-
+  Conta Azul API authenticates with OAuth 2.0 Authorization Code flow backed by
+  AWS Cognito. The client exchanges the authorization code for tokens at the
+  token endpoint using HTTP Basic auth (Base64 of client_id:client_secret).
+  API calls carry the access_token as a Bearer JWT in the Authorization header.
+  access_token TTL is 3600s (1h); refresh_token is valid up to 5 years or until
+  the next renewal (a new refresh_token is returned on every renewal).
+schemes:
+  - name: OAuth2
+    type: oauth2
+    flow: authorizationCode
+    authorizationUrl: https://auth.contaazul.com/login
+    tokenUrl: https://auth.contaazul.com/oauth2/token
+    client_authentication: basic
+    scopes:
+      - openid
+      - profile
+      - aws.cognito.signin.user.admin
+    sources: [https://developers.contaazul.com/auth]
+  - name: BearerAuth
+    type: http
+    scheme: bearer
+    bearerFormat: JWT
+    description: Bearer JWT access_token sent on every API request
+    sources: [https://developers.contaazul.com/makingcalls, https://developers.contaazul.com/docs/financial-apis-openapi]

@@ -1,0 +1,33 @@
+generated: '2026-07-18'
+method: searched
+source:
+  - https://developers.contaazul.com/auth
+  - https://contaazul.com/seguranca/
+standards:
+  - id: oauth2
+    conforms: true
+    evidence: OAuth 2.0 Authorization Code flow documented (auth.contaazul.com).
+  - id: oidc
+    conforms: true
+    evidence: openid scope + AWS Cognito hosted OIDC issuer; ID token issued.
+  - id: rest
+    conforms: true
+    evidence: Docs state REST style, JSON payloads, standard HTTP status codes.
+  - id: lgpd
+    conforms: true
+    evidence: >-
+      Security page states Conta Azul follows all LGPD requirements and publishes
+      a Cybersecurity Policy (contaazul.com/termos/politica-de-seguranca-cibernetica/).
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: No application/problem+json usage documented.
+compliance:
+  published: true
+  programs:
+    - name: LGPD
+      url: https://contaazul.com/seguranca/
+  cybersecurity_policy: https://contaazul.com/termos/politica-de-seguranca-cibernetica/
+  notes: >-
+    LGPD (Brazilian data protection law) compliance is publicly asserted. The
+    security page shows AWS badges but does not name ISO 27001 / SOC 2 / PCI DSS
+    in text, so those are not claimed here.

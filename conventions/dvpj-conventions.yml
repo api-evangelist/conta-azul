@@ -1,0 +1,43 @@
+generated: '2026-07-18'
+method: searched
+source: https://developers.contaazul.com/aboutapis
+docs:
+  - https://developers.contaazul.com/aboutapis
+  - https://developers.contaazul.com/makingcalls
+  - https://developers.contaazul.com/commonmistakes
+style: REST
+format: JSON
+base_url: https://api-v2.contaazul.com/v1
+authentication:
+  style: oauth2-bearer
+  header: 'Authorization: Bearer <access_token>'
+  detail: authentication/dvpj-authentication.yml
+pagination:
+  style: page-number
+  params: [page, size]
+  notes: Standard page/size query parameters across list endpoints.
+versioning:
+  scheme: uri-path
+  current: v1
+  detail: lifecycle/dvpj-lifecycle.yml
+idempotency:
+  supported: false
+  notes: No idempotency-key header/parameter is documented by Conta Azul.
+rate_limiting:
+  documented: true
+  limits:
+    - 600 requests per minute per connected ERP account
+    - 10 requests per second per connected ERP account
+  signaling: HTTP response headers (per the FAQ); status 429 on exceed.
+  detail: rate-limits/dvpj-rate-limits.yml
+error_handling:
+  http_status_codes: [200, 400, 401, 404, 429, 500]
+  oauth_errors: [invalid_grant]
+  envelope: JSON error body
+  detail: errors/dvpj-error-codes.yml
+webhooks:
+  supported: false
+  notes: No native webhooks; docs recommend recurrent polling of endpoints.
+sandbox:
+  supported: false
+  notes: No dedicated sandbox environment; a DEVELOPMENT app type uses www.contaazul.com as the test redirect URL.

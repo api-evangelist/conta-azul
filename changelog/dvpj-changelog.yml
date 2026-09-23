@@ -1,0 +1,36 @@
+generated: '2026-07-18'
+method: searched
+source: https://developers.contaazul.com/changelog
+docs: https://developers.contaazul.com/changelog
+scheme: 'v2.1.YYYY.MM.DD (date-stamped)'
+current_version: v2.1.2026.07.10
+notes: Recent window captured verbatim from the published API Change Log (Portuguese).
+entries:
+  - version: v2.1.2026.07.10
+    date: '2026-07-10'
+    type: added
+    highlight: >-
+      Sales: added id_vendedor field to the update-sale (PUT) payload so the
+      responsible seller can be set/updated directly when editing a sale.
+  - version: v2.1.2026.07.10
+    date: '2026-07-10'
+    type: added
+    highlight: >-
+      Person: added id_empresa to the "connected company" endpoint response to
+      identify the active company in multi-company sessions.
+  - version: v2.1.2026.06.18
+    date: '2026-06-18'
+    type: added
+    highlight: >-
+      Financial: new endpoint returning the mapping between financial operations
+      and the account's configured default categories (getDefaultCategoryConfig).
+  - version: v2.1.2026.05.27
+    date: '2026-05-27'
+    type: added
+    highlight: >-
+      Financial: added metodo_pagamento field inside the installments object on
+      create-receivable and create-payable financial events.
+  - version: v2.1.2026.05.11
+    date: '2026-05-11'
+    type: changed
+    highlight: Behavior/contract change (see published changelog for detail).
