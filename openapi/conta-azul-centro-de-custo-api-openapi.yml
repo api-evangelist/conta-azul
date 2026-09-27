@@ -1,0 +1,191 @@
+openapi: 3.2.0
+info:
+  title: Financeiro Centro De Custo API
+  version: v1
+  description: A API de Financeiro tem como objetivo oferecer um conjunto de recursos para gerenciar de forma programática os principais aspectos financeiros de uma empresa, desde a criação de eventos de contas a receber ou pagar, passando pela gestão de contas financeiras, centros de custo, categorias, até a consulta de saldos.
+servers:
+- url: https://api-v2.contaazul.com
+  description: Servidor de produção
+security:
+- BearerAuth: []
+tags:
+- name: Centro De Custo
+paths:
+  /v1/centro-de-custo:
+    summary: Endpoint de Centros de Custo
+    get:
+      summary: Retornar os centros de custo por filtro
+      operationId: searchCostCenters
+      tags:
+      - Centro De Custo
+      description: Permite consultar os centros de custo cadastrados. Suporta filtros como página, tamanho de página, busca por texto, status (ativo/inativo/todos) e ordenação. Utilizado para consultar lançamentos financeiros e facilitar análise orçamentária.
+      parameters:
+      - in: query
+        name: pagina
+        description: Página
+        example: 1
+        schema:
+          type: number
+        required: true
+      - in: query
+        name: tamanho_pagina
+        description: Tamanho da página
+        example: 10
+        schema:
+          enum:
+          - 10
+          - 20
+          - 50
+          - 100
+          - 200
+          - 500
+          - 1000
+          type: number
+        required: true
+      - in: query
+        name: busca
+        description: Busca textual por nome ou código
+        example: '010'
+        schema:
+          type: string
+        required: false
+      - in: query
+        name: filtro_rapido
+        description: Filtro rápido para itens ativos, inativos ou todos
+        example: ATIVO
+        schema:
+          type: string
+          enum:
+          - ATIVO
+          - INATIVO
+          - TODOS
+        required: false
+      - in: query
+        name: campo_ordenado_ascendente
+        description: Campo para ordenação ascendente. Se informado ele desconsidera o valor do campo_ordenado_descendente. É possível ordenar por nome ou por código
+        example: nome
+        schema:
+          type: string
+        required: false
+      - in: query
+        name: campo_ordenado_descendente
+        description: Campo para ordenação descendente. Se este campo for utilizado, o campo campo_ordenado_ascendente  não deverá ser informado. É possível ordenar por nome ou por código
+        example: nome
+        schema:
+          type: string
+        required: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CentroDeCustoResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+    post:
+      summary: Criar um novo centro de custo
+      operationId: createCostCenter
+      tags:
+      - Centro De Custo
+      description: Permite criar um novo centro de custo, definindo campos como código, nome, parâmetros que ajudam a organizar os custos da empresa de forma estruturada.
+      requestBody:
+        description: Dados do centro de custo a ser criado
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CriacaoCentroDeCustoRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CentroDeCusto'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+components:
+  schemas:
+    Totais:
+      type: object
+      properties:
+        ativo:
+          type: integer
+          description: Total de centros de custo ativos
+          example: 6
+        inativo:
+          type: integer
+          description: Total de centros de custo inativos
+          example: 0
+        todos:
+          type: integer
+          description: Total de centros de custo
+          example: 6
+    CentroDeCusto:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Identificador único do centro de custo
+          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
+        codigo:
+          type:
+          - string
+          - 'null'
+          description: Código do centro de custo
+          example: '1040'
+        nome:
+          type: string
+          description: Nome do centro de custo
+          example: Contabilidade
+        ativo:
+          type: boolean
+          description: Indica se o centro de custo está ativo
+          example: true
+    CentroDeCustoResponse:
+      type: object
+      properties:
+        itens_totais:
+          type: integer
+          example: 6
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CentroDeCusto'
+        totais:
+          $ref: '#/components/schemas/Totais'
+    CriacaoCentroDeCustoRequest:
+      type: object
+      required:
+      - nome
+      properties:
+        codigo:
+          type:
+          - string
+          - 'null'
+          description: Código do centro de custo
+          example: '1040'
+        nome:
+          type: string
+          description: Nome do centro de custo
+          example: Contabilidade
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Token de autorização Bearer JWT

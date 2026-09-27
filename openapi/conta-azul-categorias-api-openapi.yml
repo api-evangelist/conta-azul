@@ -1,0 +1,291 @@
+openapi: 3.2.0
+info:
+  title: Financeiro Categorias API
+  version: v1
+  description: A API de Financeiro tem como objetivo oferecer um conjunto de recursos para gerenciar de forma programática os principais aspectos financeiros de uma empresa, desde a criação de eventos de contas a receber ou pagar, passando pela gestão de contas financeiras, centros de custo, categorias, até a consulta de saldos.
+servers:
+- url: https://api-v2.contaazul.com
+  description: Servidor de produção
+security:
+- BearerAuth: []
+tags:
+- name: Categorias
+paths:
+  /v1/categorias:
+    summary: Endpoint de Categorias
+    get:
+      summary: Retornar as categorias por filtro
+      operationId: searchCategories
+      tags:
+      - Categorias
+      description: Permite listar as categorias utilizadas para classificação de receitas ou despesas. Auxilia no controle, agrupamento e geração de relatórios financeiros baseados em categorias.
+      parameters:
+      - in: query
+        name: pagina
+        description: Página
+        example: 1
+        schema:
+          type: number
+        required: true
+      - in: query
+        name: tamanho_pagina
+        description: Tamanho da página
+        example: 10
+        schema:
+          enum:
+          - 10
+          - 20
+          - 50
+          - 100
+          - 200
+          - 500
+          - 1000
+          type: number
+        required: true
+      - in: query
+        name: campo_ordenado_ascendente
+        description: Campo para ordenação ascendente. Se informado ele desconsidera o valor do  campo_ordenado_descendente. É possível ordenar por 'NOME' ou 'TIPO'
+        example: NOME
+        schema:
+          type: string
+          enum:
+          - NOME
+          - TIPO
+        required: false
+      - in: query
+        name: campo_ordenado_descendente
+        description: Campo para ordenação descendente. Se este campo for utilizado, o campo campo_ordenado_ascendente não  deverá ser informado. É possível ordenar por 'NOME' ou 'TIPO'
+        example: TIPO
+        schema:
+          type: string
+          enum:
+          - NOME
+          - TIPO
+        required: false
+      - in: query
+        name: busca
+        description: Busca textual por nome ou código
+        example: '010'
+        schema:
+          type: string
+        required: false
+      - in: query
+        name: tipo
+        description: Tipo da categoria
+        example: RECEITA
+        schema:
+          type: string
+          enum:
+          - RECEITA
+          - DESPESA
+        required: false
+      - in: query
+        name: apenas_filhos
+        description: Filtrar apenas categorias filhas
+        example: true
+        schema:
+          type: boolean
+        required: false
+      - in: query
+        name: nome
+        description: Nome da categoria
+        example: Eletrônicos
+        schema:
+          type: string
+        required: false
+      - in: query
+        name: permite_apenas_filhos
+        description: Permite apenas categorias filhas
+        example: true
+        schema:
+          type: boolean
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  itens_totais:
+                    type: integer
+                    example: 6
+                  itens:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Categoria'
+                  totais:
+                    $ref: '#/components/schemas/Totais'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+  /v1/categorias/configuracao-padrao:
+    summary: Configuração padrão de categorias
+    get:
+      summary: Retornar a configuração de de-para de categorias
+      operationId: getDefaultCategoryConfig
+      tags:
+      - Categorias
+      description: Retorna o de-para entre as operações financeiras e as categorias configuradas para o tenant, incluindo opcionalmente a sugestão padrão de categoria para cada operação.
+      parameters:
+      - in: query
+        name: sugestao_padrao
+        description: Quando verdadeiro (padrão), inclui o objeto `sugestao_padrao` em cada item. Quando falso, o campo `sugestao_padrao` é retornado como `null`.
+        example: true
+        schema:
+          type: boolean
+          default: true
+        required: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ConfiguracaoPadraoCategoria'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+components:
+  schemas:
+    SugestaoPadrao:
+      type:
+      - object
+      - 'null'
+      description: Sugestão padrão de categoria para a operação. Quando `sugestao_padrao=false`, este campo é retornado como `null`.
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+          description: Identificador da categoria sugerida
+          example: 1bb1b4fa-0fba-49e6-9fb6-a0342b7575eb
+        nome:
+          type: string
+          description: Nome da operação financeira correspondente à sugestão
+          example: Fretes recebidos
+    Totais:
+      type: object
+      properties:
+        ativo:
+          type: integer
+          description: Total de centros de custo ativos
+          example: 6
+        inativo:
+          type: integer
+          description: Total de centros de custo inativos
+          example: 0
+        todos:
+          type: integer
+          description: Total de centros de custo
+          example: 6
+    ConfiguracaoPadraoCategoria:
+      type: object
+      description: Item do de-para entre uma operação financeira e a categoria configurada para o tenant
+      properties:
+        tipo_operacao:
+          type: string
+          description: 'Tipo da operação financeira. Valores possíveis:
+
+            - `FRETES_RECEBIDOS`: Categoria para valor de frete inserido na venda.
+
+            - `FRETES_PAGOS`: Categoria para valor de frete inserido na compra.
+
+            - `IMPOSTOS_RETIDOS_EM_VENDAS`: Categoria para valor dos impostos retidos na venda.
+
+            - `DESCONTOS_INCONDICIONAIS_OBTIDOS`: Categoria para descontos obtidos na compra.
+
+            - `DESCONTOS_INCONDICIONAIS_CONCEDIDOS`: Categoria para descontos concedidos na venda.
+
+            - `DESCONTOS_FINANCEIROS_OBTIDOS`: Categoria para descontos obtidos, no caso de baixas em despesas com desconto.
+
+            - `DESCONTOS_FINANCEIROS_CONCEDIDOS`: Categoria para descontos concedidos, no caso de baixas em receitas com desconto.
+
+            - `MULTAS_RECEBIDAS`: Categoria para multas recebidas, em baixas no Contas a receber.
+
+            - `MULTAS_PAGAS`: Categoria para multas pagas, em baixas no Contas a pagar.
+
+            - `JUROS_RECEBIDOS`: Categoria para juros recebidos em baixas no Contas a receber.
+
+            - `JUROS_PAGOS`: Categoria para juros pagos, em baixas no Contas a pagar.
+
+            - `TARIFAS`: Categorias para tarifas pagas, em baixas no contas a receber.
+
+            - `PERDAS`: Categoria para perdas, quando a parcela é dada como perda no Contas a receber.'
+          example: FRETES_RECEBIDOS
+          enum:
+          - FRETES_RECEBIDOS
+          - FRETES_PAGOS
+          - IMPOSTOS_RETIDOS_EM_VENDAS
+          - DESCONTOS_INCONDICIONAIS_OBTIDOS
+          - DESCONTOS_INCONDICIONAIS_CONCEDIDOS
+          - DESCONTOS_FINANCEIROS_OBTIDOS
+          - DESCONTOS_FINANCEIROS_CONCEDIDOS
+          - MULTAS_RECEBIDAS
+          - MULTAS_PAGAS
+          - JUROS_RECEBIDOS
+          - JUROS_PAGOS
+          - TARIFAS
+          - PERDAS
+        id_categoria:
+          type:
+          - string
+          - 'null'
+          format: uuid
+          description: Identificador da categoria configurada para a operação
+          example: e82ba6fd-a291-422f-8ef7-eb383205d743
+        nome_categoria:
+          type:
+          - string
+          - 'null'
+          description: Nome da categoria configurada para a operação
+          example: 0.5 categoria dre
+        sugestao_padrao:
+          $ref: '#/components/schemas/SugestaoPadrao'
+    Categoria:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
+        versao:
+          type: integer
+          example: 0
+        nome:
+          type: string
+          example: Eletrônicos
+        categoria_pai:
+          type:
+          - string
+          - 'null'
+          example: 3d39b8d2-8b16-42d6-abd8-6cfd9d2e06c4
+        tipo:
+          type: string
+          example: RECEITA
+        entrada_dre:
+          type: string
+          example: DESPESAS_ADMINISTRATIVAS
+        considera_custo_dre:
+          type: boolean
+          example: true
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Token de autorização Bearer JWT

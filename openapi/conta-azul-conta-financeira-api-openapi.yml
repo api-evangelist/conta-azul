@@ -1,0 +1,352 @@
+openapi: 3.2.0
+info:
+  title: Financeiro Conta Financeira API
+  version: v1
+  description: A API de Financeiro tem como objetivo oferecer um conjunto de recursos para gerenciar de forma programática os principais aspectos financeiros de uma empresa, desde a criação de eventos de contas a receber ou pagar, passando pela gestão de contas financeiras, centros de custo, categorias, até a consulta de saldos.
+servers:
+- url: https://api-v2.contaazul.com
+  description: Servidor de produção
+security:
+- BearerAuth: []
+tags:
+- name: Conta Financeira
+paths:
+  /v1/conta-financeira:
+    summary: Endpoint de Contas Financeiras
+    get:
+      summary: Retornar as contas financeiras por filtro
+      operationId: searchFinancialAccounts
+      tags:
+      - Conta Financeira
+      description: Permite consultar as contas financeiras existentes no sistema (contas bancárias, cartões, poupança, etc.). Suporta filtros como tipo de conta, nome, se estão ativas, entre outros.
+      parameters:
+      - name: pagina
+        in: query
+        description: Página
+        required: false
+        example: 1
+        schema:
+          type: integer
+          default: 1
+      - name: tamanho_pagina
+        in: query
+        description: Tamanho da página
+        example: 10
+        schema:
+          enum:
+          - 10
+          - 20
+          - 50
+          - 100
+          - 200
+          - 500
+          - 1000
+          type: integer
+        required: false
+      - name: tipos
+        in: query
+        description: Lista de tipos de conta
+        example: APLICACAO
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - APLICACAO
+            - CAIXINHA
+            - CONTA_CORRENTE
+            - CARTAO_CREDITO
+            - INVESTIMENTO
+            - OUTROS
+            - MEIOS_RECEBIMENTO
+            - POUPANCA
+            - COBRANCAS_CONTA_AZUL
+            - RECEBA_FACIL_CARTAO
+      - name: nome
+        in: query
+        description: Nome da conta
+        example: Conta corrente
+        required: false
+        schema:
+          type: string
+      - name: apenas_ativo
+        in: query
+        description: Filtrar apenas contas ativas
+        example: true
+        required: false
+        schema:
+          type: boolean
+      - name: esconde_conta_digital
+        in: query
+        description: Esconder contas digitais
+        example: true
+        required: false
+        schema:
+          type: boolean
+      - name: mostrar_caixinha
+        in: query
+        description: Mostrar contas de caixinha
+        example: true
+        required: false
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  itens_totais:
+                    type: integer
+                    example: 6
+                  itens:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ContaFinanceira'
+                  totais:
+                    $ref: '#/components/schemas/Totais'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+  /v1/conta-financeira/{id_conta_financeira}/saldo-atual:
+    summary: Endpoint de saldo atual da conta financeira
+    get:
+      summary: Retornar o saldo atual pelo id da conta financeira
+      operationId: searchBalanceByFinancialAccountId
+      tags:
+      - Conta Financeira
+      description: Permite obter o saldo atual de uma conta financeira específica identificada por id_conta_financeira. Útil para monitoramento em tempo real de saldos das contas da empresa.
+      parameters:
+      - name: id_conta_financeira
+        in: path
+        description: uuid da conta financeira
+        example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SaldoAtualResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: O valor 'fbbccb85-a71a-4dfdb699-56ac1b5f1115' fornecido no parâmetro 'id_conta_financeira' não é um identificador (uuid) válido.
+              example:
+                code: 400
+                message: O valor 'fbbccb85-a71a-4dfdb699-56ac1b5f1115' fornecido no parâmetro 'id_conta_financeira' não é um identificador (uuid) válido.
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 401
+                  message:
+                    type: string
+                    example: The Token has expired.
+              example:
+                code: 401
+                message: The Token has expired.
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 500
+                  message:
+                    type: string
+                    example: Ocorreu um erro inesperado no servidor. Tente novamente mais tarde.
+              example:
+                code: 500
+                message: Ocorreu um erro inesperado no servidor. Tente novamente mais tarde.
+components:
+  schemas:
+    ContaFinanceira:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
+          description: Identificador único da conta financeira
+        banco:
+          type: string
+          description: Instituição bancária
+          example: BANCO_BRASIL
+          enum:
+          - BANCO_BRASIL
+          - BRADESCO
+          - CAIXA_ECONOMICA
+          - HSBC
+          - ITAU
+          - INTER
+          - ORIGINAL
+          - SANTANDER
+          - BANCOOB
+          - BANESTES
+          - BANPARA
+          - BANRISUL
+          - BCN
+          - BANK_BOSTON
+          - BANCO_BRASILIA
+          - BANCO_NORDESTE
+          - CITIBANK
+          - CREDISAN
+          - NOSSA_CAIXA
+          - MERCANTIL
+          - REAL
+          - SAFRA
+          - SICREDI
+          - SUDAMERIS
+          - UNIBANCO
+          - SICOOB
+          - AILOS
+          - BS2
+          - NUBANK
+          - UNICRED
+          - NEON
+          - C6
+          - CORA
+          - ACESSO
+          - STONE
+          - AGIBANK
+          - ASAAS
+          - TOPAZIO
+          - DAYCOVAL
+          - BANCO_AMAZONIA
+          - BANESE
+          - BTG_PACTUAL
+          - OMNI
+          - GENIAL
+          - CAPITAL
+          - RIBEIRAO_PRETO
+          - PAN
+          - BMG
+          - BNP_PARIBAS_BRASIL
+          - CCR_SAO_MIGUEL_OESTE
+          - CREDISIS
+          - CRESOL
+          - FITBANK
+          - GERENCIANET
+          - GLOBAL_SCM
+          - JP_MORGAN
+          - JUNO
+          - MERCADO_PAGO
+          - MODAL
+          - MONEY_PLUS
+          - NEXT
+          - OTIMO
+          - PAGSEGURO
+          - PICPAY
+          - PJBANK
+          - POLOCRED
+          - RENDIMENTO
+          - UNIPRIME
+          - UNIPRIME_NORTE_PARANA
+          - VORTX_DTVM
+          - BRL_TRUST
+          - IUGU
+          - OUTROS
+          - NAO_BANCO
+        codigo_banco:
+          type: integer
+          example: 1
+          description: Código da instituição bancária
+        nome:
+          type: string
+          example: Conta Corrente
+          description: Nome da conta financeira
+        ativo:
+          type: boolean
+          example: true
+          description: Indica se a conta está ativa
+        tipo:
+          type: string
+          description: Tipo da conta
+          example: APLICACAO
+          enum:
+          - APLICACAO
+          - CAIXINHA
+          - CONTA_CORRENTE
+          - CARTAO_CREDITO
+          - INVESTIMENTO
+          - OUTROS
+          - MEIOS_RECEBIMENTO
+          - POUPANCA
+          - COBRANCAS_CONTA_AZUL
+          - RECEBA_FACIL_CARTAO
+        conta_padrao:
+          type: boolean
+          example: true
+          description: Indica se é a conta padrão
+        possui_config_boleto_bancario:
+          type: boolean
+          example: false
+          description: Indica se a conta possui configuração de boleto bancário
+        agencia:
+          type: string
+          example: '001'
+          description: Agência da conta
+        numero:
+          type: string
+          example: '31'
+          description: Número da conta
+    SaldoAtualResponse:
+      type: object
+      description: Saldo atual da conta financeira
+      properties:
+        saldo_atual:
+          type: number
+          format: double
+          example: 1000.36
+    Totais:
+      type: object
+      properties:
+        ativo:
+          type: integer
+          description: Total de centros de custo ativos
+          example: 6
+        inativo:
+          type: integer
+          description: Total de centros de custo inativos
+          example: 0
+        todos:
+          type: integer
+          description: Total de centros de custo
+          example: 6
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Token de autorização Bearer JWT

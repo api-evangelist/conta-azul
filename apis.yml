@@ -36,6 +36,9 @@ specificationVersion: '0.23'
 created: '2026-07-17'
 modified: '2026-07-18'
 image: https://contaazul.com/wp-content/themes/contaazul/assets/images/logo.svg
+x-docs-platform: redocly
+x-docs-platform-confidence: medium
+x-docs-platform-checked: 2026-09-24
 tags:
 - Company
 - Fintech
@@ -47,21 +50,18 @@ tags:
 - Invoicing
 - Payments
 apis:
-- aid: conta-azul:conta-azul-v1-api
-  name: Conta Azul v1 API
-  description: Conjunto de recursos para acompanhar e administrar operações relacionadas ao gerenciamento de baixas - esses recursos incluem criar uma nova baixa, retornar as baixas pelo id da parcela, atualizar parcialmente uma baixa por id, deletar baixa por id e retornar a baixa por id
-  humanURL: https://developers.contaazul.com/docs/acquittance-apis-openapi
-  baseURL: https://api-v2.contaazul.com
-  tags:
-  - v1
-  properties:
-  - type: OpenAPI
-    url: openapi/conta-azul-v1-api-openapi.yml
 - name: Conta Azul API
-  description: REST/JSON API for the Conta Azul ERP, organized by functional area (Financeiro, Cobranças, Baixas, Vendas, Pessoas, Produtos, Serviços, Notas Fiscais, Contratos), secured with OAuth 2.0 Authorization Code (AWS Cognito).
+  description: >-
+    REST/JSON API for the Conta Azul ERP, organized by functional area (Financeiro, Cobranças, Baixas,
+    Vendas, Pessoas, Produtos, Serviços, Notas Fiscais, Contratos), secured with OAuth 2.0 Authorization
+    Code (AWS Cognito).
   humanURL: https://developers.contaazul.com
   baseURL: https://api-v2.contaazul.com/v1
   tags:
+  - ERP
+  - Finance
+  - Accounting
+  tags_raw:
   - ERP
   - Financial
   - Accounting
@@ -86,6 +86,96 @@ apis:
     url: data-model/dvpj-data-model.yml
   - type: LLMsTxt
     url: llms/dvpj-llms.txt
+- aid: conta-azul:conta-azul-categorias-api
+  name: Conta Azul Categorias API
+  description: The Categorias API from Conta Azul — 2 operation(s) for categorias.
+  humanURL: https://developers.contaazul.com/docs/acquittance-apis-openapi
+  baseURL: https://api-v2.contaazul.com
+  tags:
+  - Categorias
+  properties:
+  - type: OpenAPI
+    url: openapi/conta-azul-categorias-api-openapi.yml
+- aid: conta-azul:conta-azul-centro-de-custo-api
+  name: Conta Azul Centro De Custo API
+  description: The Centro De Custo API from Conta Azul — 1 operation(s) for centro de custo.
+  humanURL: https://developers.contaazul.com/docs/acquittance-apis-openapi
+  baseURL: https://api-v2.contaazul.com
+  tags:
+  - Centro De Custo
+  properties:
+  - type: OpenAPI
+    url: openapi/conta-azul-centro-de-custo-api-openapi.yml
+- aid: conta-azul:conta-azul-conta-financeira-api
+  name: Conta Azul Conta Financeira API
+  description: The Conta Financeira API from Conta Azul — 2 operation(s) for conta financeira.
+  humanURL: https://developers.contaazul.com/docs/acquittance-apis-openapi
+  baseURL: https://api-v2.contaazul.com
+  tags:
+  - Conta Financeira
+  properties:
+  - type: OpenAPI
+    url: openapi/conta-azul-conta-financeira-api-openapi.yml
+- aid: conta-azul:conta-azul-contratos-api
+  name: Conta Azul Contratos API
+  description: The Contratos API from Conta Azul — 4 operation(s) for contratos.
+  humanURL: https://developers.contaazul.com/docs/acquittance-apis-openapi
+  baseURL: https://api-v2.contaazul.com
+  tags:
+  - Contratos
+  properties:
+  - type: OpenAPI
+    url: openapi/conta-azul-contratos-api-openapi.yml
+- aid: conta-azul:conta-azul-financeiro-api
+  name: Conta Azul Financeiro API
+  description: The Financeiro API from Conta Azul — 14 operation(s) for financeiro.
+  humanURL: https://developers.contaazul.com/docs/acquittance-apis-openapi
+  baseURL: https://api-v2.contaazul.com
+  tags:
+  - Financeiro
+  properties:
+  - type: OpenAPI
+    url: openapi/conta-azul-financeiro-api-openapi.yml
+- aid: conta-azul:conta-azul-orcamentos-api
+  name: Conta Azul Orcamentos API
+  description: The Orcamentos API from Conta Azul — 2 operation(s) for orcamentos.
+  humanURL: https://developers.contaazul.com/docs/acquittance-apis-openapi
+  baseURL: https://api-v2.contaazul.com
+  tags:
+  - Orcamentos
+  properties:
+  - type: OpenAPI
+    url: openapi/conta-azul-orcamentos-api-openapi.yml
+- aid: conta-azul:conta-azul-produto-api
+  name: Conta Azul Produto API
+  description: The Produto API from Conta Azul — 4 operation(s) for produto.
+  humanURL: https://developers.contaazul.com/docs/acquittance-apis-openapi
+  baseURL: https://api-v2.contaazul.com
+  tags:
+  - Produto
+  properties:
+  - type: OpenAPI
+    url: openapi/conta-azul-produto-api-openapi.yml
+- aid: conta-azul:conta-azul-protocolo-api
+  name: Conta Azul Protocolo API
+  description: The Protocolo API from Conta Azul — 1 operation(s) for protocolo.
+  humanURL: https://developers.contaazul.com/docs/acquittance-apis-openapi
+  baseURL: https://api-v2.contaazul.com
+  tags:
+  - Protocolo
+  properties:
+  - type: OpenAPI
+    url: openapi/conta-azul-protocolo-api-openapi.yml
+- aid: conta-azul:conta-azul-venda-api
+  name: Conta Azul Venda API
+  description: The Venda API from Conta Azul — 8 operation(s) for venda.
+  humanURL: https://developers.contaazul.com/docs/acquittance-apis-openapi
+  baseURL: https://api-v2.contaazul.com
+  tags:
+  - Venda
+  properties:
+  - type: OpenAPI
+    url: openapi/conta-azul-venda-api-openapi.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
