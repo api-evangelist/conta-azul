@@ -21,9 +21,7 @@
     "conta-azul-venda-api-openapi.yml",
     "conta-azul-contratos-api-openapi.yml"
   ],
-  "archived": [
-    "deleted 1 superseded output(s) from the previous generation"
-  ],
+  "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
@@ -98,11 +96,18 @@
     "conta-azul-scheduled-sales-openapi.yml: tagged paths POST /v1/contratos/{id}/encerrar -> Contratos",
     "conta-azul-scheduled-sales-openapi.yml: declared missing tag: Contratos",
     "tag 'Financeiro' spans 3 source specs (conta-azul-acquittance-openapi.yml, conta-azul-charge-openapi.yml, conta-azul-financial-openapi.yml): per-path servers applied",
-    "superseded outputs removed: conta-azul-v1-api-openapi.yml",
-    "apis.yml register: written (+9 apis, 10 total)"
+    "apis.yml register: already-registered"
   ],
   "skipped": [
     "_original/conta-azul-contracts-openapi.yml: archived document superseded by a larger archived document",
-    "conta-azul-v1-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+    "conta-azul-categorias-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "conta-azul-centro-de-custo-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "conta-azul-conta-financeira-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "conta-azul-contratos-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "conta-azul-financeiro-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "conta-azul-orcamentos-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "conta-azul-produto-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "conta-azul-protocolo-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "conta-azul-venda-api-openapi.yml: previously refined output, superseded by openapi/_original/"
   ]
 }

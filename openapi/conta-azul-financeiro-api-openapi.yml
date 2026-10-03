@@ -1240,221 +1240,6 @@ paths:
       description: Servidor de produção
 components:
   schemas:
-    ValorComposicaoDTO:
-      type: object
-      required:
-      - valor_bruto
-      properties:
-        multa:
-          type: number
-          format: double
-          example: 5
-          description: Valor da multa, deve ser maior ou igual a zero
-        juros:
-          type: number
-          format: double
-          example: 2.5
-          description: Valor dos juros, deve ser maior ou igual a zero
-        valor_bruto:
-          type: number
-          format: double
-          example: 150
-          description: Valor bruto, deve ser informado e maior ou igual a zero
-        desconto:
-          type: number
-          format: double
-          example: 10
-          description: Valor do desconto, deve ser maior ou igual a zero
-        taxa:
-          type: number
-          format: double
-          example: 3.75
-          description: Valor da taxa, deve ser maior ou igual a zero
-    BaixaCriacaoRequestDTO:
-      type: object
-      required:
-      - data_pagamento
-      - conta_financeira
-      - composicao_valor
-      properties:
-        data_pagamento:
-          type: string
-          format: date
-          example: '2023-10-01'
-          description: Data do pagamento
-        composicao_valor:
-          $ref: '#/components/schemas/ValorComposicaoDTO'
-        conta_financeira:
-          type: string
-          format: uuid
-          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
-          description: Identificador único da conta financeira
-        metodo_pagamento:
-          type: string
-          example: CARTAO_CREDITO
-          description: Método de pagamento
-          enum:
-          - DINHEIRO
-          - CARTAO_CREDITO
-          - BOLETO_BANCARIO
-          - CARTAO_CREDITO_VIA_LINK
-          - CHEQUE
-          - CARTAO_DEBITO
-          - TRANSFERENCIA_BANCARIA
-          - OUTRO
-          - CARTEIRA_DIGITAL
-          - CASHBACK
-          - CREDITO_LOJA
-          - CREDITO_VIRTUAL
-          - DEPOSITO_BANCARIO
-          - PIX_PAGAMENTO_INSTANTANEO
-        observacao:
-          type: string
-          example: 'Pagamento referente à fatura #1234.'
-          description: Observação
-        nsu:
-          type: string
-          example: '1234567890'
-          description: Número sequencial único
-    BaixaCriacaoResponseDTO:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
-          description: Identificador único gerado automaticamente após a criação
-        versao:
-          type: integer
-          format: int64
-          example: 1
-          description: Versão da baixa
-        data_pagamento:
-          type: string
-          format: date
-          example: '2023-10-01'
-          description: Data do pagamento
-        composicao_valor:
-          $ref: '#/components/schemas/ValorComposicaoDTO'
-        conta_financeira:
-          type: string
-          format: uuid
-          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
-          description: Identificador único da conta financeira
-        metodo_pagamento:
-          type: string
-          example: CARTAO_CREDITO
-          description: Método de pagamento
-          enum:
-          - DINHEIRO
-          - CARTAO_CREDITO
-          - BOLETO_BANCARIO
-          - CARTAO_CREDITO_VIA_LINK
-          - CHEQUE
-          - CARTAO_DEBITO
-          - TRANSFERENCIA_BANCARIA
-          - OUTRO
-          - CARTEIRA_DIGITAL
-          - CASHBACK
-          - CREDITO_LOJA
-          - CREDITO_VIRTUAL
-          - DEPOSITO_BANCARIO
-          - PIX_PAGAMENTO_INSTANTANEO
-        observacao:
-          type: string
-          example: 'Pagamento referente à fatura #1234.'
-          description: Observação
-        nsu:
-          type: string
-          example: '1234567890'
-          description: Número sequencial único
-    AnexoBaixaResponseDTO:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
-          description: Identificador único do anexo
-        referencia:
-          type: string
-          example: REF1234
-          description: Referência associada ao anexo
-        nome:
-          type: string
-          example: pagamento_recibo.pdf
-          description: Nome do anexo
-        descricao:
-          type: string
-          example: 'Recibo de pagamento referente à fatura #1234.'
-          description: Descrição detalhada do anexo
-        tipo:
-          type: string
-          example: RECIBO_DIGITAL
-          description: Tipo do anexo
-          enum:
-          - RECIBO_DIGITAL
-          - RECIBO
-        tipo_conteudo:
-          type: string
-          example: FILE
-          description: Tipo de conteúdo do anexo
-          enum:
-          - FILE
-          - URL
-        url:
-          type: string
-          example: https://example.com/attachment.pdf
-          description: URL do anexo
-    BaixaAtualizacaoRequestDTO:
-      type: object
-      required:
-      - versao
-      properties:
-        versao:
-          type: integer
-          format: int64
-          example: 1
-          description: Versão atual do registro. Este valor será incrementado após sucesso na atualização
-        data_pagamento:
-          type: string
-          format: date
-          example: '2023-10-01'
-          description: Data do pagamento
-        composicao_valor:
-          $ref: '#/components/schemas/ValorComposicaoDTO'
-        conta_financeira:
-          type: string
-          format: uuid
-          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
-          description: Identificador único da conta financeira
-        metodo_pagamento:
-          type: string
-          example: CARTAO_CREDITO
-          description: Método de pagamento
-          enum:
-          - DINHEIRO
-          - CARTAO_CREDITO
-          - BOLETO_BANCARIO
-          - CARTAO_CREDITO_VIA_LINK
-          - CHEQUE
-          - CARTAO_DEBITO
-          - TRANSFERENCIA_BANCARIA
-          - OUTRO
-          - CARTEIRA_DIGITAL
-          - CASHBACK
-          - CREDITO_LOJA
-          - CREDITO_VIRTUA
-          - DEPOSITO_BANCARIO
-          - PIX_PAGAMENTO_INSTANTANEO
-        observacao:
-          type: string
-          example: 'Pagamento referente à fatura #1234.'
-          description: Observação adicional
-        nsu:
-          type: string
-          example: '1234567890'
-          description: Número sequencial único
     BaixaResponseDTO:
       type: object
       properties:
@@ -1576,6 +1361,244 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AnexoBaixaResponseDTO'
+    BaixaCriacaoRequestDTO:
+      type: object
+      required:
+      - data_pagamento
+      - conta_financeira
+      - composicao_valor
+      properties:
+        data_pagamento:
+          type: string
+          format: date
+          example: '2023-10-01'
+          description: Data do pagamento
+        composicao_valor:
+          $ref: '#/components/schemas/ValorComposicaoDTO'
+        conta_financeira:
+          type: string
+          format: uuid
+          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
+          description: Identificador único da conta financeira
+        metodo_pagamento:
+          type: string
+          example: CARTAO_CREDITO
+          description: Método de pagamento
+          enum:
+          - DINHEIRO
+          - CARTAO_CREDITO
+          - BOLETO_BANCARIO
+          - CARTAO_CREDITO_VIA_LINK
+          - CHEQUE
+          - CARTAO_DEBITO
+          - TRANSFERENCIA_BANCARIA
+          - OUTRO
+          - CARTEIRA_DIGITAL
+          - CASHBACK
+          - CREDITO_LOJA
+          - CREDITO_VIRTUAL
+          - DEPOSITO_BANCARIO
+          - PIX_PAGAMENTO_INSTANTANEO
+        observacao:
+          type: string
+          example: 'Pagamento referente à fatura #1234.'
+          description: Observação
+        nsu:
+          type: string
+          example: '1234567890'
+          description: Número sequencial único
+    BaixaAtualizacaoRequestDTO:
+      type: object
+      required:
+      - versao
+      properties:
+        versao:
+          type: integer
+          format: int64
+          example: 1
+          description: Versão atual do registro. Este valor será incrementado após sucesso na atualização
+        data_pagamento:
+          type: string
+          format: date
+          example: '2023-10-01'
+          description: Data do pagamento
+        composicao_valor:
+          $ref: '#/components/schemas/ValorComposicaoDTO'
+        conta_financeira:
+          type: string
+          format: uuid
+          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
+          description: Identificador único da conta financeira
+        metodo_pagamento:
+          type: string
+          example: CARTAO_CREDITO
+          description: Método de pagamento
+          enum:
+          - DINHEIRO
+          - CARTAO_CREDITO
+          - BOLETO_BANCARIO
+          - CARTAO_CREDITO_VIA_LINK
+          - CHEQUE
+          - CARTAO_DEBITO
+          - TRANSFERENCIA_BANCARIA
+          - OUTRO
+          - CARTEIRA_DIGITAL
+          - CASHBACK
+          - CREDITO_LOJA
+          - CREDITO_VIRTUA
+          - DEPOSITO_BANCARIO
+          - PIX_PAGAMENTO_INSTANTANEO
+        observacao:
+          type: string
+          example: 'Pagamento referente à fatura #1234.'
+          description: Observação adicional
+        nsu:
+          type: string
+          example: '1234567890'
+          description: Número sequencial único
+    BaixaCriacaoResponseDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
+          description: Identificador único gerado automaticamente após a criação
+        versao:
+          type: integer
+          format: int64
+          example: 1
+          description: Versão da baixa
+        data_pagamento:
+          type: string
+          format: date
+          example: '2023-10-01'
+          description: Data do pagamento
+        composicao_valor:
+          $ref: '#/components/schemas/ValorComposicaoDTO'
+        conta_financeira:
+          type: string
+          format: uuid
+          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
+          description: Identificador único da conta financeira
+        metodo_pagamento:
+          type: string
+          example: CARTAO_CREDITO
+          description: Método de pagamento
+          enum:
+          - DINHEIRO
+          - CARTAO_CREDITO
+          - BOLETO_BANCARIO
+          - CARTAO_CREDITO_VIA_LINK
+          - CHEQUE
+          - CARTAO_DEBITO
+          - TRANSFERENCIA_BANCARIA
+          - OUTRO
+          - CARTEIRA_DIGITAL
+          - CASHBACK
+          - CREDITO_LOJA
+          - CREDITO_VIRTUAL
+          - DEPOSITO_BANCARIO
+          - PIX_PAGAMENTO_INSTANTANEO
+        observacao:
+          type: string
+          example: 'Pagamento referente à fatura #1234.'
+          description: Observação
+        nsu:
+          type: string
+          example: '1234567890'
+          description: Número sequencial único
+    ValorComposicaoDTO:
+      type: object
+      required:
+      - valor_bruto
+      properties:
+        multa:
+          type: number
+          format: double
+          example: 5
+          description: Valor da multa, deve ser maior ou igual a zero
+        juros:
+          type: number
+          format: double
+          example: 2.5
+          description: Valor dos juros, deve ser maior ou igual a zero
+        valor_bruto:
+          type: number
+          format: double
+          example: 150
+          description: Valor bruto, deve ser informado e maior ou igual a zero
+        desconto:
+          type: number
+          format: double
+          example: 10
+          description: Valor do desconto, deve ser maior ou igual a zero
+        taxa:
+          type: number
+          format: double
+          example: 3.75
+          description: Valor da taxa, deve ser maior ou igual a zero
+    AnexoBaixaResponseDTO:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
+          description: Identificador único do anexo
+        referencia:
+          type: string
+          example: REF1234
+          description: Referência associada ao anexo
+        nome:
+          type: string
+          example: pagamento_recibo.pdf
+          description: Nome do anexo
+        descricao:
+          type: string
+          example: 'Recibo de pagamento referente à fatura #1234.'
+          description: Descrição detalhada do anexo
+        tipo:
+          type: string
+          example: RECIBO_DIGITAL
+          description: Tipo do anexo
+          enum:
+          - RECIBO_DIGITAL
+          - RECIBO
+        tipo_conteudo:
+          type: string
+          example: FILE
+          description: Tipo de conteúdo do anexo
+          enum:
+          - FILE
+          - URL
+        url:
+          type: string
+          example: https://example.com/attachment.pdf
+          description: URL do anexo
+    GerarCobrancaRequestAtributosDescontoAntecipado:
+      type: object
+      description: 'Deverá ser informado apenas um dos campos: valor ou percentual'
+      properties:
+        valor:
+          type: number
+          format: double
+          example: 10
+          description: Quando informado, o campo "percentual" deve ser omitido
+        percentual:
+          type: number
+          format: double
+          example: 10
+          description: Quando informado, o campo "valor" deve ser omitido
+        dias_antes_vencer:
+          type: integer
+          example: 10
+          description: Dias antes do vencimento para aplicar o desconto antecipado
+    GerarCobrancaRequestAtributosDto:
+      type: object
+      properties:
+        desconto_antecipado:
+          $ref: '#/components/schemas/GerarCobrancaRequestAtributosDescontoAntecipado'
     GerarCobrancaRequestDto:
       type: object
       required:
@@ -1618,24 +1641,6 @@ components:
           type: integer
           example: 3
           description: Número máximo de parcelas exibido na fatura do cartão
-    GerarCobrancaRequestAtributosDescontoAntecipado:
-      type: object
-      description: 'Deverá ser informado apenas um dos campos: valor ou percentual'
-      properties:
-        valor:
-          type: number
-          format: double
-          example: 10
-          description: Quando informado, o campo "percentual" deve ser omitido
-        percentual:
-          type: number
-          format: double
-          example: 10
-          description: Quando informado, o campo "valor" deve ser omitido
-        dias_antes_vencer:
-          type: integer
-          example: 10
-          description: Dias antes do vencimento para aplicar o desconto antecipado
     GerarCobrancaResponseDto:
       type: object
       properties:
@@ -1666,721 +1671,35 @@ components:
           - PAGO
           - EXTORNADO
           description: Status da cobrança
-    GerarCobrancaRequestAtributosDto:
-      type: object
-      properties:
-        desconto_antecipado:
-          $ref: '#/components/schemas/GerarCobrancaRequestAtributosDescontoAntecipado'
-    ParcelaCondicaoPagamento:
+    ComposicaoValor:
       type: object
       required:
-      - descricao
-      - data_vencimento
-      - nota
-      - conta_financeira
-      - detalhe_valor
+      - valor_bruto
       properties:
-        descricao:
-          type: string
-          example: Mensalidade (2/6)
-          description: Descrição da parcela
-        data_vencimento:
-          type: string
-          format: date
-          example: '2024-07-15'
-          description: Data de vencimento da parcela
-        nota:
-          type: string
-          example: Pagamento realizado via PIX
-          description: Nota adicional sobre a parcela
-        conta_financeira:
-          type: string
-          format: uuid
-          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
-          description: Identificador da conta financeira associada à parcela
-        detalhe_valor:
-          $ref: '#/components/schemas/ComposicaoValor'
-        metodo_pagamento:
-          type: string
-          description: Método de pagamento da parcela
-          example: PIX_PAGAMENTO_INSTANTANEO
-          enum:
-          - DINHEIRO
-          - CARTAO_CREDITO
-          - BOLETO_BANCARIO
-          - CARTAO_CREDITO_VIA_LINK
-          - CHEQUE
-          - CARTAO_DEBITO
-          - TRANSFERENCIA_BANCARIA
-          - OUTRO
-          - CARTEIRA_DIGITAL
-          - CASHBACK
-          - CREDITO_LOJA
-          - CREDITO_VIRTUAL
-          - DEPOSITO_BANCARIO
-          - PIX_PAGAMENTO_INSTANTANEO
-          - PROGRAMA_FIDELIDADE
-          - SEM_PAGAMENTO
-          - VALE_ALIMENTACAO
-          - VALE_COMBUSTIVEL
-          - VALE_PRESENTE
-          - VALE_REFEICAO
-          - PIX_COBRANCA
-          - DEBITO_AUTOMATICO
-    SolicitacaoCobranca:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
-        versao:
-          type: integer
-          format: int64
-          example: 1
-        status_solicitacao_cobranca:
-          type: string
-          example: AGUARDANDO_CONFIRMACAO
-          enum:
-          - AGUARDANDO_CONFIRMACAO
-          - EM_CANCELAMENTO
-          - REGISTRADO
-          - QUITADO
-          - CANCELADO
-          - INVALIDO
-          - EXPIRADO
-          - FALHA_EMISSAO
-          - FALHA_CANCELAR
-          - REMESSA_GERADO
-          - REMESSA_PENDENTE
-          - PAGO
-          - EXTORNADO
-        valor_composicao:
-          $ref: '#/components/schemas/ValorComposicao'
-        data_vencimento:
-          type: string
-          format: date
-          example: '2025-09-05'
-        data_quitacao:
-          type: string
-          format: date
-          example: '2025-09-05'
-        tipo_solicitacao_cobranca:
-          type: string
-          example: BOLETO
-          enum:
-          - BOLETO
-          - LINK_PAGAMENTO
-          - BOLETO_REGISTRADO
-          - PIX_COBRANCA
-        id_cliente:
-          type: string
-          format: uuid
-          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
-        id_referencia:
-          type: string
-          example: 5b04139f-fcca-4c64-8d01-1dd568eb420e
-        url:
-          type: string
-          example: www.exemplo.com
-        detalhe_erro:
-          type: string
-          example: Erro de valor...
-        conta_financeira:
-          $ref: '#/components/schemas/ContaFinanceira'
-        notificacao_cobranca:
-          $ref: '#/components/schemas/NotificacaoCobranca'
-        confirmado_em:
-          type: string
-          format: date
-          example: '2025-09-05'
-        descricao:
-          type: string
-          example: Reembolso de Despesas
-        referencia_externa:
-          type: string
-          example: 5b04139f-fcca-4c64-8d01-1dd568eb420e
-        recuperado:
-          type: boolean
-          example: false
-        combinado:
-          type: boolean
-          example: false
-        atributos_personalizados:
-          type: string
-          example: atributos
-    CategoriaParcela:
-      type: object
-      description: Estrutura resumida de categoria enviada em itens de parcela
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Identificador único da categoria
-          example: b134ec6b-30f8-4edc-9a8f-4787fd3381ac
-        nome:
-          description: Nome da categoria
-          type: string
-          example: Adiantamento Salarial
-    AnexoBaixa:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
-        referencia:
-          type: string
-          example: 5b04139f-fcca-4c64-8d01-1dd568eb420e
-        nome:
-          type: string
-          example: baixa_03_05.pdf
-        descricao:
-          type: string
-          example: Pgto 03/05 - Nota Fiscal 4567
-        tipo:
-          type: string
-          example: RECIBO_DIGITAL
-          enum:
-          - RECIBO_DIGITAL
-          - RECIBO
-        tipo_conteudo:
-          type: string
-          example: FILE
-          enum:
-          - FILE
-          - URL
-        url:
-          type: string
-          example: www.example.com
-    AnexoParcela:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
-        versao:
-          type: integer
-          format: int64
-          example: 1
-        descricao:
-          type: string
-          example: Boleto de cobrança
-        nome:
-          type: string
-          example: boleto_03_05.pdf
-        url:
-          type: string
-          example: www.exemplo.com
-        tipo_conteudo:
-          type: string
-          example: URL
-          enum:
-          - FILE
-          - URL
-        referencia:
-          type: string
-          example: 5b04139f-fcca-4c64-8d01-1dd568eb420e
-        tipo_anexo:
-          type: string
-          example: BOLETO_BANCARIO
-          enum:
-          - BOLETO_BANCARIO_RFB
-          - BOLETO_BANCARIO
-          - RECIBO
-          - FATURA
-          - OUTROS
-          - RECIBO_DIGITAL
-        id_parcela:
-          type: string
-          format: uuid
-          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
-    Totais:
-      type: object
-      properties:
-        ativo:
-          type: integer
-          description: Total de centros de custo ativos
-          example: 6
-        inativo:
-          type: integer
-          description: Total de centros de custo inativos
-          example: 0
-        todos:
-          type: integer
-          description: Total de centros de custo
-          example: 6
-    EventoFinanceiro:
-      type: object
-      description: IDs dos eventos financeiros alterados
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Identificador único do evento financeiro
-          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
-    NegociadorContaAPagarOuReceber:
-      type: object
-      properties:
-        id:
-          type: string
-          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
-        nome:
-          type: string
-          example: Maria da Silva
-    Fatura:
-      type: object
-      properties:
-        numero:
-          type: integer
-          format: int64
-          example: 123
-        rps:
-          type: integer
-          format: int64
-          example: 1
-        tipo_fatura:
-          type: string
-          example: NFE
-          enum:
-          - NFE
-          - NFSE
-          - NFCE
-    EventoFinanceiroRequest:
-      type: object
-      required:
-      - data_competencia
-      - valor
-      - observacao
-      - descricao
-      - contato
-      - conta_financeira
-      - condicao_pagamento
-      properties:
-        data_competencia:
-          type: string
-          format: date
-          example: '2024-07-15'
-          description: Data da competência do evento financeiro
-        valor:
+        multa:
           type: number
-          format: decimal
-          example: 100
-          description: Valor do evento financeiro
-        observacao:
-          type: string
-          example: Evento financeiro no valor de R$100,00
-          description: Observação do evento financeiro
-        descricao:
-          type: string
-          example: Prestação de serviço
-          description: Descrição do evento financeiro
-        contato:
-          type: string
-          format: uuid
-          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
-          description: Identificador do negociador
-        conta_financeira:
-          type: string
-          format: uuid
-          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
-          description: Identificador da Conta Financeira
-        rateio:
-          type: array
-          items:
-            $ref: '#/components/schemas/CategoriaRateio'
-        condicao_pagamento:
-          $ref: '#/components/schemas/ListaCondicaoPagamento'
-    CategoriaDRE:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: id do item da categoria DRE
-          example: a1b2c3d4-e5f6-7890-1234-567890abcdef
-        descricao:
-          type: string
-          description: Descrição do item
-          example: Receita Operacional Bruta
-        codigo:
-          type: string
-          description: Código de identificação do item
-          example: '01'
-        posicao:
-          type: integer
-          format: int64
-          description: Ordem de posicionamento do item na estrutura
-          example: 1
-        indica_totalizador:
-          type: boolean
-          description: Indica se o item é um totalizador de subitens
-          example: true
-        representa_soma_custo_medio:
-          type: boolean
-          description: Indica se o item representa a soma do custo médio do produto
-          example: false
-        subitens:
-          type: array
-          description: Lista de subitens aninhados
-          items:
-            $ref: '#/components/schemas/CategoriaDRE'
-        categorias_financeiras:
-          type: array
-          description: Categorias financeiras associadas a este item da DRE
-          items:
-            $ref: '#/components/schemas/CategoriaFinanceira'
-    ContaAReceber:
-      type: object
-      properties:
-        id:
-          type: string
-          example: c6a28b6e-efe4-11ee-8ef8-8b86c5251537
-        descricao:
-          type: string
-          example: Venda de Produtos
-        data_vencimento:
-          type: string
-          example: '2027-08-15'
-        status:
-          type: string
-          example: OVERDUE
-        status_traduzido:
-          example: ATRASADO
-          type: string
-          enum:
-          - PERDIDO
-          - RECEBIDO
-          - EM_ABERTO
-          - RENEGOCIADO
-          - RECEBIDO_PARCIAL
-          - ATRASADO
-        total:
+          example: 100.25
+          description: Valor da multa
+        juros:
           type: number
-          example: 781201.79
-        nao_pago:
+          example: 1.5
+          description: Valor dos juros
+        valor_bruto:
           type: number
-          example: 213023.79
-        pago:
+          example: 275.99
+          description: Valor bruto da parcela
+        valor_liquido:
           type: number
-          example: 0
-        data_criacao:
-          type: string
-          format: date-time
-          example: '2027-08-15T14:30:00Z'
-        data_alteracao:
-          type: string
-          description: Data de alteração da conta a receber (ISO 8601, São Paulo/GMT-3)
-          format: date-time
-          example: '2027-08-15T14:30:00Z'
-        data_competencia:
-          type: string
-          format: date
-          description: Data de competência da parcela (campo data_competencia)
-          example: '2018-03-16'
-        categorias:
-          type: array
-          description: Lista de categorias associadas à parcela (id e nome)
-          items:
-            $ref: '#/components/schemas/CategoriaParcela'
-        centros_custo:
-          type: array
-          description: Lista de centros de custo associados à parcela (id e nome)
-          items:
-            $ref: '#/components/schemas/CentroCustoParcela'
-        cliente:
-          $ref: '#/components/schemas/NegociadorContaAPagarOuReceber'
-        renegociacao:
-          $ref: '#/components/schemas/RenegociacaoContaAReceber'
-    ParcelaContaFinanceira:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          example: 6bac0a7f-0422-48a9-86ea-0b1f0a6f9db9
-        versao:
-          type: integer
-          example: 1
-        nome:
-          type: string
-          description: Nome do banco
-          example: Conta Corrente
-        agencia:
-          type: string
-          example: '001'
-        numero:
-          type: string
-          example: '123'
-        tipo:
-          type: string
-          example: OUTROS
-          enum:
-          - APLICACAO
-          - CAIXINHA
-          - CONTA_CORRENTE
-          - CARTAO_CREDITO
-          - INVESTIMENTO
-          - OUTROS
-          - MEIOS_RECEBIMENTO
-          - POUPANCA
-          - COBRANCAS_CONTA_AZUL
-          - RECEBA_FACIL_CARTAO
-        banco:
-          type: string
-          example: OUTROS
-          enum:
-          - BANCO_BRASIL
-          - BRADESCO
-          - CAIXA_ECONOMICA
-          - HSBC
-          - ITAU
-          - INTER
-          - ORIGINAL
-          - SANTANDER
-          - BANCOOB
-          - BANESTES
-          - BANPARA
-          - BANRISUL
-          - BCN
-          - BANK_BOSTON
-          - BANCO_BRASILIA
-          - BANCO_NORDESTE
-          - CITIBANK
-          - CREDISAN
-          - NOSSA_CAIXA
-          - MERCANTIL
-          - REAL
-          - SAFRA
-          - SICREDI
-          - SUDAMERIS
-          - UNIBANCO
-          - SICOOB
-          - AILOS
-          - BS2
-          - NUBANK
-          - UNICRED
-          - NEON
-          - C6
-          - CORA
-          - ACESSO
-          - STONE
-          - AGIBANK
-          - ASAAS
-          - TOPAZIO
-          - DAYCOVAL
-          - BANCO_AMAZONIA
-          - BANESE
-          - BTG_PACTUAL
-          - OMNI
-          - GENIAL
-          - CAPITAL
-          - RIBEIRAO_PRETO
-          - PAN
-          - BMG
-          - BNP_PARIBAS_BRASIL
-          - CCR_SAO_MIGUEL_OESTE
-          - CREDISIS
-          - CRESOL
-          - FITBANK
-          - GERENCIANET
-          - GLOBAL_SCM
-          - JP_MORGAN
-          - JUNO
-          - MERCADO_PAGO
-          - MODAL
-          - MONEY_PLUS
-          - NEXT
-          - OTIMO
-          - PAGSEGURO
-          - PICPAY
-          - PJBANK
-          - POLOCRED
-          - RENDIMENTO
-          - UNIPRIME
-          - UNIPRIME_NORTE_PARANA
-          - VORTX_DTVM
-          - BRL_TRUST
-          - IUGU
-          - OUTROS
-          - NAO_BANCO
-    Renegociacao:
-      type: object
-      description: Informações de renegociação.
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Identificador único da renegociação.
-          example: 43adf4e9-203c-4f7e-a0f6-08abf3f8a583
-        valor:
+          example: 250.33
+          description: Valor líquido da parcela
+        desconto:
           type: number
-          format: double
-          description: Valor da renegociação.
-          example: 25
-    SaldoInicialContaFinanceira:
-      type: object
-      description: Informações sobre o saldo inicial de uma conta financeira, incluindo o valor e a data de competência
-      properties:
-        tipo:
-          type: string
-          example: RECEITA
-          enum:
-          - RECEITA
-          - DESPESA
-        id_conta_financeira:
-          type: string
-          format: uuid
-          description: Identificador único da conta financeira
-          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
-        data_competencia:
-          type: string
-          format: date
-          description: Data de competência da conta financeira (formato ISO date)
-          example: '2018-03-16'
-        saldo_inicial:
+          example: 2.1
+          description: Valor do desconto
+        taxa:
           type: number
-          description: Saldo inicial da conta financeira na data de competência. Se o saldo for negativo, o tipo deve ser "DESPESA", caso contrário, "RECEITA".
-          format: decimal
-          example: 2500
-    ParcelaAtualizacaoResponse:
-      type: object
-      properties:
-        nota:
-          type: string
-          description: Nota da parcela
-          example: Pgto 3/5
-        descricao:
-          type: string
-          description: Descrição da parcela
-          example: Valor líquido referente ao serviço prestado
-        vencimento:
-          type: string
-          format: date
-          example: '2024-07-15'
-        composicao_valor:
-          $ref: '#/components/schemas/ComposicaoValor'
-        versao:
-          type: integer
-          example: 1
-          description: Nova versão da parcela após salvar as alterações
-        data_pagamento_esperado:
-          type: string
-          format: date
-          example: '2024-07-15'
-        metodo_pagamento:
-          type: string
-          example: CARTAO_CREDITO
-          enum:
-          - DINHEIRO
-          - CARTAO_CREDITO
-          - BOLETO_BANCARIO
-          - CARTAO_CREDITO_VIA_LINK
-          - CHEQUE
-          - CARTAO_DEBITO
-          - TRANSFERENCIA_BANCARIA
-          - OUTRO
-          - CARTEIRA_DIGITAL
-          - CASHBACK
-          - CREDITO_LOJA
-          - CREDITO_VIRTUAL
-          - DEPOSITO_BANCARIO
-          - PIX_PAGAMENTO_INSTANTANEO
-          - PROGRAMA_FIDELIDADE
-          - SEM_PAGAMENTO
-          - VALE_ALIMENTACAO
-          - VALE_COMBUSTIVEL
-          - VALE_PRESENTE
-          - VALE_REFEICAO
-          - PIX_COBRANCA
-          - DEBITO_AUTOMATICO
-        perda:
-          $ref: '#/components/schemas/PerdaFinanceira'
-        nsu:
-          type: string
-          example: '1029384756'
-        pagamento_agendado:
-          type: boolean
-          example: false
-        conta_financeira:
-          $ref: '#/components/schemas/ParcelaContaFinanceira'
-    RateioCentroCusto:
-      type: object
-      properties:
-        id_centro_custo:
-          type: string
-          format: uuid
-          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
-        nome_centro_custo:
-          type: string
-          example: Contabilidade
-        valor:
-          type: number
-          format: double
-          example: 30.5
-    NotificacaoCobranca:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
-        solicitacao_cobranca_ids:
-          type: array
-          example:
-          - 35473eec-4e74-11ee-b500-9f61de8a8b8b
-          items:
-            type: string
-            format: uuid
-        versao:
-          type: integer
-          format: int64
-          example: 1
-        enviado_em:
-          type: string
-          format: date
-          example: '2025-09-05'
-        aberto_em:
-          type: string
-          format: date
-          example: '2025-09-05'
-        itens_notificacao_cobranca:
-          type: array
-          items:
-            $ref: '#/components/schemas/ItemNotificacaoCobranca'
-        assunto:
-          type: string
-          example: Fatura Vencida
-        corpo:
-          type: string
-          example: Verificamos que o prazo de vencimento era [X] dias atrás...
-        respondido_para:
-          type: string
-          example: exemplo@email.com
-        agendado:
-          type: boolean
-          example: false
-        auto_notificacao:
-          type: boolean
-          example: false
-        envio_instantaneo:
-          type: boolean
-          example: false
-    TransferenciaContaFinanceiraResponse:
-      type: object
-      description: Resposta paginada contendo a lista de transferências entre contas financeiras
-      properties:
-        itens_totais:
-          type: integer
-          format: int64
-          description: Número total de transferências encontradas
-          example: 50
-        itens:
-          type: array
-          description: Lista de transferências entre contas financeiras
-          items:
-            $ref: '#/components/schemas/TransferenciaContaFinanceira'
+          example: 4.4
+          description: Valor da taxa
     Baixa:
       type: object
       properties:
@@ -2484,48 +1803,305 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AnexoBaixa'
-    CentroCustoRateio:
+    ValorComposicao:
       type: object
-      properties:
-        id_centro_custo:
-          type: string
-          format: uuid
-          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
-          description: Identificador único do centro de custo
-        valor:
-          type: number
-          format: decimal
-          example: 100
-          description: Valor atribuído ao centro de custo no rateio
-    ComposicaoValor:
-      type: object
-      required:
-      - valor_bruto
       properties:
         multa:
           type: number
-          example: 100.25
-          description: Valor da multa
+          format: double
+          example: 10
         juros:
           type: number
-          example: 1.5
-          description: Valor dos juros
+          format: double
+          example: 1
         valor_bruto:
           type: number
-          example: 275.99
-          description: Valor bruto da parcela
-        valor_liquido:
-          type: number
-          example: 250.33
-          description: Valor líquido da parcela
+          format: double
+          example: 20
         desconto:
           type: number
-          example: 2.1
-          description: Valor do desconto
+          format: double
+          example: 0.1
         taxa:
           type: number
-          example: 4.4
-          description: Valor da taxa
+          format: double
+          example: 0.03
+        valor_liquido:
+          type: number
+          format: double
+          example: 9
+    InstituicaoBancaria:
+      type: object
+      description: Informações da instituição bancária
+      properties:
+        codigo:
+          type: integer
+          description: Código da instituição bancária
+          example: 1
+        nome:
+          type: string
+          description: Nome da instituição bancária
+          example: Banco do Brasil
+    NotificacaoCobranca:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
+        solicitacao_cobranca_ids:
+          type: array
+          example:
+          - 35473eec-4e74-11ee-b500-9f61de8a8b8b
+          items:
+            type: string
+            format: uuid
+        versao:
+          type: integer
+          format: int64
+          example: 1
+        enviado_em:
+          type: string
+          format: date
+          example: '2025-09-05'
+        aberto_em:
+          type: string
+          format: date
+          example: '2025-09-05'
+        itens_notificacao_cobranca:
+          type: array
+          items:
+            $ref: '#/components/schemas/ItemNotificacaoCobranca'
+        assunto:
+          type: string
+          example: Fatura Vencida
+        corpo:
+          type: string
+          example: Verificamos que o prazo de vencimento era [X] dias atrás...
+        respondido_para:
+          type: string
+          example: exemplo@email.com
+        agendado:
+          type: boolean
+          example: false
+        auto_notificacao:
+          type: boolean
+          example: false
+        envio_instantaneo:
+          type: boolean
+          example: false
+    TransferenciaContaFinanceira:
+      type: object
+      description: Representa uma transferência entre contas financeiras da empresa
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Identificador único da transferência
+          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
+        descricao:
+          type: string
+          description: Descrição ou motivo da transferência
+          example: Transferência para conta poupança
+        valor:
+          type: number
+          format: decimal
+          description: Valor da transferência
+          example: 1500.5
+        data:
+          type: string
+          format: date
+          description: Data em que a transferência foi realizada (formato ISO date)
+          example: '2026-02-15'
+        origem:
+          $ref: '#/components/schemas/Quitacao'
+          description: Informações da conta financeira de origem da transferência
+        destino:
+          $ref: '#/components/schemas/Quitacao'
+          description: Informações da conta financeira de destino da transferência
+    ContaAPagar:
+      type: object
+      properties:
+        id:
+          type: string
+          example: c6a28b6e-efe4-11ee-8ef8-8b86c5251537
+        descricao:
+          type: string
+          example: Aluguel do escritório
+        data_vencimento:
+          type: string
+          example: '2027-08-15'
+        status:
+          type: string
+          example: OVERDUE
+        status_traduzido:
+          example: ATRASADO
+          type: string
+          enum:
+          - PERDIDO
+          - RECEBIDO
+          - EM_ABERTO
+          - RENEGOCIADO
+          - RECEBIDO_PARCIAL
+          - ATRASADO
+        total:
+          type: number
+          example: 781201.79
+        nao_pago:
+          type: number
+          example: 213023.79
+        pago:
+          type: number
+          example: 0
+        data_criacao:
+          type: string
+          format: date-time
+          example: '2027-08-15T14:30:00Z'
+        data_alteracao:
+          type: string
+          description: Data de alteração da conta a pagar (ISO 8601, São Paulo/GMT-3)
+          format: date-time
+          example: '2027-08-15T14:30:00Z'
+        data_competencia:
+          type: string
+          format: date
+          description: Data de competência da parcela (campo data_competencia)
+          example: '2018-03-16'
+        categorias:
+          type: array
+          description: Lista de categorias associadas à parcela (id e nome)
+          items:
+            $ref: '#/components/schemas/CategoriaParcela'
+        centros_custo:
+          type: array
+          description: Lista de centros de custo associados à parcela (id e nome)
+          items:
+            $ref: '#/components/schemas/CentroCustoParcela'
+        fornecedor:
+          $ref: '#/components/schemas/NegociadorContaAPagarOuReceber'
+    SolicitacaoCobranca:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
+        versao:
+          type: integer
+          format: int64
+          example: 1
+        status_solicitacao_cobranca:
+          type: string
+          example: AGUARDANDO_CONFIRMACAO
+          enum:
+          - AGUARDANDO_CONFIRMACAO
+          - EM_CANCELAMENTO
+          - REGISTRADO
+          - QUITADO
+          - CANCELADO
+          - INVALIDO
+          - EXPIRADO
+          - FALHA_EMISSAO
+          - FALHA_CANCELAR
+          - REMESSA_GERADO
+          - REMESSA_PENDENTE
+          - PAGO
+          - EXTORNADO
+        valor_composicao:
+          $ref: '#/components/schemas/ValorComposicao'
+        data_vencimento:
+          type: string
+          format: date
+          example: '2025-09-05'
+        data_quitacao:
+          type: string
+          format: date
+          example: '2025-09-05'
+        tipo_solicitacao_cobranca:
+          type: string
+          example: BOLETO
+          enum:
+          - BOLETO
+          - LINK_PAGAMENTO
+          - BOLETO_REGISTRADO
+          - PIX_COBRANCA
+        id_cliente:
+          type: string
+          format: uuid
+          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
+        id_referencia:
+          type: string
+          example: 5b04139f-fcca-4c64-8d01-1dd568eb420e
+        url:
+          type: string
+          example: www.exemplo.com
+        detalhe_erro:
+          type: string
+          example: Erro de valor...
+        conta_financeira:
+          $ref: '#/components/schemas/ContaFinanceira'
+        notificacao_cobranca:
+          $ref: '#/components/schemas/NotificacaoCobranca'
+        confirmado_em:
+          type: string
+          format: date
+          example: '2025-09-05'
+        descricao:
+          type: string
+          example: Reembolso de Despesas
+        referencia_externa:
+          type: string
+          example: 5b04139f-fcca-4c64-8d01-1dd568eb420e
+        recuperado:
+          type: boolean
+          example: false
+        combinado:
+          type: boolean
+          example: false
+        atributos_personalizados:
+          type: string
+          example: atributos
+    ItemNotificacaoCobranca:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
+        versao:
+          type: integer
+          format: int64
+          example: 1
+        email:
+          type: string
+          example: exemplo@email.com
+        sms:
+          type: string
+          example: SMS
+        whatsapp:
+          type: string
+          example: whatsapp
+        status_entrega:
+          type: string
+          example: ENVIADO
+          enum:
+          - ENVIADO
+          - INVALIDO
+    Totais:
+      type: object
+      properties:
+        ativo:
+          type: integer
+          description: Total de centros de custo ativos
+          example: 6
+        inativo:
+          type: integer
+          description: Total de centros de custo inativos
+          example: 0
+        todos:
+          type: integer
+          description: Total de centros de custo
+          example: 6
     ParcelaAtualizacaoRequest:
       type: object
       required:
@@ -2591,108 +2167,95 @@ components:
           type: string
           format: uuid
           example: e12a84ed-fb5c-4b8c-af56-4448b947337c
-    ComposicaoValorTransferencia:
+    ContaAReceber:
       type: object
-      description: Composição detalhada do valor de uma transação financeira
-      properties:
-        valor_bruto:
-          type: number
-          format: decimal
-          description: Valor bruto da transação antes de qualquer ajuste
-          example: 1500.5
-        juros:
-          type: number
-          format: decimal
-          description: Valor de juros aplicado
-          example: 0
-        multa:
-          type: number
-          format: decimal
-          description: Valor de multa aplicado
-          example: 0
-        valor_liquido:
-          type: number
-          format: decimal
-          description: Valor líquido após todos os ajustes (valor_bruto + juros + multa - desconto - taxa)
-          example: 1500.5
-        desconto:
-          type: number
-          format: decimal
-          description: Valor de desconto aplicado
-          example: 0
-        taxa:
-          type: number
-          format: decimal
-          description: Valor de taxa aplicado
-          example: 0
-    PerdaFinanceira:
-      type: object
-      properties:
-        data:
-          type: string
-          format: date
-          example: '2024-07-15'
-        valor:
-          type: number
-          example: 1.99
-    ContaFinanceiraDetalhes:
-      type: object
-      description: Detalhes de uma conta financeira
       properties:
         id:
           type: string
-          format: uuid
-          description: Identificador único da conta financeira
-          example: 8f2a3e45-1c9d-4b3a-a7f1-9e8d7c6b5a4f
-        nome:
+          example: c6a28b6e-efe4-11ee-8ef8-8b86c5251537
+        descricao:
           type: string
-          description: Nome da conta financeira
-          example: Conta Corrente Principal
-        instituicao_bancaria:
-          $ref: '#/components/schemas/InstituicaoBancaria'
-          description: Informações da instituição bancária
-    Evento:
-      type: object
-      properties:
+          example: Venda de Produtos
+        data_vencimento:
+          type: string
+          example: '2027-08-15'
+        status:
+          type: string
+          example: OVERDUE
+        status_traduzido:
+          example: ATRASADO
+          type: string
+          enum:
+          - PERDIDO
+          - RECEBIDO
+          - EM_ABERTO
+          - RENEGOCIADO
+          - RECEBIDO_PARCIAL
+          - ATRASADO
+        total:
+          type: number
+          example: 781201.79
+        nao_pago:
+          type: number
+          example: 213023.79
+        pago:
+          type: number
+          example: 0
+        data_criacao:
+          type: string
+          format: date-time
+          example: '2027-08-15T14:30:00Z'
+        data_alteracao:
+          type: string
+          description: Data de alteração da conta a receber (ISO 8601, São Paulo/GMT-3)
+          format: date-time
+          example: '2027-08-15T14:30:00Z'
         data_competencia:
           type: string
           format: date
-          example: '2025-06-11'
-        id:
+          description: Data de competência da parcela (campo data_competencia)
+          example: '2018-03-16'
+        categorias:
+          type: array
+          description: Lista de categorias associadas à parcela (id e nome)
+          items:
+            $ref: '#/components/schemas/CategoriaParcela'
+        centros_custo:
+          type: array
+          description: Lista de centros de custo associados à parcela (id e nome)
+          items:
+            $ref: '#/components/schemas/CentroCustoParcela'
+        cliente:
+          $ref: '#/components/schemas/NegociadorContaAPagarOuReceber'
+        renegociacao:
+          $ref: '#/components/schemas/RenegociacaoContaAReceber'
+    CentroCustoRateio:
+      type: object
+      properties:
+        id_centro_custo:
           type: string
           format: uuid
           example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
-        condicao_pagamento:
-          $ref: '#/components/schemas/CondicaoPagamento'
-        referencia:
-          $ref: '#/components/schemas/Referencia'
-        agendado:
-          type: boolean
-          example: true
-        tipo:
-          type: string
-          example: RECEITA
-          enum:
-          - RECEITA
-          - DESPESA
-        codigo_referencia:
-          type: string
-          description: Código de referência do evento financeiro
-          example: '123456'
-        rateio:
-          type: array
-          items:
-            $ref: '#/components/schemas/Rateio'
-    ListaCondicaoPagamento:
+          description: Identificador único do centro de custo
+        valor:
+          type: number
+          format: decimal
+          example: 100
+          description: Valor atribuído ao centro de custo no rateio
+    TransferenciaContaFinanceiraResponse:
       type: object
-      required:
-      - parcelas
+      description: Resposta paginada contendo a lista de transferências entre contas financeiras
       properties:
-        parcelas:
+        itens_totais:
+          type: integer
+          format: int64
+          description: Número total de transferências encontradas
+          example: 50
+        itens:
           type: array
+          description: Lista de transferências entre contas financeiras
           items:
-            $ref: '#/components/schemas/ParcelaCondicaoPagamento'
-          description: Lista de parcelas da condição de pagamento
+            $ref: '#/components/schemas/TransferenciaContaFinanceira'
     Parcela:
       type: object
       properties:
@@ -2829,36 +2392,6 @@ components:
           example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
         renegociacao:
           $ref: '#/components/schemas/Renegociacao'
-    Referencia:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
-        revisao:
-          type: string
-          example: '1'
-        origem:
-          type: string
-          example: LANCAMENTO_FINANCEIRO
-          enum:
-          - LANCAMENTO_FINANCEIRO
-          - DAS
-          - FOLHA
-          - TRANSFERENCIA
-          - SALDO_CONTA_BANCARIA
-          - VENDA
-          - COMPRA
-          - VENDA_AGENDADA
-          - COMPRA_AGENDADA
-          - IMPORTACAO_DOCUMENTO
-          - IMPOSTO_RETIDO
-          - SIC
-          - NOTA_COMPRA
-          - ANTECIPACAO
-          - RENEGOCIACAO
-          - HONORARIOS_CONTABEIS
     ContaFinanceira:
       type: object
       properties:
@@ -2989,138 +2522,373 @@ components:
           type: string
           example: '31'
           description: Número da conta
-    RenegociacaoContaAReceber:
+    CondicaoPagamento:
       type: object
-      description: Informações de renegociação.
       properties:
-        id:
+        quantidade_parcelas:
+          type: integer
+          example: 10
+        montante_fixo:
+          type: boolean
+          example: false
+    Rateio:
+      type: object
+      properties:
+        id_categoria:
           type: string
           format: uuid
-          description: Identificador único da renegociação.
-          example: 43adf4e9-203c-4f7e-a0f6-08abf3f8a583
+          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
+        nome_categoria:
+          type: string
+          example: Eletrônicos
         valor:
           type: number
           format: double
-          description: Valor da renegociação.
-          example: 25
-        id_evento:
-          type: string
-          format: uuid
-          description: Identificador único do evento relacionado à renegociação.
-          example: 6460daeb-6db1-4a50-a15d-b9dfb54200ca
-    TransferenciaContaFinanceira:
-      type: object
-      description: Representa uma transferência entre contas financeiras da empresa
-      properties:
-        id:
-          type: string
-          format: uuid
-          description: Identificador único da transferência
-          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
-        descricao:
-          type: string
-          description: Descrição ou motivo da transferência
-          example: Transferência para conta poupança
-        valor:
+          example: 20.5
+        valor_bruto:
           type: number
-          format: decimal
-          description: Valor da transferência
-          example: 1500.5
-        data:
-          type: string
-          format: date
-          description: Data em que a transferência foi realizada (formato ISO date)
-          example: '2026-02-15'
-        origem:
-          $ref: '#/components/schemas/Quitacao'
-          description: Informações da conta financeira de origem da transferência
-        destino:
-          $ref: '#/components/schemas/Quitacao'
-          description: Informações da conta financeira de destino da transferência
-    InstituicaoBancaria:
-      type: object
-      description: Informações da instituição bancária
-      properties:
-        codigo:
-          type: integer
-          description: Código da instituição bancária
-          example: 1
-        nome:
-          type: string
-          description: Nome da instituição bancária
-          example: Banco do Brasil
-    ContasAReceberResponse:
-      type: object
-      properties:
-        itens_totais:
-          type: integer
-          example: 6
-        itens:
+          format: double
+          example: 20.5
+        rateio_centro_custo:
           type: array
           items:
-            $ref: '#/components/schemas/ContaAReceber'
-        totais:
-          $ref: '#/components/schemas/Totais'
-    ContaAPagar:
+            $ref: '#/components/schemas/RateioCentroCusto'
+    EventoFinanceiroRequest:
       type: object
+      required:
+      - data_competencia
+      - valor
+      - observacao
+      - descricao
+      - contato
+      - conta_financeira
+      - condicao_pagamento
       properties:
-        id:
-          type: string
-          example: c6a28b6e-efe4-11ee-8ef8-8b86c5251537
-        descricao:
-          type: string
-          example: Aluguel do escritório
-        data_vencimento:
-          type: string
-          example: '2027-08-15'
-        status:
-          type: string
-          example: OVERDUE
-        status_traduzido:
-          example: ATRASADO
-          type: string
-          enum:
-          - PERDIDO
-          - RECEBIDO
-          - EM_ABERTO
-          - RENEGOCIADO
-          - RECEBIDO_PARCIAL
-          - ATRASADO
-        total:
-          type: number
-          example: 781201.79
-        nao_pago:
-          type: number
-          example: 213023.79
-        pago:
-          type: number
-          example: 0
-        data_criacao:
-          type: string
-          format: date-time
-          example: '2027-08-15T14:30:00Z'
-        data_alteracao:
-          type: string
-          description: Data de alteração da conta a pagar (ISO 8601, São Paulo/GMT-3)
-          format: date-time
-          example: '2027-08-15T14:30:00Z'
         data_competencia:
           type: string
           format: date
-          description: Data de competência da parcela (campo data_competencia)
+          example: '2024-07-15'
+          description: Data da competência do evento financeiro
+        valor:
+          type: number
+          format: decimal
+          example: 100
+          description: Valor do evento financeiro
+        observacao:
+          type: string
+          example: Evento financeiro no valor de R$100,00
+          description: Observação do evento financeiro
+        descricao:
+          type: string
+          example: Prestação de serviço
+          description: Descrição do evento financeiro
+        contato:
+          type: string
+          format: uuid
+          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
+          description: Identificador do negociador
+        conta_financeira:
+          type: string
+          format: uuid
+          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
+          description: Identificador da Conta Financeira
+        rateio:
+          type: array
+          items:
+            $ref: '#/components/schemas/CategoriaRateio'
+        condicao_pagamento:
+          $ref: '#/components/schemas/ListaCondicaoPagamento'
+    ParcelaAtualizacaoResponse:
+      type: object
+      properties:
+        nota:
+          type: string
+          description: Nota da parcela
+          example: Pgto 3/5
+        descricao:
+          type: string
+          description: Descrição da parcela
+          example: Valor líquido referente ao serviço prestado
+        vencimento:
+          type: string
+          format: date
+          example: '2024-07-15'
+        composicao_valor:
+          $ref: '#/components/schemas/ComposicaoValor'
+        versao:
+          type: integer
+          example: 1
+          description: Nova versão da parcela após salvar as alterações
+        data_pagamento_esperado:
+          type: string
+          format: date
+          example: '2024-07-15'
+        metodo_pagamento:
+          type: string
+          example: CARTAO_CREDITO
+          enum:
+          - DINHEIRO
+          - CARTAO_CREDITO
+          - BOLETO_BANCARIO
+          - CARTAO_CREDITO_VIA_LINK
+          - CHEQUE
+          - CARTAO_DEBITO
+          - TRANSFERENCIA_BANCARIA
+          - OUTRO
+          - CARTEIRA_DIGITAL
+          - CASHBACK
+          - CREDITO_LOJA
+          - CREDITO_VIRTUAL
+          - DEPOSITO_BANCARIO
+          - PIX_PAGAMENTO_INSTANTANEO
+          - PROGRAMA_FIDELIDADE
+          - SEM_PAGAMENTO
+          - VALE_ALIMENTACAO
+          - VALE_COMBUSTIVEL
+          - VALE_PRESENTE
+          - VALE_REFEICAO
+          - PIX_COBRANCA
+          - DEBITO_AUTOMATICO
+        perda:
+          $ref: '#/components/schemas/PerdaFinanceira'
+        nsu:
+          type: string
+          example: '1029384756'
+        pagamento_agendado:
+          type: boolean
+          example: false
+        conta_financeira:
+          $ref: '#/components/schemas/ParcelaContaFinanceira'
+    ParcelaCondicaoPagamento:
+      type: object
+      required:
+      - descricao
+      - data_vencimento
+      - nota
+      - conta_financeira
+      - detalhe_valor
+      properties:
+        descricao:
+          type: string
+          example: Mensalidade (2/6)
+          description: Descrição da parcela
+        data_vencimento:
+          type: string
+          format: date
+          example: '2024-07-15'
+          description: Data de vencimento da parcela
+        nota:
+          type: string
+          example: Pagamento realizado via PIX
+          description: Nota adicional sobre a parcela
+        conta_financeira:
+          type: string
+          format: uuid
+          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
+          description: Identificador da conta financeira associada à parcela
+        detalhe_valor:
+          $ref: '#/components/schemas/ComposicaoValor'
+        metodo_pagamento:
+          type: string
+          description: Método de pagamento da parcela
+          example: PIX_PAGAMENTO_INSTANTANEO
+          enum:
+          - DINHEIRO
+          - CARTAO_CREDITO
+          - BOLETO_BANCARIO
+          - CARTAO_CREDITO_VIA_LINK
+          - CHEQUE
+          - CARTAO_DEBITO
+          - TRANSFERENCIA_BANCARIA
+          - OUTRO
+          - CARTEIRA_DIGITAL
+          - CASHBACK
+          - CREDITO_LOJA
+          - CREDITO_VIRTUAL
+          - DEPOSITO_BANCARIO
+          - PIX_PAGAMENTO_INSTANTANEO
+          - PROGRAMA_FIDELIDADE
+          - SEM_PAGAMENTO
+          - VALE_ALIMENTACAO
+          - VALE_COMBUSTIVEL
+          - VALE_PRESENTE
+          - VALE_REFEICAO
+          - PIX_COBRANCA
+          - DEBITO_AUTOMATICO
+    SaldoInicialContaFinanceira:
+      type: object
+      description: Informações sobre o saldo inicial de uma conta financeira, incluindo o valor e a data de competência
+      properties:
+        tipo:
+          type: string
+          example: RECEITA
+          enum:
+          - RECEITA
+          - DESPESA
+        id_conta_financeira:
+          type: string
+          format: uuid
+          description: Identificador único da conta financeira
+          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
+        data_competencia:
+          type: string
+          format: date
+          description: Data de competência da conta financeira (formato ISO date)
           example: '2018-03-16'
-        categorias:
+        saldo_inicial:
+          type: number
+          description: Saldo inicial da conta financeira na data de competência. Se o saldo for negativo, o tipo deve ser "DESPESA", caso contrário, "RECEITA".
+          format: decimal
+          example: 2500
+    CategoriaRateio:
+      type: object
+      required:
+      - id_categoria
+      - valor
+      properties:
+        id_categoria:
+          type: string
+          format: uuid
+          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
+          description: Identificador único da categoria
+        valor:
+          type: number
+          format: decimal
+          example: 100
+          description: Valor atribuído à categoria no rateio
+        rateio_centro_custo:
           type: array
-          description: Lista de categorias associadas à parcela (id e nome)
           items:
-            $ref: '#/components/schemas/CategoriaParcela'
-        centros_custo:
-          type: array
-          description: Lista de centros de custo associados à parcela (id e nome)
-          items:
-            $ref: '#/components/schemas/CentroCustoParcela'
-        fornecedor:
-          $ref: '#/components/schemas/NegociadorContaAPagarOuReceber'
+            $ref: '#/components/schemas/CentroCustoRateio'
+          description: Lista de rateios por centro de custo
+    ParcelaContaFinanceira:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 6bac0a7f-0422-48a9-86ea-0b1f0a6f9db9
+        versao:
+          type: integer
+          example: 1
+        nome:
+          type: string
+          description: Nome do banco
+          example: Conta Corrente
+        agencia:
+          type: string
+          example: '001'
+        numero:
+          type: string
+          example: '123'
+        tipo:
+          type: string
+          example: OUTROS
+          enum:
+          - APLICACAO
+          - CAIXINHA
+          - CONTA_CORRENTE
+          - CARTAO_CREDITO
+          - INVESTIMENTO
+          - OUTROS
+          - MEIOS_RECEBIMENTO
+          - POUPANCA
+          - COBRANCAS_CONTA_AZUL
+          - RECEBA_FACIL_CARTAO
+        banco:
+          type: string
+          example: OUTROS
+          enum:
+          - BANCO_BRASIL
+          - BRADESCO
+          - CAIXA_ECONOMICA
+          - HSBC
+          - ITAU
+          - INTER
+          - ORIGINAL
+          - SANTANDER
+          - BANCOOB
+          - BANESTES
+          - BANPARA
+          - BANRISUL
+          - BCN
+          - BANK_BOSTON
+          - BANCO_BRASILIA
+          - BANCO_NORDESTE
+          - CITIBANK
+          - CREDISAN
+          - NOSSA_CAIXA
+          - MERCANTIL
+          - REAL
+          - SAFRA
+          - SICREDI
+          - SUDAMERIS
+          - UNIBANCO
+          - SICOOB
+          - AILOS
+          - BS2
+          - NUBANK
+          - UNICRED
+          - NEON
+          - C6
+          - CORA
+          - ACESSO
+          - STONE
+          - AGIBANK
+          - ASAAS
+          - TOPAZIO
+          - DAYCOVAL
+          - BANCO_AMAZONIA
+          - BANESE
+          - BTG_PACTUAL
+          - OMNI
+          - GENIAL
+          - CAPITAL
+          - RIBEIRAO_PRETO
+          - PAN
+          - BMG
+          - BNP_PARIBAS_BRASIL
+          - CCR_SAO_MIGUEL_OESTE
+          - CREDISIS
+          - CRESOL
+          - FITBANK
+          - GERENCIANET
+          - GLOBAL_SCM
+          - JP_MORGAN
+          - JUNO
+          - MERCADO_PAGO
+          - MODAL
+          - MONEY_PLUS
+          - NEXT
+          - OTIMO
+          - PAGSEGURO
+          - PICPAY
+          - PJBANK
+          - POLOCRED
+          - RENDIMENTO
+          - UNIPRIME
+          - UNIPRIME_NORTE_PARANA
+          - VORTX_DTVM
+          - BRL_TRUST
+          - IUGU
+          - OUTROS
+          - NAO_BANCO
+    ContaFinanceiraDetalhes:
+      type: object
+      description: Detalhes de uma conta financeira
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Identificador único da conta financeira
+          example: 8f2a3e45-1c9d-4b3a-a7f1-9e8d7c6b5a4f
+        nome:
+          type: string
+          description: Nome da conta financeira
+          example: Conta Corrente Principal
+        instituicao_bancaria:
+          $ref: '#/components/schemas/InstituicaoBancaria'
+          description: Informações da instituição bancária
     Quitacao:
       type: object
       description: Informações de quitação de uma conta financeira incluindo data, composição de valores e detalhes da conta
@@ -3136,42 +2904,97 @@ components:
         conta_financeira:
           $ref: '#/components/schemas/ContaFinanceiraDetalhes'
           description: Informações da conta financeira envolvida
-    CondicaoPagamento:
+    AnexoBaixa:
       type: object
       properties:
-        quantidade_parcelas:
-          type: integer
-          example: 10
-        montante_fixo:
-          type: boolean
-          example: false
-    ValorComposicao:
+        id:
+          type: string
+          format: uuid
+          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
+        referencia:
+          type: string
+          example: 5b04139f-fcca-4c64-8d01-1dd568eb420e
+        nome:
+          type: string
+          example: baixa_03_05.pdf
+        descricao:
+          type: string
+          example: Pgto 03/05 - Nota Fiscal 4567
+        tipo:
+          type: string
+          example: RECIBO_DIGITAL
+          enum:
+          - RECIBO_DIGITAL
+          - RECIBO
+        tipo_conteudo:
+          type: string
+          example: FILE
+          enum:
+          - FILE
+          - URL
+        url:
+          type: string
+          example: www.example.com
+    ComposicaoValorTransferencia:
       type: object
+      description: Composição detalhada do valor de uma transação financeira
       properties:
-        multa:
-          type: number
-          format: double
-          example: 10
-        juros:
-          type: number
-          format: double
-          example: 1
         valor_bruto:
           type: number
-          format: double
-          example: 20
-        desconto:
+          format: decimal
+          description: Valor bruto da transação antes de qualquer ajuste
+          example: 1500.5
+        juros:
           type: number
-          format: double
-          example: 0.1
-        taxa:
+          format: decimal
+          description: Valor de juros aplicado
+          example: 0
+        multa:
           type: number
-          format: double
-          example: 0.03
+          format: decimal
+          description: Valor de multa aplicado
+          example: 0
         valor_liquido:
           type: number
+          format: decimal
+          description: Valor líquido após todos os ajustes (valor_bruto + juros + multa - desconto - taxa)
+          example: 1500.5
+        desconto:
+          type: number
+          format: decimal
+          description: Valor de desconto aplicado
+          example: 0
+        taxa:
+          type: number
+          format: decimal
+          description: Valor de taxa aplicado
+          example: 0
+    Renegociacao:
+      type: object
+      description: Informações de renegociação.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Identificador único da renegociação.
+          example: 43adf4e9-203c-4f7e-a0f6-08abf3f8a583
+        valor:
+          type: number
           format: double
-          example: 9
+          description: Valor da renegociação.
+          example: 25
+    ContasAReceberResponse:
+      type: object
+      properties:
+        itens_totais:
+          type: integer
+          example: 6
+        itens:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContaAReceber'
+        totais:
+          $ref: '#/components/schemas/Totais'
     CentroCustoParcela:
       type: object
       description: Estrutura resumida de centro de custo enviada em itens de parcela
@@ -3185,6 +3008,166 @@ components:
           type: string
           example: Centro de custo de Teste
           description: Nome do centro de custo
+    CategoriaParcela:
+      type: object
+      description: Estrutura resumida de categoria enviada em itens de parcela
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Identificador único da categoria
+          example: b134ec6b-30f8-4edc-9a8f-4787fd3381ac
+        nome:
+          description: Nome da categoria
+          type: string
+          example: Adiantamento Salarial
+    Evento:
+      type: object
+      properties:
+        data_competencia:
+          type: string
+          format: date
+          example: '2025-06-11'
+        id:
+          type: string
+          format: uuid
+          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
+        condicao_pagamento:
+          $ref: '#/components/schemas/CondicaoPagamento'
+        referencia:
+          $ref: '#/components/schemas/Referencia'
+        agendado:
+          type: boolean
+          example: true
+        tipo:
+          type: string
+          example: RECEITA
+          enum:
+          - RECEITA
+          - DESPESA
+        codigo_referencia:
+          type: string
+          description: Código de referência do evento financeiro
+          example: '123456'
+        rateio:
+          type: array
+          items:
+            $ref: '#/components/schemas/Rateio'
+    CategoriaDRE:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: id do item da categoria DRE
+          example: a1b2c3d4-e5f6-7890-1234-567890abcdef
+        descricao:
+          type: string
+          description: Descrição do item
+          example: Receita Operacional Bruta
+        codigo:
+          type: string
+          description: Código de identificação do item
+          example: '01'
+        posicao:
+          type: integer
+          format: int64
+          description: Ordem de posicionamento do item na estrutura
+          example: 1
+        indica_totalizador:
+          type: boolean
+          description: Indica se o item é um totalizador de subitens
+          example: true
+        representa_soma_custo_medio:
+          type: boolean
+          description: Indica se o item representa a soma do custo médio do produto
+          example: false
+        subitens:
+          type: array
+          description: Lista de subitens aninhados
+          items:
+            $ref: '#/components/schemas/CategoriaDRE'
+        categorias_financeiras:
+          type: array
+          description: Categorias financeiras associadas a este item da DRE
+          items:
+            $ref: '#/components/schemas/CategoriaFinanceira'
+    RateioCentroCusto:
+      type: object
+      properties:
+        id_centro_custo:
+          type: string
+          format: uuid
+          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
+        nome_centro_custo:
+          type: string
+          example: Contabilidade
+        valor:
+          type: number
+          format: double
+          example: 30.5
+    ListaCondicaoPagamento:
+      type: object
+      required:
+      - parcelas
+      properties:
+        parcelas:
+          type: array
+          items:
+            $ref: '#/components/schemas/ParcelaCondicaoPagamento'
+          description: Lista de parcelas da condição de pagamento
+    EventoFinanceiro:
+      type: object
+      description: IDs dos eventos financeiros alterados
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Identificador único do evento financeiro
+          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
+    AnexoParcela:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
+        versao:
+          type: integer
+          format: int64
+          example: 1
+        descricao:
+          type: string
+          example: Boleto de cobrança
+        nome:
+          type: string
+          example: boleto_03_05.pdf
+        url:
+          type: string
+          example: www.exemplo.com
+        tipo_conteudo:
+          type: string
+          example: URL
+          enum:
+          - FILE
+          - URL
+        referencia:
+          type: string
+          example: 5b04139f-fcca-4c64-8d01-1dd568eb420e
+        tipo_anexo:
+          type: string
+          example: BOLETO_BANCARIO
+          enum:
+          - BOLETO_BANCARIO_RFB
+          - BOLETO_BANCARIO
+          - RECIBO
+          - FATURA
+          - OUTROS
+          - RECIBO_DIGITAL
+        id_parcela:
+          type: string
+          format: uuid
+          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
     CategoriaFinanceira:
       type: object
       properties:
@@ -3205,6 +3188,82 @@ components:
           type: boolean
           description: Indica se a categoria financeira está ativa
           example: true
+    Fatura:
+      type: object
+      properties:
+        numero:
+          type: integer
+          format: int64
+          example: 123
+        rps:
+          type: integer
+          format: int64
+          example: 1
+        tipo_fatura:
+          type: string
+          example: NFE
+          enum:
+          - NFE
+          - NFSE
+          - NFCE
+    Referencia:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
+        revisao:
+          type: string
+          example: '1'
+        origem:
+          type: string
+          example: LANCAMENTO_FINANCEIRO
+          enum:
+          - LANCAMENTO_FINANCEIRO
+          - DAS
+          - FOLHA
+          - TRANSFERENCIA
+          - SALDO_CONTA_BANCARIA
+          - VENDA
+          - COMPRA
+          - VENDA_AGENDADA
+          - COMPRA_AGENDADA
+          - IMPORTACAO_DOCUMENTO
+          - IMPOSTO_RETIDO
+          - SIC
+          - NOTA_COMPRA
+          - ANTECIPACAO
+          - RENEGOCIACAO
+          - HONORARIOS_CONTABEIS
+    NegociadorContaAPagarOuReceber:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
+        nome:
+          type: string
+          example: Maria da Silva
+    RenegociacaoContaAReceber:
+      type: object
+      description: Informações de renegociação.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Identificador único da renegociação.
+          example: 43adf4e9-203c-4f7e-a0f6-08abf3f8a583
+        valor:
+          type: number
+          format: double
+          description: Valor da renegociação.
+          example: 25
+        id_evento:
+          type: string
+          format: uuid
+          description: Identificador único do evento relacionado à renegociação.
+          example: 6460daeb-6db1-4a50-a15d-b9dfb54200ca
     EstruturaDRE:
       type: object
       properties:
@@ -3234,75 +3293,16 @@ components:
           format: date-time
           example: '2024-10-22T14:30:00Z'
           description: Data de criação do protocolo
-    Rateio:
+    PerdaFinanceira:
       type: object
       properties:
-        id_categoria:
+        data:
           type: string
-          format: uuid
-          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
-        nome_categoria:
-          type: string
-          example: Eletrônicos
+          format: date
+          example: '2024-07-15'
         valor:
           type: number
-          format: double
-          example: 20.5
-        valor_bruto:
-          type: number
-          format: double
-          example: 20.5
-        rateio_centro_custo:
-          type: array
-          items:
-            $ref: '#/components/schemas/RateioCentroCusto'
-    ItemNotificacaoCobranca:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
-        versao:
-          type: integer
-          format: int64
-          example: 1
-        email:
-          type: string
-          example: exemplo@email.com
-        sms:
-          type: string
-          example: SMS
-        whatsapp:
-          type: string
-          example: whatsapp
-        status_entrega:
-          type: string
-          example: ENVIADO
-          enum:
-          - ENVIADO
-          - INVALIDO
-    CategoriaRateio:
-      type: object
-      required:
-      - id_categoria
-      - valor
-      properties:
-        id_categoria:
-          type: string
-          format: uuid
-          example: 35473eec-4e74-11ee-b500-9f61de8a8b8b
-          description: Identificador único da categoria
-        valor:
-          type: number
-          format: decimal
-          example: 100
-          description: Valor atribuído à categoria no rateio
-        rateio_centro_custo:
-          type: array
-          items:
-            $ref: '#/components/schemas/CentroCustoRateio'
-          description: Lista de rateios por centro de custo
+          example: 1.99
   securitySchemes:
     BearerAuth:
       type: http

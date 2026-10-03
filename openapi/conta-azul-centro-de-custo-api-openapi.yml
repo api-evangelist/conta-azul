@@ -134,6 +134,33 @@ components:
           type: integer
           description: Total de centros de custo
           example: 6
+    CriacaoCentroDeCustoRequest:
+      type: object
+      required:
+      - nome
+      properties:
+        codigo:
+          type:
+          - string
+          - 'null'
+          description: Código do centro de custo
+          example: '1040'
+        nome:
+          type: string
+          description: Nome do centro de custo
+          example: Contabilidade
+    CentroDeCustoResponse:
+      type: object
+      properties:
+        itens_totais:
+          type: integer
+          example: 6
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CentroDeCusto'
+        totais:
+          $ref: '#/components/schemas/Totais'
     CentroDeCusto:
       type: object
       properties:
@@ -156,33 +183,6 @@ components:
           type: boolean
           description: Indica se o centro de custo está ativo
           example: true
-    CentroDeCustoResponse:
-      type: object
-      properties:
-        itens_totais:
-          type: integer
-          example: 6
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/CentroDeCusto'
-        totais:
-          $ref: '#/components/schemas/Totais'
-    CriacaoCentroDeCustoRequest:
-      type: object
-      required:
-      - nome
-      properties:
-        codigo:
-          type:
-          - string
-          - 'null'
-          description: Código do centro de custo
-          example: '1040'
-        nome:
-          type: string
-          description: Nome do centro de custo
-          example: Contabilidade
   securitySchemes:
     BearerAuth:
       type: http

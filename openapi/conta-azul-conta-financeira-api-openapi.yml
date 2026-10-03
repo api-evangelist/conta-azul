@@ -191,6 +191,29 @@ paths:
                 message: Ocorreu um erro inesperado no servidor. Tente novamente mais tarde.
 components:
   schemas:
+    Totais:
+      type: object
+      properties:
+        ativo:
+          type: integer
+          description: Total de centros de custo ativos
+          example: 6
+        inativo:
+          type: integer
+          description: Total de centros de custo inativos
+          example: 0
+        todos:
+          type: integer
+          description: Total de centros de custo
+          example: 6
+    SaldoAtualResponse:
+      type: object
+      description: Saldo atual da conta financeira
+      properties:
+        saldo_atual:
+          type: number
+          format: double
+          example: 1000.36
     ContaFinanceira:
       type: object
       properties:
@@ -321,29 +344,6 @@ components:
           type: string
           example: '31'
           description: Número da conta
-    SaldoAtualResponse:
-      type: object
-      description: Saldo atual da conta financeira
-      properties:
-        saldo_atual:
-          type: number
-          format: double
-          example: 1000.36
-    Totais:
-      type: object
-      properties:
-        ativo:
-          type: integer
-          description: Total de centros de custo ativos
-          example: 6
-        inativo:
-          type: integer
-          description: Total de centros de custo inativos
-          example: 0
-        todos:
-          type: integer
-          description: Total de centros de custo
-          example: 6
   securitySchemes:
     BearerAuth:
       type: http

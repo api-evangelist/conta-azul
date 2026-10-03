@@ -161,6 +161,21 @@ paths:
           description: Internal Server Error
 components:
   schemas:
+    Totais:
+      type: object
+      properties:
+        ativo:
+          type: integer
+          description: Total de centros de custo ativos
+          example: 6
+        inativo:
+          type: integer
+          description: Total de centros de custo inativos
+          example: 0
+        todos:
+          type: integer
+          description: Total de centros de custo
+          example: 6
     SugestaoPadrao:
       type:
       - object
@@ -178,21 +193,6 @@ components:
           type: string
           description: Nome da operação financeira correspondente à sugestão
           example: Fretes recebidos
-    Totais:
-      type: object
-      properties:
-        ativo:
-          type: integer
-          description: Total de centros de custo ativos
-          example: 6
-        inativo:
-          type: integer
-          description: Total de centros de custo inativos
-          example: 0
-        todos:
-          type: integer
-          description: Total de centros de custo
-          example: 6
     ConfiguracaoPadraoCategoria:
       type: object
       description: Item do de-para entre uma operação financeira e a categoria configurada para o tenant
