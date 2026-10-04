@@ -182,6 +182,9 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: CapabilityMap
+  url: capabilities/conta-azul-capability-edges.yml
+  name: Conta Azul Business Capability Map
 - type: Overlay
   url: overlays/conta-azul-acquittance-overlay.yaml
 - type: DomainSecurity
