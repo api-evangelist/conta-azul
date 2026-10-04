@@ -405,6 +405,18 @@ components:
           description: Versão do orçamento
           type: integer
           example: 1
+    ComposicaoValorOrcamento:
+      description: Modelo que representa a composição de valor de um orçamento
+      type: object
+      properties:
+        desconto:
+          description: Desconto aplicado ao orçamento
+          allOf:
+          - $ref: '#/components/schemas/DescontoOrcamento'
+        frete:
+          description: Valor do frete do orçamento
+          type: number
+          example: 5
     CriarItemOrcamento:
       description: Modelo de criação de item do orçamento
       type: object
@@ -427,18 +439,6 @@ components:
           description: Valor de custo do item
           type: number
           example: 8
-    ComposicaoValorOrcamento:
-      description: Modelo que representa a composição de valor de um orçamento
-      type: object
-      properties:
-        desconto:
-          description: Desconto aplicado ao orçamento
-          allOf:
-          - $ref: '#/components/schemas/DescontoOrcamento'
-        frete:
-          description: Valor do frete do orçamento
-          type: number
-          example: 5
     TipoDeSituacaoOrcamento:
       description: Enum de tipo de situação de orçamento
       type: string
@@ -450,71 +450,6 @@ components:
       - SITUATION_TYPE_FOR_PROPOSAL
       - SITUATION_TYPE_FOR_PROPOSAL_ACCEPTED
       - SITUATION_TYPE_FOR_PROPOSAL_REFUSED
-    CriarDescontoOrcamento:
-      description: Modelo de criação de desconto aplicado ao orçamento
-      type: object
-      properties:
-        tipo:
-          description: 'Tipo de desconto: VALOR ou PORCENTAGEM'
-          allOf:
-          - $ref: '#/components/schemas/TipoDeDesconto'
-          example: VALOR
-        valor:
-          description: Valor do desconto; se o tipo for PORCENTAGEM, deve ser entre 0 e 100
-          type: number
-          minimum: 0
-          example: 10
-    CriarOrcamento:
-      description: Modelo de criação de orçamento
-      type: object
-      required:
-      - data_orcamento
-      - data_validade
-      - id_cliente
-      - itens
-      properties:
-        composicao_de_valor:
-          description: Composição dos valores do orçamento (frete e desconto)
-          allOf:
-          - $ref: '#/components/schemas/CriarComposicaoValorOrcamento'
-        data_orcamento:
-          description: Data do orçamento no formato YYYY-MM-DD
-          type: string
-          example: '2026-05-01'
-        data_validade:
-          description: Data de validade no formato YYYY-MM-DD; não pode ser anterior à data do orçamento
-          type: string
-          example: '2026-05-15'
-        descricao:
-          description: Descrição do orçamento
-          type: string
-          example: Proposta comercial referente ao mês de maio
-        id_cliente:
-          description: ID do cliente
-          type: string
-          example: 72f07482-bfda-44b0-a2e7-d8817bf950fa
-        id_vendedor:
-          description: ID do vendedor; se não informado ou inexistente, será utilizado o vendedor default
-          type: string
-          example: 8cc4ff03-e8c6-4d7e-8c41-4245f55f8612
-        itens:
-          description: Lista de itens do orçamento; deve conter ao menos um item
-          type: array
-          minItems: 1
-          items:
-            $ref: '#/components/schemas/CriarItemOrcamento'
-        observacoes:
-          description: Observações gerais
-          type: string
-          example: Cliente solicitou entrega rápida
-        observacoes_pagamento:
-          description: Observações sobre o pagamento
-          type: string
-          example: Pagamento em até 30 dias após aprovação
-        previsao_entrega:
-          description: Previsão de entrega
-          type: string
-          example: Entrega em até 10 dias úteis
     ExclusaoLoteOrcamento:
       description: Modelo de lista de ids para exclusão de orçamentos em lote
       type: object
@@ -531,87 +466,6 @@ components:
           example:
           - 7d7c9d4a-27aa-457e-b981-2df4c81970f7
           - c44e254d-0040-46e2-bccf-6898d0981201
-    DescontoOrcamento:
-      description: Modelo que representa o desconto de um orçamento
-      type: object
-      properties:
-        tipo:
-          description: Tipo do desconto (VALOR ou PORCENTAGEM)
-          allOf:
-          - $ref: '#/components/schemas/TipoDeDesconto'
-          example: VALOR
-        valor:
-          description: Valor do desconto
-          type: number
-          example: 10
-    TipoDeItens:
-      description: Enum de tipo de itens
-      type: string
-      enum:
-      - PRODUTO
-      - SERVICO
-      - PRODUTO_E_SERVICO
-      x-enum-varnames:
-      - ItemsTypeProduto
-      - ItemsTypeServico
-      - ItemsTypeProdutoEServico
-    ResumoCriacaoOrcamento:
-      description: Modelo de resposta da criação de orçamento
-      type: object
-      properties:
-        id:
-          description: ID do orçamento criado
-          type: string
-          example: cae40e8a-8330-4469-9bf7-51cbf3e8e2cd
-    ErroAPI:
-      description: Modelo de resposta para erros da API
-      type: object
-      properties:
-        error:
-          description: Mensagem de erro
-          type: string
-          example: Mensagem de erro detalhada
-    ListagemOrcamentosPorFiltro:
-      description: Listagem de orçamentos com filtros
-      type: object
-      properties:
-        itens:
-          description: Lista de orçamentos
-          type: array
-          items:
-            $ref: '#/components/schemas/ItemOrcamentoPorFiltro'
-        total_itens:
-          description: Total de itens
-          type: integer
-          example: 10
-    ClienteOrcamento:
-      type: object
-      properties:
-        email:
-          description: Email do cliente
-          type: string
-          example: exemplo@email.com
-        id:
-          description: id do cliente
-          type: string
-          example: 123e4567-e89b-12d3-a456-426614174000
-        nome:
-          description: Nome do cliente
-          type: string
-          example: João da Silva
-    CriarComposicaoValorOrcamento:
-      description: Modelo de criação da composição de valor do orçamento, incluindo frete e desconto
-      type: object
-      properties:
-        desconto:
-          description: Detalhes do desconto aplicado ao orçamento
-          allOf:
-          - $ref: '#/components/schemas/CriarDescontoOrcamento'
-        frete:
-          description: Valor do frete; deve ser maior ou igual a 0
-          type: number
-          minimum: 0
-          example: 5
     Orcamento:
       description: Modelo que representa um orçamento
       type: object
@@ -674,6 +528,138 @@ components:
           description: Versão do orçamento
           type: integer
           example: 1
+    ListagemOrcamentosPorFiltro:
+      description: Listagem de orçamentos com filtros
+      type: object
+      properties:
+        itens:
+          description: Lista de orçamentos
+          type: array
+          items:
+            $ref: '#/components/schemas/ItemOrcamentoPorFiltro'
+        total_itens:
+          description: Total de itens
+          type: integer
+          example: 10
+    DescontoOrcamento:
+      description: Modelo que representa o desconto de um orçamento
+      type: object
+      properties:
+        tipo:
+          description: Tipo do desconto (VALOR ou PORCENTAGEM)
+          allOf:
+          - $ref: '#/components/schemas/TipoDeDesconto'
+          example: VALOR
+        valor:
+          description: Valor do desconto
+          type: number
+          example: 10
+    CriarOrcamento:
+      description: Modelo de criação de orçamento
+      type: object
+      required:
+      - data_orcamento
+      - data_validade
+      - id_cliente
+      - itens
+      properties:
+        composicao_de_valor:
+          description: Composição dos valores do orçamento (frete e desconto)
+          allOf:
+          - $ref: '#/components/schemas/CriarComposicaoValorOrcamento'
+        data_orcamento:
+          description: Data do orçamento no formato YYYY-MM-DD
+          type: string
+          example: '2026-05-01'
+        data_validade:
+          description: Data de validade no formato YYYY-MM-DD; não pode ser anterior à data do orçamento
+          type: string
+          example: '2026-05-15'
+        descricao:
+          description: Descrição do orçamento
+          type: string
+          example: Proposta comercial referente ao mês de maio
+        id_cliente:
+          description: ID do cliente
+          type: string
+          example: 72f07482-bfda-44b0-a2e7-d8817bf950fa
+        id_vendedor:
+          description: ID do vendedor; se não informado ou inexistente, será utilizado o vendedor default
+          type: string
+          example: 8cc4ff03-e8c6-4d7e-8c41-4245f55f8612
+        itens:
+          description: Lista de itens do orçamento; deve conter ao menos um item
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/CriarItemOrcamento'
+        observacoes:
+          description: Observações gerais
+          type: string
+          example: Cliente solicitou entrega rápida
+        observacoes_pagamento:
+          description: Observações sobre o pagamento
+          type: string
+          example: Pagamento em até 30 dias após aprovação
+        previsao_entrega:
+          description: Previsão de entrega
+          type: string
+          example: Entrega em até 10 dias úteis
+    TipoDeDesconto:
+      description: Enum de tipo de desconto
+      type: string
+      enum:
+      - PORCENTAGEM
+      - VALOR
+      x-enum-varnames:
+      - DISCOUNT_TYPE_PERCENT
+      - DISCOUNT_TYPE_VALUE
+    TipoItemOrcamento:
+      description: Enum de tipo de item de orçamento
+      type: string
+      enum:
+      - PRODUTO
+      - SERVICO
+      x-enum-varnames:
+      - PROPOSAL_PRODUCT
+      - PROPOSAL_SERVICE
+    ResumoCriacaoOrcamento:
+      description: Modelo de resposta da criação de orçamento
+      type: object
+      properties:
+        id:
+          description: ID do orçamento criado
+          type: string
+          example: cae40e8a-8330-4469-9bf7-51cbf3e8e2cd
+    ClienteOrcamento:
+      type: object
+      properties:
+        email:
+          description: Email do cliente
+          type: string
+          example: exemplo@email.com
+        id:
+          description: id do cliente
+          type: string
+          example: 123e4567-e89b-12d3-a456-426614174000
+        nome:
+          description: Nome do cliente
+          type: string
+          example: João da Silva
+    CriarDescontoOrcamento:
+      description: Modelo de criação de desconto aplicado ao orçamento
+      type: object
+      properties:
+        tipo:
+          description: 'Tipo de desconto: VALOR ou PORCENTAGEM'
+          allOf:
+          - $ref: '#/components/schemas/TipoDeDesconto'
+          example: VALOR
+        valor:
+          description: Valor do desconto; se o tipo for PORCENTAGEM, deve ser entre 0 e 100
+          type: number
+          minimum: 0
+          example: 10
     ItemOrcamento:
       description: Modelo que representa um item de um orçamento
       type: object
@@ -707,24 +693,38 @@ components:
           description: Valor do item do orçamento
           type: number
           example: 10
-    TipoDeDesconto:
-      description: Enum de tipo de desconto
-      type: string
-      enum:
-      - PORCENTAGEM
-      - VALOR
-      x-enum-varnames:
-      - DISCOUNT_TYPE_PERCENT
-      - DISCOUNT_TYPE_VALUE
-    TipoItemOrcamento:
-      description: Enum de tipo de item de orçamento
+    TipoDeItens:
+      description: Enum de tipo de itens
       type: string
       enum:
       - PRODUTO
       - SERVICO
+      - PRODUTO_E_SERVICO
       x-enum-varnames:
-      - PROPOSAL_PRODUCT
-      - PROPOSAL_SERVICE
+      - ItemsTypeProduto
+      - ItemsTypeServico
+      - ItemsTypeProdutoEServico
+    ErroAPI:
+      description: Modelo de resposta para erros da API
+      type: object
+      properties:
+        error:
+          description: Mensagem de erro
+          type: string
+          example: Mensagem de erro detalhada
+    CriarComposicaoValorOrcamento:
+      description: Modelo de criação da composição de valor do orçamento, incluindo frete e desconto
+      type: object
+      properties:
+        desconto:
+          description: Detalhes do desconto aplicado ao orçamento
+          allOf:
+          - $ref: '#/components/schemas/CriarDescontoOrcamento'
+        frete:
+          description: Valor do frete; deve ser maior ou igual a 0
+          type: number
+          minimum: 0
+          example: 5
   securitySchemes:
     BearerAuth:
       description: Digite **'Bearer &lt;JWT&gt;'**, onde JWT é o access_token recebido no login (passo 2 do fluxo de autenticação).

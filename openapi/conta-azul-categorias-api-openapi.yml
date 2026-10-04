@@ -176,23 +176,6 @@ components:
           type: integer
           description: Total de centros de custo
           example: 6
-    SugestaoPadrao:
-      type:
-      - object
-      - 'null'
-      description: Sugestão padrão de categoria para a operação. Quando `sugestao_padrao=false`, este campo é retornado como `null`.
-      properties:
-        id:
-          type:
-          - string
-          - 'null'
-          format: uuid
-          description: Identificador da categoria sugerida
-          example: 1bb1b4fa-0fba-49e6-9fb6-a0342b7575eb
-        nome:
-          type: string
-          description: Nome da operação financeira correspondente à sugestão
-          example: Fretes recebidos
     ConfiguracaoPadraoCategoria:
       type: object
       description: Item do de-para entre uma operação financeira e a categoria configurada para o tenant
@@ -283,6 +266,23 @@ components:
         considera_custo_dre:
           type: boolean
           example: true
+    SugestaoPadrao:
+      type:
+      - object
+      - 'null'
+      description: Sugestão padrão de categoria para a operação. Quando `sugestao_padrao=false`, este campo é retornado como `null`.
+      properties:
+        id:
+          type:
+          - string
+          - 'null'
+          format: uuid
+          description: Identificador da categoria sugerida
+          example: 1bb1b4fa-0fba-49e6-9fb6-a0342b7575eb
+        nome:
+          type: string
+          description: Nome da operação financeira correspondente à sugestão
+          example: Fretes recebidos
   securitySchemes:
     BearerAuth:
       type: http

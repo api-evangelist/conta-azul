@@ -163,6 +163,331 @@ paths:
       - Produto
 components:
   schemas:
+    ProdutoDesativadoResponse:
+      type: object
+      properties:
+        todos:
+          type: array
+          example:
+          - 34471cce-67a2-48b8-a526-1120c0704ed3
+          - 123e4567-e89b-12d3-a456-426614174000
+          items:
+            type: string
+            format: uuid
+          description: Lista de todos os produtos.
+        produtos_desativados:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Lista de produtos desativados.
+          example:
+          - 34471cce-67a2-48b8-a526-1120c0704ed3
+          - 123e4567-e89b-12d3-a456-426614174000
+    ProductVariationOptionRequest:
+      type: object
+      required:
+      - id
+      - descricao
+      properties:
+        id:
+          description: Identificador único da opção de variação é obrigatório. Cada opção de variação deve ter um identificador único em cada cadastro de produto. Ao informar a variação no produto, o mesmo identificador do elemento tipos.opcoes deve ser informado em produtos.opcoes.
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+        descricao:
+          description: Descrição da opção de variação é obrigatório.
+          type: string
+          example: Descrição da opção de variação
+    ListagemDeProdutosPorFiltroResponse:
+      type: object
+      properties:
+        itens:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductListResponse'
+        itens_totais:
+          type: integer
+          example: 1
+    ItemVariacao:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+        nome:
+          type: string
+          example: Produto Variado - Tamanho G
+        codigo:
+          type: string
+          example: PROD123
+        codigo_ean:
+          type: string
+          example: '1234567890123'
+        versao:
+          type: integer
+          example: 1
+        valor_venda:
+          type: number
+          format: double
+          example: 99.99
+        estoque:
+          type: number
+          format: double
+          example: 50
+        opcoes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductVariationOptionResponse'
+    EcommerceRequestProduto:
+      type: object
+      properties:
+        condicao:
+          type: string
+          example: NOVO
+          enum:
+          - NOVO
+          - USADO
+        integracao_habilitada:
+          type: boolean
+          example: false
+        observacao_adicional:
+          type: string
+          example: Descrição adicional....
+        titulo_seo:
+          type: string
+          example: Produto 1.0
+        descricao:
+          type: string
+          example: Lorem ipsum
+        url_seo:
+          type: string
+          example: produto-x-1-0
+    Ecommerce:
+      type: object
+      properties:
+        condicao:
+          type: string
+          example: NOVO
+          enum:
+          - NOVO
+          - USADO
+        integracao_ativa:
+          type: boolean
+          example: true
+        descricao_adicional:
+          type: string
+          example: Descrição adicional do produto
+        titulo_seo:
+          type: string
+          example: Título SEO
+        descricao_seo:
+          type: string
+          example: Descrição SEO
+        url_seo:
+          type: string
+          example: url-seo
+    TipoVariacaoRequest:
+      type: object
+      required:
+      - descricao
+      - opcoes
+      properties:
+        descricao:
+          type: string
+          example: Tamanho
+        opcoes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductVariationOptionRequest'
+    ProductListChildResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 34471cce-67a2-48b8-a526-1120c0704ed3
+        id_legado:
+          type: integer
+          description: ID Legado do produto.
+          example: 12345
+        nome:
+          type: string
+          description: Nome do Produto.
+          example: Produto Exemplo
+        codigo_sku:
+          type: string
+          description: Código SKU.
+          example: SKU123456
+        codigo_ean:
+          type: string
+          description: Código EAN.
+          example: '1234567890123'
+        tipo:
+          type: string
+          description: Tipo do produto.
+          example: VARIACAO
+          enum:
+          - PRODUTO
+          - VARIACAO
+          - KIT_PRODUTOS
+        status:
+          type: string
+          description: Status do produto
+          example: ATIVO
+          enum:
+          - ATIVO
+          - INATIVO
+          - TODOS
+        estoque:
+          type: number
+          format: double
+          description: Estoque.
+          example: 50
+        valor_venda:
+          type: number
+          format: double
+          description: Valor de venda.
+          example: 99.99
+        custo_medio:
+          type: number
+          format: double
+          description: Custo médio.
+          example: 50
+        filhos:
+          type: array
+          description: Lista de produtos filhos. Neste nível retorna vazio.
+          items: {}
+        variacao:
+          type: integer
+          description: Quantidade de filhos/variações. Neste nível retorna 0.
+          example: 0
+        nivel_estoque:
+          type: string
+          description: Nível do estoque
+          example: MINIMO
+          enum:
+          - MINIMO
+          - MAXIMO
+          - PADRAO
+        estoque_minimo:
+          type: number
+          format: double
+          description: Estoque mínimo.
+          example: 10
+        estoque_maximo:
+          type: number
+          format: double
+          description: Estoque máximo.
+          example: 200
+        movimentado:
+          type: boolean
+          description: Indica se o produto foi movimentado
+          example: true
+        id_pai:
+          type: string
+          format: uuid
+          description: ID do produto pai
+          example: 34471cce-67a2-48b8-a526-1120c0704ed3
+        integracao_ecommerce_ativa:
+          type: boolean
+          description: Indica se a integração com o e-commerce está ativa.
+          example: true
+    CriacaoProdutoRequest:
+      type: object
+      required:
+      - nome
+      - formato
+      - estoque
+      - dimensao
+      properties:
+        nome:
+          type: string
+          example: Nome do Produto
+        codigo_sku:
+          type: string
+          example: SKU12345
+        codigo_ean:
+          type: string
+          example: '1234567890123'
+        observacao:
+          type: string
+          example: Descrição do produto
+        formato:
+          type: string
+          example: VARIACAO
+          enum:
+          - SIMPLES
+          - VARIACAO
+        estoque:
+          $ref: '#/components/schemas/EstoqueCriacaoProduto'
+        dimensao:
+          $ref: '#/components/schemas/Dimensao'
+        variacao:
+          $ref: '#/components/schemas/VariacaoRequest'
+        ecommerce:
+          $ref: '#/components/schemas/EcommerceRequestProduto'
+    ItemVariacaoRequest:
+      type: object
+      required:
+      - nome
+      - codigo
+      - estoque
+      - opcoes
+      properties:
+        nome:
+          type: string
+          example: Produto Variado - Tamanho G
+        codigo:
+          type: string
+          example: PROD123
+        codigo_ean:
+          type: string
+          example: '1234567890123'
+        versao:
+          type: integer
+          example: 1
+        valor_venda:
+          type: number
+          format: double
+          example: 99.99
+        estoque:
+          type: number
+          format: double
+          example: 50
+        opcoes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductVariationOptionRequest'
+    EstoqueCriacaoProduto:
+      type: object
+      properties:
+        valor_venda:
+          description: Valor de venda do produto.
+          type: number
+          format: double
+          example: 99.99
+        custo_medio:
+          description: Valor de custo médio do produto.
+          type: number
+          format: double
+          example: 50
+        estoque_disponivel:
+          description: Quantidade de estoque disponível do produto.
+          type: number
+          format: double
+          example: 50.5
+        estoque_minimo:
+          description: Quantidade mínima de estoque do produto.
+          type: number
+          format: double
+          example: 1
+        estoque_maximo:
+          description: Quantidade máxima de estoque do produto.
+          type: number
+          format: double
+          example: 100
     ProductListResponse:
       type: object
       properties:
@@ -294,6 +619,56 @@ components:
           type: boolean
           description: Indica se a integração com o e-commerce está ativa.
           example: true
+    VariacaoResponse:
+      type: object
+      properties:
+        tipos:
+          type: array
+          items:
+            $ref: '#/components/schemas/TipoVariacao'
+        produtos:
+          type: array
+          items:
+            $ref: '#/components/schemas/ItemVariacao'
+    TipoVariacao:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+        descricao:
+          type: string
+          example: Tamanho
+        opcoes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductVariationOptionResponse'
+    Dimensao:
+      type: object
+      properties:
+        altura:
+          type: number
+          format: double
+          example: 10
+        largura:
+          type: number
+          format: double
+          example: 5
+        profundidade:
+          type: number
+          format: double
+          example: 2
+    ProductVariationOptionResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 123e4567-e89b-12d3-a456-426614174000
+        descricao:
+          type: string
+          example: G
     ProdutoResponse:
       type: object
       properties:
@@ -345,30 +720,6 @@ components:
         variacao:
           description: Caso o formato não seja do tipo VARIACAO, este campo será nulo.
           $ref: '#/components/schemas/VariacaoResponse'
-    EcommerceRequestProduto:
-      type: object
-      properties:
-        condicao:
-          type: string
-          example: NOVO
-          enum:
-          - NOVO
-          - USADO
-        integracao_habilitada:
-          type: boolean
-          example: false
-        observacao_adicional:
-          type: string
-          example: Descrição adicional....
-        titulo_seo:
-          type: string
-          example: Produto 1.0
-        descricao:
-          type: string
-          example: Lorem ipsum
-        url_seo:
-          type: string
-          example: produto-x-1-0
     VariacaoRequest:
       type: object
       properties:
@@ -382,64 +733,6 @@ components:
           description: O produto deve conter pelo menos uma opção. Cada item conterá os dados do produto e as opções de variação.
           items:
             $ref: '#/components/schemas/ItemVariacaoRequest'
-    TipoVariacaoRequest:
-      type: object
-      required:
-      - descricao
-      - opcoes
-      properties:
-        descricao:
-          type: string
-          example: Tamanho
-        opcoes:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductVariationOptionRequest'
-    CriacaoProdutoRequest:
-      type: object
-      required:
-      - nome
-      - formato
-      - estoque
-      - dimensao
-      properties:
-        nome:
-          type: string
-          example: Nome do Produto
-        codigo_sku:
-          type: string
-          example: SKU12345
-        codigo_ean:
-          type: string
-          example: '1234567890123'
-        observacao:
-          type: string
-          example: Descrição do produto
-        formato:
-          type: string
-          example: VARIACAO
-          enum:
-          - SIMPLES
-          - VARIACAO
-        estoque:
-          $ref: '#/components/schemas/EstoqueCriacaoProduto'
-        dimensao:
-          $ref: '#/components/schemas/Dimensao'
-        variacao:
-          $ref: '#/components/schemas/VariacaoRequest'
-        ecommerce:
-          $ref: '#/components/schemas/EcommerceRequestProduto'
-    VariacaoResponse:
-      type: object
-      properties:
-        tipos:
-          type: array
-          items:
-            $ref: '#/components/schemas/TipoVariacao'
-        produtos:
-          type: array
-          items:
-            $ref: '#/components/schemas/ItemVariacao'
     Estoque:
       type: object
       properties:
@@ -467,299 +760,6 @@ components:
           type: number
           format: double
           example: 200
-    ItemVariacaoRequest:
-      type: object
-      required:
-      - nome
-      - codigo
-      - estoque
-      - opcoes
-      properties:
-        nome:
-          type: string
-          example: Produto Variado - Tamanho G
-        codigo:
-          type: string
-          example: PROD123
-        codigo_ean:
-          type: string
-          example: '1234567890123'
-        versao:
-          type: integer
-          example: 1
-        valor_venda:
-          type: number
-          format: double
-          example: 99.99
-        estoque:
-          type: number
-          format: double
-          example: 50
-        opcoes:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductVariationOptionRequest'
-    TipoVariacao:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          example: 123e4567-e89b-12d3-a456-426614174000
-        descricao:
-          type: string
-          example: Tamanho
-        opcoes:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductVariationOptionResponse'
-    ProdutoDesativadoResponse:
-      type: object
-      properties:
-        todos:
-          type: array
-          example:
-          - 34471cce-67a2-48b8-a526-1120c0704ed3
-          - 123e4567-e89b-12d3-a456-426614174000
-          items:
-            type: string
-            format: uuid
-          description: Lista de todos os produtos.
-        produtos_desativados:
-          type: array
-          items:
-            type: string
-            format: uuid
-          description: Lista de produtos desativados.
-          example:
-          - 34471cce-67a2-48b8-a526-1120c0704ed3
-          - 123e4567-e89b-12d3-a456-426614174000
-    EstoqueCriacaoProduto:
-      type: object
-      properties:
-        valor_venda:
-          description: Valor de venda do produto.
-          type: number
-          format: double
-          example: 99.99
-        custo_medio:
-          description: Valor de custo médio do produto.
-          type: number
-          format: double
-          example: 50
-        estoque_disponivel:
-          description: Quantidade de estoque disponível do produto.
-          type: number
-          format: double
-          example: 50.5
-        estoque_minimo:
-          description: Quantidade mínima de estoque do produto.
-          type: number
-          format: double
-          example: 1
-        estoque_maximo:
-          description: Quantidade máxima de estoque do produto.
-          type: number
-          format: double
-          example: 100
-    Ecommerce:
-      type: object
-      properties:
-        condicao:
-          type: string
-          example: NOVO
-          enum:
-          - NOVO
-          - USADO
-        integracao_ativa:
-          type: boolean
-          example: true
-        descricao_adicional:
-          type: string
-          example: Descrição adicional do produto
-        titulo_seo:
-          type: string
-          example: Título SEO
-        descricao_seo:
-          type: string
-          example: Descrição SEO
-        url_seo:
-          type: string
-          example: url-seo
-    ItemVariacao:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          example: 123e4567-e89b-12d3-a456-426614174000
-        nome:
-          type: string
-          example: Produto Variado - Tamanho G
-        codigo:
-          type: string
-          example: PROD123
-        codigo_ean:
-          type: string
-          example: '1234567890123'
-        versao:
-          type: integer
-          example: 1
-        valor_venda:
-          type: number
-          format: double
-          example: 99.99
-        estoque:
-          type: number
-          format: double
-          example: 50
-        opcoes:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductVariationOptionResponse'
-    ProductListChildResponse:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          example: 34471cce-67a2-48b8-a526-1120c0704ed3
-        id_legado:
-          type: integer
-          description: ID Legado do produto.
-          example: 12345
-        nome:
-          type: string
-          description: Nome do Produto.
-          example: Produto Exemplo
-        codigo_sku:
-          type: string
-          description: Código SKU.
-          example: SKU123456
-        codigo_ean:
-          type: string
-          description: Código EAN.
-          example: '1234567890123'
-        tipo:
-          type: string
-          description: Tipo do produto.
-          example: VARIACAO
-          enum:
-          - PRODUTO
-          - VARIACAO
-          - KIT_PRODUTOS
-        status:
-          type: string
-          description: Status do produto
-          example: ATIVO
-          enum:
-          - ATIVO
-          - INATIVO
-          - TODOS
-        estoque:
-          type: number
-          format: double
-          description: Estoque.
-          example: 50
-        valor_venda:
-          type: number
-          format: double
-          description: Valor de venda.
-          example: 99.99
-        custo_medio:
-          type: number
-          format: double
-          description: Custo médio.
-          example: 50
-        filhos:
-          type: array
-          description: Lista de produtos filhos. Neste nível retorna vazio.
-          items: {}
-        variacao:
-          type: integer
-          description: Quantidade de filhos/variações. Neste nível retorna 0.
-          example: 0
-        nivel_estoque:
-          type: string
-          description: Nível do estoque
-          example: MINIMO
-          enum:
-          - MINIMO
-          - MAXIMO
-          - PADRAO
-        estoque_minimo:
-          type: number
-          format: double
-          description: Estoque mínimo.
-          example: 10
-        estoque_maximo:
-          type: number
-          format: double
-          description: Estoque máximo.
-          example: 200
-        movimentado:
-          type: boolean
-          description: Indica se o produto foi movimentado
-          example: true
-        id_pai:
-          type: string
-          format: uuid
-          description: ID do produto pai
-          example: 34471cce-67a2-48b8-a526-1120c0704ed3
-        integracao_ecommerce_ativa:
-          type: boolean
-          description: Indica se a integração com o e-commerce está ativa.
-          example: true
-    ListagemDeProdutosPorFiltroResponse:
-      type: object
-      properties:
-        itens:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductListResponse'
-        itens_totais:
-          type: integer
-          example: 1
-    ProductVariationOptionRequest:
-      type: object
-      required:
-      - id
-      - descricao
-      properties:
-        id:
-          description: Identificador único da opção de variação é obrigatório. Cada opção de variação deve ter um identificador único em cada cadastro de produto. Ao informar a variação no produto, o mesmo identificador do elemento tipos.opcoes deve ser informado em produtos.opcoes.
-          type: string
-          format: uuid
-          example: 123e4567-e89b-12d3-a456-426614174000
-        descricao:
-          description: Descrição da opção de variação é obrigatório.
-          type: string
-          example: Descrição da opção de variação
-    Dimensao:
-      type: object
-      properties:
-        altura:
-          type: number
-          format: double
-          example: 10
-        largura:
-          type: number
-          format: double
-          example: 5
-        profundidade:
-          type: number
-          format: double
-          example: 2
-    ProductVariationOptionResponse:
-      type: object
-      properties:
-        id:
-          type: string
-          format: uuid
-          example: 123e4567-e89b-12d3-a456-426614174000
-        descricao:
-          type: string
-          example: G
   securitySchemes:
     bearerAuth:
       type: http
