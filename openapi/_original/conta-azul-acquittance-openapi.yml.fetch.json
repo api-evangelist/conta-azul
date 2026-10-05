@@ -1,0 +1,12 @@
+{
+ "url": "https://developers.contaazul.com/_bundle/docs/acquittance-apis-openapi.yaml?download",
+ "requested_url": "https://developers.contaazul.com/_bundle/docs/acquittance-apis-openapi.yaml?download",
+ "status": 200,
+ "content_type": "application/yaml",
+ "bytes": 17824,
+ "sha256": "b775b5d80109e8f94bce84cc2a67f0ac21b267c831cd8baf7d49c418a9b6e400",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the archived file is byte-identical to what the provider serves."
+}
