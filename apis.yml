@@ -182,6 +182,8 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: RateLimits
+  url: rate-limits/dvpj-rate-limits.yml
 - url: https://contaazul.com/blog/
   type: Blog
 - type: CapabilityMap
