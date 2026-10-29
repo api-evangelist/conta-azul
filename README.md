@@ -64,6 +64,146 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Conta Azul is a company surfaced as a portfolio company of ribbit-capital and added to the API Evangelist network as a stub for enrichment. Sector: fintech. This profile is a lead awaiting the enrichment pipeline.
+Conta Azul is a Brazilian cloud accounting, financial-management and ERP platform for small and medium businesses, backed by Ribbit Capital. Its Nova API (v2, api-v2.contaazul.com) exposes the ERP over REST/JSON with OAuth 2.0 (AWS Cognito) authorization: financial events (accounts payable and receivable), installments, cost centers, categories and DRE, financial accounts and balances, sales, charges, products/inventory, proposals, contracts and settlements (baixas). The legacy API was sunset in November 2025 in favor of this versioned, OpenAPI-documented platform.
 
-Backed by: ribbit-capital — https://contaazul.com
+**Areas:** Company · Fintech · Accounting · ERP · Brazil · Small Business · Financial Management · Invoicing · Payments
+
+## Conta Azul on APIs.io
+
+Everything profiled for Conta Azul is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/conta-azul/](https://apis.io/providers/conta-azul/)** — or go straight to one of the APIs or properties below.
+
+### APIs (10)
+
+- [Conta Azul API](https://apis.io/apis/conta-azul/conta-azul-api/) — REST/JSON API for the Conta Azul ERP, organized by functional area (Financeiro, Cobranças, Baixas, Vendas, Pessoas, Produtos, Serviços, Notas Fiscais,…
+- [Conta Azul Categorias API](https://apis.io/apis/conta-azul/conta-azul-categorias-api/) — The Categorias API from Conta Azul — 2 operation(s) for categorias.
+- [Conta Azul Centro De Custo API](https://apis.io/apis/conta-azul/conta-azul-centro-de-custo-api/) — The Centro De Custo API from Conta Azul — 1 operation(s) for centro de custo.
+- [Conta Azul Conta Financeira API](https://apis.io/apis/conta-azul/conta-azul-conta-financeira-api/) — The Conta Financeira API from Conta Azul — 2 operation(s) for conta financeira.
+- [Conta Azul Contratos API](https://apis.io/apis/conta-azul/conta-azul-contratos-api/) — The Contratos API from Conta Azul — 4 operation(s) for contratos.
+- [Conta Azul Financeiro API](https://apis.io/apis/conta-azul/conta-azul-financeiro-api/) — The Financeiro API from Conta Azul — 14 operation(s) for financeiro.
+- [Conta Azul Orcamentos API](https://apis.io/apis/conta-azul/conta-azul-orcamentos-api/) — The Orcamentos API from Conta Azul — 2 operation(s) for orcamentos.
+- [Conta Azul Produto API](https://apis.io/apis/conta-azul/conta-azul-produto-api/) — The Produto API from Conta Azul — 4 operation(s) for produto.
+- [Conta Azul Protocolo API](https://apis.io/apis/conta-azul/conta-azul-protocolo-api/) — The Protocolo API from Conta Azul — 1 operation(s) for protocolo.
+- [Conta Azul Venda API](https://apis.io/apis/conta-azul/conta-azul-venda-api/) — The Venda API from Conta Azul — 8 operation(s) for venda.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [conta-azul](https://apis.io/servers/conta-azul/conta-azul/)
+
+#### Collections (1)
+
+Postman and Open Collection request collections.
+
+- [Baixas v1 API](https://apis.io/collections/conta-azul/open-conta-azul-v1-api/)
+
+#### Overlays (9)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Conta Azul Acquittance Overlay](https://apis.io/overlays/conta-azul/conta-azul-acquittance-overlay/)
+- [Conta Azul Charge Overlay](https://apis.io/overlays/conta-azul/conta-azul-charge-overlay/)
+- [Conta Azul Contracts Overlay](https://apis.io/overlays/conta-azul/conta-azul-contracts-overlay/)
+- [Conta Azul Financial Overlay](https://apis.io/overlays/conta-azul/conta-azul-financial-overlay/)
+- [Conta Azul Inventory Overlay](https://apis.io/overlays/conta-azul/conta-azul-inventory-overlay/)
+- [Conta Azul Proposal Overlay](https://apis.io/overlays/conta-azul/conta-azul-proposal-overlay/)
+- [Conta Azul Protocol Overlay](https://apis.io/overlays/conta-azul/conta-azul-protocol-overlay/)
+- [Conta Azul Sales Overlay](https://apis.io/overlays/conta-azul/conta-azul-sales-overlay/)
+- [Conta Azul Scheduled Sales Overlay](https://apis.io/overlays/conta-azul/conta-azul-scheduled-sales-overlay/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Conta Azul Authentication](https://apis.io/security/conta-azul/conta-azul-authentication/)
+- [Conta Azul Domain Security](https://apis.io/security/conta-azul/conta-azul-domain-security/)
+- [Dvpj Authentication](https://apis.io/security/conta-azul/dvpj-authentication/)
+
+#### OAuth scopes (2)
+
+The permissions the API asks for.
+
+- [Conta Azul Scopes](https://apis.io/scopes/conta-azul/conta-azul-scopes/)
+- [Dvpj Scopes](https://apis.io/scopes/conta-azul/dvpj-scopes/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Dvpj Rate Limits](https://apis.io/rate-limits/conta-azul/dvpj-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://contaazul.com)
+- [Documentation](https://developers.contaazul.com/introduction)
+- [Getting started](https://developers.contaazul.com/guide)
+- [API reference](https://developers.contaazul.com/docs/financial-apis-openapi)
+- [Pricing](https://contaazul.com/planos/)
+- [Sign up](https://developers-portal.contaazul.com/)
+- [Support](https://ajuda.contaazul.com/hc/pt-br)
+- [Blog](https://contaazul.com/blog/)
+- [Terms of service](https://contaazul.com/termos/)
+- [Privacy policy](https://contaazul.com/termos/privacidade/)
+- [GitHub](https://github.com/ContaAzul)
+- [Status](https://status.contaazul.com)
+
+## API Evangelist rating
+
+**Kin Score 50.9** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 78.6 |
+| Contract quality | 50.0 |
+| Contract governance | 4.5 |
+| Operational transparency | 63.2 |
+| Developer ergonomics | 58.9 |
+| Access clarity | 44.7 |
+
+**Agent readiness 37.9** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | — |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 31.3** — Payments
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/conta-azul/](https://apis.io/providers/conta-azul/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Conta Azul: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/conta-azul/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
